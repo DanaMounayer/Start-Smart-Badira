@@ -19,10 +19,13 @@ export function QuestionBlock({
   question,
   answer,
   onAnswer,
+  isFollowUp = false,
 }: {
   question: Question
   answer: Answer | undefined
   onAnswer: (answer: Answer | undefined) => void
+  /** Marks a question that only exists because of an earlier answer. */
+  isFollowUp?: boolean
 }) {
   const { t, language } = useLanguage()
   const { profile } = useSession()
@@ -55,19 +58,19 @@ export function QuestionBlock({
   }
 
   return (
-    <section className="question">
-      <h2 className="question__prompt" id={`${fieldId}-prompt`}>
-        {t(question.promptKey)}
-      </h2>
-      {question.hintKey && <p className="question__hint">{t(question.hintKey)}</p>}
-
-      {saved && (
-        <p className="saved-chip">
-          <span className="saved-chip__dot" aria-hidden="true" />
-          {t('savedAlready')} <strong>{saved.display}</strong> ·{' '}
-          {formatDate(saved.recordedAt, language)}
-        </p>
-      )}
+    <section className="ask__body">
+      <header className="ask__prompt-block">
+        {isFollowUp && (
+          <p className="followup-tag">
+            <span className="followup-tag__line" aria-hidden="true" />
+            {t('followUp')}
+          </p>
+        )}
+        <h1 className="ask__prompt" id={`${fieldId}-prompt`}>
+          {t(question.promptKey)}
+        </h1>
+        {question.hintKey && <p className="ask__hint">{t(question.hintKey)}</p>}
+      </header>
 
       {(question.kind === 'single' || question.kind === 'multi') && question.options && (
         <ChoiceList
@@ -79,22 +82,32 @@ export function QuestionBlock({
       )}
 
       {question.kind === 'number' && (
-        <NumberField
-          id={fieldId}
-          labelledBy={`${fieldId}-prompt`}
-          unit={question.unitKey ? t(question.unitKey) : undefined}
-          value={answer?.kind === 'number' ? answer.value : ''}
-          onChange={(value) =>
-            onAnswer(value === '' ? undefined : { kind: 'number', value })
-          }
-        />
+        <div className="measure">
+          <input
+            id={fieldId}
+            aria-labelledby={`${fieldId}-prompt`}
+            className="measure__input"
+            type="text"
+            inputMode="decimal"
+            value={answer?.kind === 'number' ? answer.value : ''}
+            onChange={(event) => {
+              const raw = event.target.value.replace(/[^\d.]/g, '')
+              onAnswer(raw === '' ? undefined : { kind: 'number', value: Number(raw) })
+            }}
+            placeholder="—"
+          />
+          {question.unitKey && (
+            <span className="measure__unit">{t(question.unitKey)}</span>
+          )}
+        </div>
       )}
 
       {question.kind === 'bloodPressure' && (
-        <BloodPressureField
+        <BloodPressureEntry
           id={fieldId}
           systolic={answer?.kind === 'bp' ? answer.systolic : ''}
           diastolic={answer?.kind === 'bp' ? answer.diastolic : ''}
+          usingSaved={answer?.kind === 'fromProfile'}
           onChange={(systolic, diastolic) =>
             onAnswer(
               systolic === '' || diastolic === ''
@@ -102,117 +115,99 @@ export function QuestionBlock({
                 : { kind: 'bp', systolic, diastolic },
             )
           }
-          onUseSaved={saved ? () => onAnswer({ kind: 'fromProfile' }) : undefined}
-          usingSaved={answer?.kind === 'fromProfile'}
-          savedDisplay={saved?.display}
         />
+      )}
+
+      {saved && (
+        <div className="saved-note">
+          <p className="saved-note__text">
+            {t('savedAlready')} <strong>{saved.display}</strong>
+            <span>{formatDate(saved.recordedAt, language)}</span>
+          </p>
+          <button
+            type="button"
+            aria-pressed={answer?.kind === 'fromProfile'}
+            className={`saved-note__use${answer?.kind === 'fromProfile' ? ' is-active' : ''}`}
+            onClick={() =>
+              onAnswer(answer?.kind === 'fromProfile' ? undefined : { kind: 'fromProfile' })
+            }
+          >
+            {answer?.kind === 'fromProfile' ? t('usingSavedReading') : t('useSavedReading')}
+          </button>
+        </div>
       )}
 
       <EscapeHatches
         question={question}
         activeReason={missingReason}
         onChoose={(reason) =>
-          onAnswer(
-            missingReason === reason ? undefined : { kind: 'missing', reason },
-          )
+          onAnswer(missingReason === reason ? undefined : { kind: 'missing', reason })
         }
       />
     </section>
   )
 }
 
-function NumberField({
-  id,
-  labelledBy,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string
-  labelledBy: string
-  unit?: string
-  value: number | ''
-  onChange: (value: number | '') => void
-}) {
-  return (
-    <div className="field">
-      <input
-        id={id}
-        aria-labelledby={labelledBy}
-        className="field__input"
-        type="text"
-        inputMode="decimal"
-        value={value}
-        onChange={(event) => {
-          const raw = event.target.value.replace(/[^\d.]/g, '')
-          onChange(raw === '' ? '' : Number(raw))
-        }}
-        placeholder="—"
-      />
-      {unit && <span className="field__unit">{unit}</span>}
-    </div>
-  )
-}
-
-function BloodPressureField({
+/**
+ * Blood pressure entry.
+ *
+ * The numbers are the screen's subject — large, centred, on one soft surface,
+ * with the labels beneath rather than a pair of boxed web inputs.
+ */
+function BloodPressureEntry({
   id,
   systolic,
   diastolic,
-  onChange,
-  onUseSaved,
   usingSaved,
-  savedDisplay,
+  onChange,
 }: {
   id: string
   systolic: number | ''
   diastolic: number | ''
-  onChange: (systolic: number | '', diastolic: number | '') => void
-  onUseSaved?: () => void
   usingSaved: boolean
-  savedDisplay?: string
+  onChange: (systolic: number | '', diastolic: number | '') => void
 }) {
   const { t } = useLanguage()
-  const clean = (raw: string) => (raw === '' ? '' : Number(raw.replace(/\D/g, '')))
+  const clean = (raw: string) => {
+    const digits = raw.replace(/\D/g, '').slice(0, 3)
+    return digits === '' ? '' : Number(digits)
+  }
 
   return (
-    <>
-      <div className="bp-field" dir="ltr">
-        <input
-          id={`${id}-sys`}
-          className="bp-field__input"
-          type="text"
-          inputMode="numeric"
-          value={usingSaved ? '' : systolic}
-          onChange={(event) => onChange(clean(event.target.value), diastolic)}
-          placeholder="—"
-          aria-label={t('systolic')}
-        />
-        <span className="bp-field__slash" aria-hidden="true">
+    <div className={`bp${usingSaved ? ' is-muted' : ''}`}>
+      {/* Each caption sits inside its own cell, so it stays under its field. */}
+      <div className="bp__row" dir="ltr">
+        <label className="bp__cell">
+          <input
+            id={`${id}-sys`}
+            className="bp__digits"
+            type="text"
+            inputMode="numeric"
+            value={usingSaved ? '' : systolic}
+            onChange={(event) => onChange(clean(event.target.value), diastolic)}
+            placeholder="—"
+            aria-label={t('systolic')}
+          />
+          <span className="bp__cap">{t('systolic')}</span>
+        </label>
+        <span className="bp__slash" aria-hidden="true">
           /
         </span>
-        <input
-          id={`${id}-dia`}
-          className="bp-field__input"
-          type="text"
-          inputMode="numeric"
-          value={usingSaved ? '' : diastolic}
-          onChange={(event) => onChange(systolic, clean(event.target.value))}
-          placeholder="—"
-          aria-label={t('diastolic')}
-        />
-        <span className="bp-field__unit">{t('mmhg')}</span>
+        <label className="bp__cell">
+          <input
+            id={`${id}-dia`}
+            className="bp__digits"
+            type="text"
+            inputMode="numeric"
+            value={usingSaved ? '' : diastolic}
+            onChange={(event) => onChange(systolic, clean(event.target.value))}
+            placeholder="—"
+            aria-label={t('diastolic')}
+          />
+          <span className="bp__cap">{t('diastolic')}</span>
+        </label>
       </div>
-
-      {onUseSaved && (
-        <button
-          type="button"
-          aria-pressed={usingSaved}
-          className={`hatch hatch--wide${usingSaved ? ' is-active' : ''}`}
-          onClick={onUseSaved}
-        >
-          {t('useSavedReading')} {savedDisplay && <strong>{savedDisplay}</strong>}
-        </button>
-      )}
-    </>
+      <p className="bp__unit">{t('mmhg')}</p>
+    </div>
   )
 }

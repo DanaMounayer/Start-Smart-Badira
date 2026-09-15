@@ -7,17 +7,16 @@ import { useAssessment } from '@/app/assessmentSession'
 import { useSession } from '@/app/session'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { StepProgress } from '@/components/assessment/StepProgress'
-import { Chevron } from '@/components/ui/Chevron'
 
 /**
  * Review before analysis.
  *
- * Three groups: what is reused from the saved profile, what was provided
- * today, and what is unavailable. The profile group stays collapsed — the
- * point is to confirm, not to re-read the whole record.
+ * Three collapsed summaries — already known, updated today, unavailable —
+ * rather than a table of every answer. The screen's subject is the decision to
+ * run the analysis; the detail is one tap away for whoever wants it.
  *
- * Missing information is stated neutrally. No consequence is asserted here,
- * because Reliability has not been defined yet.
+ * Missing information is stated neutrally. No consequence is asserted, because
+ * Reliability is not defined yet.
  */
 export function AssessmentReview() {
   const { t } = useLanguage()
@@ -29,17 +28,19 @@ export function AssessmentReview() {
   const provided = providedQuestions(demoSpec, context)
   const missing = missingQuestions(demoSpec, context)
 
-  const fromProfile: (keyof Strings)[] = profile
+  const savedItems: (keyof Strings)[] = profile
     ? ['introHaveProfile', 'introHaveHistory', 'introHaveFamily', 'introHaveMeasurements']
     : []
 
   return (
-    <>
-      <div className="step-head">
+    <div className="ask">
+      <div className="ask__head">
         <button
           type="button"
           className="icon-btn"
-          onClick={() => navigate(`/assessment/${steps[steps.length - 1]}`)}
+          onClick={() =>
+            navigate(`/assessment/${steps[steps.length - 1]}`, { state: { atLast: true } })
+          }
           aria-label={t('back')}
         >
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="chevron">
@@ -55,94 +56,133 @@ export function AssessmentReview() {
         <StepProgress steps={[...steps, 'review']} current="review" />
       </div>
 
-      <h1 className="large-title large-title--tight">{t('reviewTitle')}</h1>
+      <div className="ask__body">
+        <header className="ask__prompt-block">
+          <h1 className="ask__prompt">{t('reviewTitle')}</h1>
+          <p className="ask__hint">{t('reviewLede')}</p>
+        </header>
 
-      {fromProfile.length > 0 && (
-        <details className="disclosure">
-          <summary className="disclosure__summary">
-            <span>{t('reviewFromProfile')}</span>
-            <span className="disclosure__count">{fromProfile.length}</span>
-          </summary>
-          <ul className="disclosure__body">
-            {fromProfile.map((key) => (
-              <li key={key}>{t(key)}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+        <div className="summaries">
+          {savedItems.length > 0 && (
+            <Summary
+              label={t('reviewFromProfile')}
+              count={savedItems.length}
+              tone="known"
+            >
+              <ul className="summary__list">
+                {savedItems.map((key) => (
+                  <li key={key}>{t(key)}</li>
+                ))}
+              </ul>
+            </Summary>
+          )}
 
-      <ReviewGroup
-        label={t('reviewUpdatedToday')}
-        questions={provided}
-        answers={answers}
-        emptyLabel={t('reviewNothingAddedYet')}
-        onEdit={(question) => navigate(`/assessment/${question.step}`)}
-      />
+          <Summary
+            label={t('reviewUpdatedToday')}
+            count={provided.length}
+            tone="updated"
+            emptyLabel={provided.length === 0 ? t('reviewNothingAddedYet') : undefined}
+          >
+            <AnswerList
+              questions={provided}
+              answers={answers}
+              onEdit={(q) => navigate(`/assessment/${q.step}`)}
+            />
+          </Summary>
 
-      {missing.length > 0 && (
-        <ReviewGroup
-          label={t('reviewUnavailable')}
-          questions={missing}
-          answers={answers}
-          onEdit={(question) => navigate(`/assessment/${question.step}`)}
-        />
-      )}
+          <Summary
+            label={t('reviewUnavailable')}
+            count={missing.length}
+            tone="missing"
+            emptyLabel={missing.length === 0 ? t('reviewNothingMissing') : undefined}
+          >
+            <AnswerList
+              questions={missing}
+              answers={answers}
+              onEdit={(q) => navigate(`/assessment/${q.step}`)}
+            />
+          </Summary>
+        </div>
 
-      <p className="fineprint">{t('reviewMissingNote')}</p>
+        <p className="ask__note">{t('reviewMissingNote')}</p>
+      </div>
 
-      <button
-        type="button"
-        className="btn btn--primary"
-        onClick={() => navigate('/assessment/analyzing')}
-      >
-        {t('analyzeWithBadira')}
-      </button>
-
-      <p className="fineprint fineprint--center">{t('disclaimerFull')}</p>
-    </>
+      <div className="ask__foot">
+        <button
+          type="button"
+          className="btn btn--primary"
+          onClick={() => navigate('/assessment/analyzing')}
+        >
+          {t('analyzeWithBadira')}
+        </button>
+        <p className="fineprint fineprint--center">{t('disclaimerFull')}</p>
+      </div>
+    </div>
   )
 }
 
-function ReviewGroup({
+/** A collapsed group. Open it to see what it contains. */
+function Summary({
   label,
-  questions,
-  answers,
+  count,
+  tone,
   emptyLabel,
-  onEdit,
+  children,
 }: {
   label: string
+  count: number
+  tone: 'known' | 'updated' | 'missing'
+  emptyLabel?: string
+  children: React.ReactNode
+}) {
+  if (emptyLabel) {
+    return (
+      <div className={`summary summary--${tone} is-empty`}>
+        <span className="summary__label">{label}</span>
+        <span className="summary__empty">{emptyLabel}</span>
+      </div>
+    )
+  }
+
+  return (
+    <details className={`summary summary--${tone}`}>
+      <summary className="summary__head">
+        <span className="summary__label">{label}</span>
+        <span className="summary__count">{count}</span>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="summary__caret">
+          <path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </summary>
+      <div className="summary__body">{children}</div>
+    </details>
+  )
+}
+
+function AnswerList({
+  questions,
+  answers,
+  onEdit,
+}: {
   questions: Question[]
   answers: Record<string, Answer | undefined>
-  emptyLabel?: string
   onEdit: (question: Question) => void
 }) {
   const { t, language } = useLanguage()
-  const listSeparator = language === 'ar' ? '، ' : ', '
+  const separator = language === 'ar' ? '، ' : ', '
 
   return (
-    <section className="group">
-      <h2 className="group__label">{label}</h2>
-      {questions.length === 0 && emptyLabel ? (
-        <p className="group__empty">{emptyLabel}</p>
-      ) : (
-        <div className="list">
-          {questions.map((question) => (
-            <button
-              key={question.id}
-              type="button"
-              className="list__row"
-              onClick={() => onEdit(question)}
-            >
-              <span className="list__label">{t(question.promptKey)}</span>
-              <span className="list__value">
-                {describe(question, answers[question.id], t, listSeparator)}
-              </span>
-              <Chevron />
-            </button>
-          ))}
-        </div>
-      )}
-    </section>
+    <ul className="summary__answers">
+      {questions.map((question) => (
+        <li key={question.id}>
+          <button type="button" className="answer" onClick={() => onEdit(question)}>
+            <span className="answer__q">{t(question.promptKey)}</span>
+            <span className="answer__a">
+              {describe(question, answers[question.id], t, separator)}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
   )
 }
 

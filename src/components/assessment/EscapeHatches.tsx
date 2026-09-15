@@ -4,8 +4,9 @@ import { useLanguage } from '@/i18n/LanguageProvider'
 /**
  * The ways out of answering.
  *
- * The user is never forced to invent a value. Each choice records *why* the
- * value is absent, which Stage 3 will read as part of Reliability.
+ * Present but deliberately quiet: plain tinted text, below the answer, so the
+ * user is never pushed toward inventing a value nor toward skipping. Each
+ * choice records *why* the value is absent, for Stage 3 to read.
  */
 export function EscapeHatches({
   question,
@@ -36,6 +37,17 @@ export function EscapeHatches({
           className={`hatch${activeReason === hatch.reason ? ' is-active' : ''}`}
           onClick={() => onChoose(hatch.reason)}
         >
+          {activeReason === hatch.reason && (
+            <svg width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path
+                d="M3.8 9.4 7.2 12.8 14.2 5.4"
+                stroke="currentColor"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
           {hatch.label}
         </button>
       ))}

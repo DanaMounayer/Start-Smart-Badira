@@ -147,6 +147,10 @@ export const en = {
   resultMissing: 'Unavailable or missing',
   resultMissingNote: 'What is missing is recorded and will inform Reliability once that is defined.',
   backToHome: 'Back to home',
+  followUp: 'Follow-up',
+  usingSavedReading: 'Using saved reading',
+  reviewLede: 'A quick look before BADIRA runs the assessment.',
+  reviewNothingMissing: 'Nothing missing',
   // --- History view ---
   historyTitle: 'Measurement history',
   chartTitle: 'Blood pressure over time',

@@ -149,6 +149,10 @@ export const ar: Strings = {
   resultMissing: 'غير متوفر أو ناقص',
   resultMissingNote: 'يُسجَّل الناقص وسيُستخدم في تحديد الموثوقية عند اعتمادها.',
   backToHome: 'العودة للرئيسية',
+  followUp: 'سؤال متابعة',
+  usingSavedReading: 'يُستخدم القياس المحفوظ',
+  reviewLede: 'نظرة سريعة قبل أن تجري بادرة التقييم.',
+  reviewNothingMissing: 'لا شيء ناقص',
   // --- History view ---
   historyTitle: 'سجل القياسات',
   chartTitle: 'ضغط الدم عبر الزمن',
