@@ -69,19 +69,30 @@ because the profile arrives from the session and is simply null for a guest.
 
 ## Main Stage 3 — Risk × Reliability × Time result
 
-Not built. **The result system is undefined**: no risk categories, thresholds,
-percentages, reliability scales or recommendations have been designed, and none
-may be invented. Risk, Reliability and Time stay three separate concepts and are
-never merged into one score.
+Built as a framework. `src/domain/result/schema.ts` types the result;
+`demoResult.ts` builds one; the screens render whatever valid result object
+they receive. No component contains a threshold, band or cutoff.
 
-| Route | Screen |
-| --- | --- |
-| `/result` | Placeholder — states the result experience is not finalized (built) |
-| `/result/:id` | The result |
-| `/result/:id/why` | Most influential factors |
-| `/result/:id/reliability` | Improve Reliability / missing information |
-| `/result/:id/report` | Detailed report |
-| `/result/:id/share` | Share a structured summary with a doctor |
+| Route | Screen | Status |
+| --- | --- | --- |
+| `/result/:id` | The result — Risk, with Reliability and Time as context | built |
+| `/result/:id/why` | Information that influenced this assessment | built |
+| `/result/:id/reliability` | Improve reliability | built |
+| `/result/:id/report` | Detailed report | built |
+| `/result/:id/share` | Share a structured summary | built |
+
+**No prediction model is connected, so no result is produced.** Risk,
+Reliability and the Time interpretation are returned in their `awaitingModel`
+state and the UI says so. There are no percentages, probabilities, bands,
+cutoffs, timing rules or recommendations anywhere in the codebase.
+
+What the screens do show is factual, read from the profile and the user's own
+answers: the inventory of information the assessment had and did not have, the
+gestational age, and the assessment date. Reliability is captioned throughout
+as separate from the user's health risk.
+
+Sharing transmits nothing: the summary is copied to the device, and the screen
+says so rather than implying a doctor received it.
 
 ## Journeys
 

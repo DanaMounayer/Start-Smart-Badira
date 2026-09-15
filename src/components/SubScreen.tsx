@@ -6,9 +6,12 @@ import { useLanguage } from '@/i18n/LanguageProvider'
 export function SubScreen({
   title,
   children,
+  backTo = '/',
 }: {
   title: string
   children: ReactNode
+  /** Where the back affordance leads. Detail views of a result return to it. */
+  backTo?: string
 }) {
   const { t } = useLanguage()
   const navigate = useNavigate()
@@ -19,7 +22,7 @@ export function SubScreen({
         <button
           type="button"
           className="icon-btn"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(backTo)}
           aria-label={t('back')}
         >
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="chevron">

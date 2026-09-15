@@ -9,7 +9,11 @@ import { AssessmentIntro } from '@/screens/assessment/Intro'
 import { AssessmentStep } from '@/screens/assessment/Step'
 import { AssessmentReview } from '@/screens/assessment/Review'
 import { Analyzing } from '@/screens/assessment/Analyzing'
-import { ResultPlaceholder } from '@/screens/assessment/ResultPlaceholder'
+import { Result } from '@/screens/result/Result'
+import { ResultWhy } from '@/screens/result/Why'
+import { ResultReliability } from '@/screens/result/Reliability'
+import { ResultReport } from '@/screens/result/Report'
+import { ResultShare } from '@/screens/result/Share'
 import { NotBuiltYet } from '@/screens/NotBuiltYet'
 
 /**
@@ -17,8 +21,8 @@ import { NotBuiltYet } from '@/screens/NotBuiltYet'
  *
  * `/welcome` is the entry point; `/` is Screen 1 with `/profile`, `/history`
  * and `/assessments` as detail views. `/assessment/*` is Stage 2, whose steps
- * are chosen by the adaptive engine rather than fixed here. `/result` is the
- * Stage 3 placeholder.
+ * are chosen by the adaptive engine rather than fixed here. `/result/:id` is
+ * Stage 3, with its detail views beneath it.
  */
 export function AppRoutes() {
   return (
@@ -34,7 +38,12 @@ export function AppRoutes() {
         <Route path="/assessment/review" element={<AssessmentReview />} />
         <Route path="/assessment/analyzing" element={<Analyzing />} />
         <Route path="/assessment/:step" element={<AssessmentStep />} />
-        <Route path="/result" element={<ResultPlaceholder />} />
+        <Route path="/result/:id" element={<Result />} />
+        <Route path="/result/:id/why" element={<ResultWhy />} />
+        <Route path="/result/:id/reliability" element={<ResultReliability />} />
+        <Route path="/result/:id/report" element={<ResultReport />} />
+        <Route path="/result/:id/share" element={<ResultShare />} />
+        <Route path="/result" element={<Navigate to="/result/demo" replace />} />
 
         <Route
           path="/profile/update"

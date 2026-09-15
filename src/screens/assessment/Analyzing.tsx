@@ -23,7 +23,7 @@ export function Analyzing() {
       window.setTimeout(() => setLit(i + 1), beat * (i + 1)),
     )
     const done = window.setTimeout(
-      () => navigate('/result', { replace: true }),
+      () => navigate('/result/demo', { replace: true }),
       beat * (AXES.length + 1.4),
     )
     return () => {
