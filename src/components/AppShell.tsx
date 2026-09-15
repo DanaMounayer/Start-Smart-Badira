@@ -13,6 +13,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   // The welcome screen carries its own brand lockup and language toggle.
   if (pathname === '/welcome') return <div className="app-shell">{children}</div>
 
+  // The analysis transition is a full-bleed moment with no chrome at all.
+  if (pathname === '/assessment/analyzing') {
+    return <div className="app-shell app-shell--bare">{children}</div>
+  }
+
   return (
     <div className="app-shell">
       <AppBar initial={profile?.firstName.charAt(0) ?? '?'} />

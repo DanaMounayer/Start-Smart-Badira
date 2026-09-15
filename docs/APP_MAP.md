@@ -42,15 +42,30 @@ section are deliberately undefined until the clinical content is agreed.
 
 ## Main Stage 2 — Intelligent predictive assessment
 
-Not built. Planned as a multi-step adaptive flow that reuses saved information,
-asks only for what is new, missing or needs confirmation, allows "I don't know
-/ not available", and treats missing answers as meaningful for Reliability.
+Built. A data-driven adaptive flow: `src/domain/assessment/demoSpec.ts` holds
+the questions and their visibility rules, `engine.ts` decides what is visible,
+and the step screen renders whatever it is given. Steps with no visible
+questions disappear entirely, so a signed-in user sees four stages and a guest
+sees five.
 
-| Route | Screen |
-| --- | --- |
-| `/assessment` | Introduction — what BADIRA already has |
-| `/assessment/:step` | Adaptive steps (measurements, symptoms, recent changes, follow-ups) |
-| `/assessment/review` | Review before analysis |
+| Route | Screen | Status |
+| --- | --- | --- |
+| `/assessment` | Introduction — what BADIRA already has | built |
+| `/assessment/about` | Guest-only; hidden when a profile exists | built |
+| `/assessment/measurements` | Current measurements | built |
+| `/assessment/symptoms` | Current symptoms + adaptive follow-ups | built |
+| `/assessment/changes` | Recent changes | built |
+| `/assessment/review` | Review before analysis | built |
+| `/assessment/analyzing` | Transition to the result | built |
+
+**All question content is demo content.** `demoSpec.ts` carries the warning in
+full: no thresholds, ranges, severity or interpretation appear anywhere, and
+follow-ups fire only because the user named the related item — interaction
+logic, not a decision rule. Replacing that one file is how the clinical
+specification lands; the engine, screens and state layer do not change.
+
+Answers live only for the run. A guest's answers never touch the demo profile,
+because the profile arrives from the session and is simply null for a guest.
 
 ## Main Stage 3 — Risk × Reliability × Time result
 
@@ -61,6 +76,7 @@ never merged into one score.
 
 | Route | Screen |
 | --- | --- |
+| `/result` | Placeholder — states the result experience is not finalized (built) |
 | `/result/:id` | The result |
 | `/result/:id/why` | Most influential factors |
 | `/result/:id/reliability` | Improve Reliability / missing information |

@@ -22,14 +22,13 @@ export function SubScreen({
           onClick={() => navigate('/')}
           aria-label={t('back')}
         >
-          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="chevron">
             <path
               d="m10 4-4 4 4 4"
               stroke="currentColor"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="chevron"
             />
           </svg>
         </button>
