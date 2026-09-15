@@ -20,7 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="app-shell">
-      <AppBar initial={profile?.firstName.charAt(0) ?? '?'} />
+      <AppBar initial={profile?.firstName.trim().charAt(0) ?? ''} />
       <main className="app-main">{children}</main>
       <footer className="app-footer">{t('disclaimer')}</footer>
     </div>

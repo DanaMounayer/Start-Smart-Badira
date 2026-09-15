@@ -1,22 +1,29 @@
 import { useNavigate } from 'react-router-dom'
+import { useSession } from '@/app/session'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
+import { formatFullDate } from '@/lib/format'
 
 /**
  * Previous BADIRA assessments.
  *
- * Empty for the demo profile: no assessment has been run, and none is
- * fabricated. Once Stage 3 exists this lists real results.
+ * Records are created only by completing an assessment in this session. No
+ * past result is fabricated, and each record carries the true state of its
+ * readings: awaiting the validated model.
  */
 export function Assessments() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+  const { assessments } = useSession()
   const navigate = useNavigate()
 
-  return (
-    <SubScreen title={t('navAssessments')}>
-      <section className="card card--empty">
-        <p className="card__title">{t('noAssessmentsTitle')}</p>
-        <p className="muted muted--small">{t('noAssessmentsBody')}</p>
+  if (assessments.length === 0) {
+    return (
+      <SubScreen title={t('navAssessments')}>
+        <section className="empty-state">
+          <span className="empty-state__glyph" aria-hidden="true" />
+          <p className="empty-state__title">{t('noAssessmentsTitle')}</p>
+          <p className="empty-state__body">{t('noAssessmentsBody')}</p>
+        </section>
         <button
           type="button"
           className="btn btn--primary"
@@ -24,7 +31,34 @@ export function Assessments() {
         >
           {t('startAssessment')}
         </button>
-      </section>
+      </SubScreen>
+    )
+  }
+
+  return (
+    <SubScreen title={t('navAssessments')}>
+      <div className="list">
+        {assessments.map((record) => (
+          <div key={record.id} className="record">
+            <div className="record__head">
+              <p className="record__date">
+                {formatFullDate(record.completedAt, language)}
+              </p>
+              <span className="tagline-pill">{t('awaitingModelShort')}</span>
+            </div>
+            <p className="record__meta">
+              {record.gestationalAge
+                ? `${record.gestationalAge.weeks} ${t('weeksWord')} + ${record.gestationalAge.days} ${t('daysWord')}`
+                : t('gestationUnknown')}
+            </p>
+            <p className="record__counts">
+              {t('infoProvided')}: {record.informationProvided} ·{' '}
+              {t('infoUnavailable')}: {record.informationUnavailable}
+            </p>
+          </div>
+        ))}
+      </div>
+      <p className="fineprint">{t('recordsNote')}</p>
     </SubScreen>
   )
 }

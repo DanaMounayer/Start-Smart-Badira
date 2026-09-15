@@ -11,12 +11,11 @@ import { useSession } from '@/app/session'
  */
 export function Welcome() {
   const { t, toggleLanguage } = useLanguage()
-  const { signIn, continueAsGuest } = useSession()
+  const { continueAsGuest } = useSession()
   const navigate = useNavigate()
 
-  const enter = (as: 'signedIn' | 'guest') => {
-    if (as === 'signedIn') signIn()
-    else continueAsGuest()
+  const asGuest = () => {
+    continueAsGuest()
     navigate('/')
   }
 
@@ -33,10 +32,10 @@ export function Welcome() {
       </div>
 
       <div className="welcome__actions">
-        <button type="button" className="btn btn--primary" onClick={() => enter('signedIn')}>
+        <button type="button" className="btn btn--primary" onClick={() => navigate('/signin')}>
           {t('signIn')}
         </button>
-        <button type="button" className="btn btn--ghost btn--block" onClick={() => enter('guest')}>
+        <button type="button" className="btn btn--ghost btn--block" onClick={asGuest}>
           {t('continueAsGuest')}
         </button>
         <p className="welcome__note">{t('guestNote')}</p>

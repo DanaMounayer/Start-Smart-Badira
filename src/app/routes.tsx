@@ -5,6 +5,10 @@ import { Home } from '@/screens/Home'
 import { History } from '@/screens/History'
 import { Profile } from '@/screens/Profile'
 import { Assessments } from '@/screens/Assessments'
+import { SignIn } from '@/screens/SignIn'
+import { Onboarding } from '@/screens/Onboarding'
+import { ProfileOverview } from '@/screens/profile/ProfileOverview'
+import { ProfileSection } from '@/screens/profile/ProfileSection'
 import { AssessmentIntro } from '@/screens/assessment/Intro'
 import { AssessmentStep } from '@/screens/assessment/Step'
 import { AssessmentReview } from '@/screens/assessment/Review'
@@ -14,7 +18,6 @@ import { ResultWhy } from '@/screens/result/Why'
 import { ResultReliability } from '@/screens/result/Reliability'
 import { ResultReport } from '@/screens/result/Report'
 import { ResultShare } from '@/screens/result/Share'
-import { NotBuiltYet } from '@/screens/NotBuiltYet'
 
 /**
  * Route table.
@@ -31,7 +34,12 @@ export function AppRoutes() {
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/" element={<Home />} />
         <Route path="/history" element={<History />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/profile" element={<ProfileOverview intent="view" />} />
+        <Route path="/profile/update" element={<ProfileOverview intent="update" />} />
+        <Route path="/profile/section/:id" element={<ProfileSection />} />
+        <Route path="/profile/full" element={<Profile />} />
         <Route path="/assessments" element={<Assessments />} />
 
         <Route path="/assessment" element={<AssessmentIntro />} />
@@ -45,10 +53,6 @@ export function AppRoutes() {
         <Route path="/result/:id/share" element={<ResultShare />} />
         <Route path="/result" element={<Navigate to="/result/demo" replace />} />
 
-        <Route
-          path="/profile/update"
-          element={<NotBuiltYet titleKey="updateInformation" />}
-        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AppShell>

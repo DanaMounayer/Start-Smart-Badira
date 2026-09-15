@@ -1,6 +1,9 @@
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useResult } from '@/app/useResult'
 import { useAssessment } from '@/app/assessmentSession'
+import { useSession } from '@/app/session'
+import { countBy } from '@/domain/result/schema'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { Signature } from '@/components/result/Signature'
 import { RiskPanel } from '@/components/result/RiskPanel'
@@ -20,7 +23,22 @@ export function Result() {
   const { id = 'demo' } = useParams()
   const result = useResult()
   const { reset } = useAssessment()
+  const { mode, recordAssessment } = useSession()
   const navigate = useNavigate()
+
+  // Completing an assessment adds it to this session's history. The record
+  // carries the true state of the readings — no result is invented for it.
+  useEffect(() => {
+    recordAssessment({
+      id: `${result.id}-${result.time.assessedAt}`,
+      completedAt: result.time.assessedAt,
+      gestationalAge: result.time.gestationalAge,
+      informationProvided: countBy(result.information, 'provided'),
+      informationUnavailable: countBy(result.information, 'unavailable'),
+    })
+    // Recording once per completed run; the record id is stable for it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const actions = [
     { key: 'why', label: t('whyThisResult'), to: `/result/${id}/why` },
@@ -57,6 +75,20 @@ export function Result() {
           </button>
         ))}
       </nav>
+
+      {mode === 'guest' && (
+        <section className="invite">
+          <p className="invite__title">{t('guestSaveTitle')}</p>
+          <p className="invite__body">{t('guestSaveBody')}</p>
+          <button
+            type="button"
+            className="btn btn--tinted"
+            onClick={() => navigate('/signin')}
+          >
+            {t('guestSaveAction')}
+          </button>
+        </section>
+      )}
 
       <p className="result__disclaimer">{t('badiraDisclaimer')}</p>
 

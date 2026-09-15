@@ -54,3 +54,25 @@ export const saraProfile: PregnancyProfile = {
   reportedSymptoms: [],
   lastUpdatedAt: new Date().toISOString(),
 }
+
+/**
+ * A signed-in user who has not completed onboarding yet.
+ *
+ * Every field a section fills is empty. This is a valid state: the app shows
+ * what it has and invites her to add the rest.
+ */
+export const emptyProfile = (): PregnancyProfile => ({
+  id: 'new-user',
+  firstName: '',
+  age: null,
+  pregnancyNumber: null,
+  gestationalAge: null,
+  estimatedDueDate: null,
+  bmi: null,
+  chronicConditions: [],
+  familyHistory: [],
+  previousPregnancies: [],
+  bloodPressureReadings: [],
+  reportedSymptoms: [],
+  lastUpdatedAt: new Date().toISOString(),
+})

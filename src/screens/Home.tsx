@@ -16,7 +16,7 @@ import { isToday } from '@/lib/format'
  */
 export function Home() {
   const { t } = useLanguage()
-  const { profile } = useSession()
+  const { profile, assessments } = useSession()
   const navigate = useNavigate()
 
   if (!profile) return <GuestHome />
@@ -27,16 +27,41 @@ export function Home() {
     <>
       <h1 className="large-title">{t('greeting')}</h1>
 
-      <GestationHero age={profile.gestationalAge} dueDate={profile.estimatedDueDate} />
+      {profile.gestationalAge && profile.estimatedDueDate ? (
+        <GestationHero
+          age={profile.gestationalAge}
+          dueDate={profile.estimatedDueDate}
+        />
+      ) : (
+        <section className="empty-hero">
+          <p className="empty-hero__title">{t('homeNoPregnancyTitle')}</p>
+          <p className="empty-hero__body">{t('homeNoPregnancyBody')}</p>
+          <button
+            type="button"
+            className="btn btn--tinted"
+            onClick={() => navigate('/onboarding')}
+          >
+            {t('completeProfile')}
+          </button>
+        </section>
+      )}
 
-      <HealthSnapshot
-        factors={[
-          { key: 'htn', label: t('chronicHypertension'), tone: 'blush' as const },
-          { key: 'family', label: t('familyHistoryChip'), tone: 'butter' as const },
-          { key: 'bmi', label: `${t('bmi')} ${profile.bmi}`, tone: 'sage' as const },
-        ]}
-        readings={readings}
-      />
+      {readings.length > 0 && (
+        <HealthSnapshot
+          factors={[
+            ...(profile.chronicConditions.length
+              ? [{ key: 'htn', label: t('chronicHypertension'), tone: 'blush' as const }]
+              : []),
+            ...(profile.familyHistory.length
+              ? [{ key: 'family', label: t('familyHistoryChip'), tone: 'butter' as const }]
+              : []),
+            ...(profile.bmi !== null
+              ? [{ key: 'bmi', label: `${t('bmi')} ${profile.bmi}`, tone: 'sage' as const }]
+              : []),
+          ]}
+          readings={readings}
+        />
+      )}
 
       <section className="group">
         <InfoList
@@ -47,7 +72,13 @@ export function Home() {
               label: 'navHistory',
               value: `${readings.length} ${t('chipRecentReadings')}`,
             },
-            { to: '/assessments', label: 'navAssessments', value: t('noAssessmentsYet') },
+            {
+            to: '/assessments',
+            label: 'navAssessments',
+            value: assessments.length
+              ? `${assessments.length}`
+              : t('noAssessmentsYet'),
+          },
           ]}
         />
         <button

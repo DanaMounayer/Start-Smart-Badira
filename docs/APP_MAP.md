@@ -7,7 +7,8 @@ the full screen count; supporting screens exist where they improve the flow.
 
 | Route | Screen | Status |
 | --- | --- | --- |
-| `/welcome` | Welcome — sign in or continue as guest | built |
+| `/welcome` | Welcome — sign in, continue as guest, switch language | built |
+| `/signin` | Prototype sign-in: returning demo profile, or a new user | built |
 
 Guest access is a required feature. A guest carries no saved profile and is
 told plainly that Reliability will be limited without one.
@@ -20,8 +21,9 @@ told plainly that Reliability will be limited without one.
 | `/profile` | Full pregnancy profile | built (read-only) |
 | `/history` | Measurements & history | built |
 | `/assessments` | Previous BADIRA assessments | built (empty state) |
-| `/profile/update` | Update / add information | placeholder |
-| `/onboarding` | First-time profile setup | not built |
+| `/profile/update` | Choose a section to change | built |
+| `/profile/section/:id` | Edit one section | built |
+| `/onboarding` | First-time setup, section-based and resumable | built |
 
 ### Onboarding
 
@@ -37,8 +39,21 @@ Reliability. Sections currently anticipated:
 - Measurements
 - Further sections to be finalised
 
-**No clinical fields are specified yet.** The exact questions inside each
-section are deliberately undefined until the clinical content is agreed.
+Sections are built from fields that already exist in the profile model; no
+clinical question was invented to fill a screen. Each section reports as
+complete, partly filled or not added, and a partly filled profile is a valid
+state that never blocks the user.
+
+**No new clinical fields are specified.** The exact questions inside each
+section remain open until the clinical content is agreed.
+
+### State
+
+Profile, assessment records and session mode live in memory for the length of
+the session — there is no server, and the app says so wherever it matters.
+Editing a section writes through the session, so a change appears immediately
+on Home and in the next assessment. Guest mode carries no profile at all, so
+signed-in data cannot reach it.
 
 ## Main Stage 2 — Intelligent predictive assessment
 

@@ -38,9 +38,24 @@ export function AppBar({ initial }: { initial: string }) {
           onClick={() => navigate('/profile')}
           aria-label={t('yourProfile')}
         >
-          {initial}
+          {initial || <PersonGlyph />}
         </button>
       </span>
     </header>
+  )
+}
+
+/** Shown before a profile has a name — a new user has not added one yet. */
+function PersonGlyph() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="7" r="3" stroke="currentColor" strokeWidth="1.7" />
+      <path
+        d="M4.5 16.2c1.2-2.5 3.2-3.7 5.5-3.7s4.3 1.2 5.5 3.7"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
   )
 }

@@ -29,16 +29,22 @@ export type PreviousPregnancy = {
   hadPreeclampsia: boolean | null
 }
 
-/** Everything the prototype may know about a user's pregnancy. */
+/**
+ * Everything the prototype may know about a user's pregnancy.
+ *
+ * Almost every field is nullable: a partially complete profile is a valid
+ * state. Onboarding fills sections over time, and a profile with gaps simply
+ * gives BADIRA less to work with.
+ */
 export type PregnancyProfile = {
   id: string
   firstName: string
-  age: number
+  age: number | null
   /** 1 = first pregnancy, 2 = second, and so on. */
-  pregnancyNumber: number
-  gestationalAge: GestationalAge
+  pregnancyNumber: number | null
+  gestationalAge: GestationalAge | null
   /** Estimated due date, ISO date string. */
-  estimatedDueDate: string
+  estimatedDueDate: string | null
   bmi: number | null
   chronicConditions: string[]
   familyHistory: string[]
