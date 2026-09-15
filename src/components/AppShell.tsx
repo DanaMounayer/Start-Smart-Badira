@@ -1,33 +1,17 @@
 import type { ReactNode } from 'react'
+import { AppBar } from './AppBar'
 import { useLanguage } from '@/i18n/LanguageProvider'
-import { BadiraMark } from './BadiraMark'
+import { saraProfile } from '@/data/mockProfile'
 
 /** Phone-width frame shared by every screen. */
 export function AppShell({ children }: { children: ReactNode }) {
-  const { t, toggleLanguage } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <div className="app-shell">
-      <header className="app-header">
-        <div className="app-header__brand">
-          <BadiraMark />
-          <span>{t('appName')}</span>
-        </div>
-        <button
-          type="button"
-          className="btn btn--ghost"
-          onClick={toggleLanguage}
-          aria-label={t('switchLanguage')}
-        >
-          {t('switchLanguage')}
-        </button>
-      </header>
-
+      <AppBar initial={saraProfile.firstName.charAt(0)} />
       <main className="app-main">{children}</main>
-
-      <footer className="app-footer">
-        <p className="disclaimer">{t('disclaimer')}</p>
-      </footer>
+      <footer className="app-footer">{t('disclaimer')}</footer>
     </div>
   )
 }

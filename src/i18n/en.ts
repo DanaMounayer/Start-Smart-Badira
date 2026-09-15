@@ -1,31 +1,61 @@
 export const en = {
   // --- Shell ---
   appName: 'BADIRA',
-  tagline: 'Early awareness companion for preeclampsia',
   switchLanguage: 'العربية',
-  disclaimer:
+  yourProfile: 'Your profile',
+  back: 'Back',
+  disclaimer: 'Not a diagnosis. BADIRA supports earlier awareness only.',
+  disclaimerFull:
     'BADIRA is not a symptom checker and does not diagnose or treat. It supports earlier awareness and never replaces professional medical assessment.',
   notImplemented: 'This part of the prototype has not been built yet.',
-  back: 'Back',
 
-  // --- Greeting / session ---
+  // --- Pregnancy header ---
   greeting: 'Hello, Sara',
-  signedInAs: 'Signed in · profile saved',
-  welcomeBack: 'Your pregnancy profile and previous information are saved.',
-
-  // --- Gestation ---
-  gestationLabel: 'Gestational age',
-  weeksShort: 'w',
-  daysShort: 'd',
+  weeksWord: 'weeks',
+  daysWord: 'days',
   trimester1: 'First trimester',
   trimester2: 'Second trimester',
   trimester3: 'Third trimester',
-  weeksToGo: 'weeks to term',
-  dueDate: 'Estimated due date',
+  weeksToGo: 'weeks to go',
   progressLabel: 'Pregnancy progress',
 
-  // --- Profile summary ---
-  profileTitle: 'Your Pregnancy Profile',
+  // --- Check-in card ---
+  checkInEyebrow: "Today's check-in",
+  checkInTitle: 'Your saved profile is ready',
+  chipProfileSaved: 'Profile saved',
+  chipRecentReadings: 'recent readings',
+  chipUpdatedToday: 'Updated today',
+  chipUpdatedRecently: 'Recently updated',
+
+  // --- Snapshot ---
+  snapshotTitle: 'Health snapshot',
+  viewHistory: 'View history',
+  chronicHypertension: 'Chronic hypertension',
+  familyHistoryChip: 'Family history',
+  bmi: 'BMI',
+  bloodPressure: 'Blood pressure',
+  mmhg: 'mmHg',
+
+  // --- Actions ---
+  startAssessment: 'Start BADIRA Assessment',
+  ctaSupport:
+    'BADIRA will use your current and saved information to assess Risk × Reliability × Time.',
+  updateInformation: 'Update my information',
+
+  // --- History view ---
+  historyTitle: 'Measurement history',
+  chartTitle: 'Blood pressure over time',
+  measurementsSubtitle: 'BADIRA looks at your readings over time, not just today',
+  allReadings: 'All readings',
+  systolic: 'Systolic',
+  diastolic: 'Diastolic',
+  chartTableView: 'View as table',
+  chartDate: 'Date',
+  sourceHome: 'Home',
+  sourceClinic: 'Clinic',
+
+  // --- Profile view ---
+  profileTitle: 'Your pregnancy profile',
   profileSubtitle: 'Saved information BADIRA already knows about you',
   age: 'Age',
   years: 'years',
@@ -34,46 +64,13 @@ export const en = {
   previousPregnancy: 'Previous pregnancy',
   noPreeclampsiaBefore: 'No preeclampsia',
   chronicConditionsLabel: 'Chronic conditions',
-  chronicHypertension: 'Chronic hypertension',
   familyHistoryLabel: 'Family history',
   motherPreeclampsia: 'Mother had preeclampsia',
-  bmi: 'BMI',
   bmiUnit: 'kg/m²',
   symptomsLabel: 'Current symptoms',
   noSymptoms: 'None reported',
-
-  // --- Measurements ---
-  measurementsTitle: 'Recent Measurements',
-  measurementsSubtitle: 'BADIRA looks at your readings over time, not just today',
-  bloodPressure: 'Blood pressure',
-  systolic: 'Systolic',
-  diastolic: 'Diastolic',
-  mmhg: 'mmHg',
-  latest: 'Latest',
-  readingsCount: 'readings saved',
-  sourceHome: 'Home',
-  sourceClinic: 'Clinic',
-  chartTitle: 'Blood pressure over time',
-  chartTableView: 'View as table',
-  chartDate: 'Date',
-
-  // --- Freshness ---
-  lastUpdated: 'Profile last updated',
+  lastUpdated: 'Last updated',
   updatedToday: 'Today',
-
-  // --- How BADIRA uses the data ---
-  howItWorksTitle: 'How BADIRA uses this',
-  howItWorksBody:
-    'BADIRA combines your current and saved information to assess Risk, the Reliability of that assessment given what is known, and Time — how promptly professional assessment may be needed.',
-  riskLabel: 'Risk',
-  reliabilityLabel: 'Reliability',
-  timeLabel: 'Time',
-  noResultYet: 'No assessment has been run yet.',
-
-  // --- Actions ---
-  startAssessment: 'Start Assessment',
-  updateInformation: 'Update or add information',
-  addMeasurement: 'Add a new measurement',
 } as const
 
 /** Every dictionary must supply exactly these keys. */
