@@ -6,11 +6,17 @@ import { progressOf, trimesterOf, weeksRemaining } from '@/domain/gestation'
 
 const TRIMESTER_KEY = { 1: 'trimester1', 2: 'trimester2', 3: 'trimester3' } as const
 
+const SIZE = 190
+const STROKE = 13
+const RADIUS = (SIZE - STROKE) / 2
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+
 /**
- * The home screen's anchor: where this pregnancy is, right now.
+ * The home screen's centrepiece: where this pregnancy is, right now.
  *
- * Given the most typographic weight on the screen because Time is both the
- * user's primary context and one of BADIRA's three axes.
+ * Given the most space and the largest type on the screen — Time is both the
+ * user's primary context and one of BADIRA's three axes. Everything else on
+ * the screen is deliberately quieter than this.
  */
 export function GestationHero({
   age,
@@ -20,45 +26,61 @@ export function GestationHero({
   dueDate: string
 }) {
   const { t, language } = useLanguage()
-  const percent = Math.round(progressOf(age) * 100)
+  const progress = progressOf(age)
+  const percent = Math.round(progress * 100)
 
   return (
     <section className="hero">
-      <div className="hero__top">
-        <p className="hero__figure">
+      <div className="hero__ring">
+        <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} aria-hidden="true">
+          <circle
+            cx={SIZE / 2}
+            cy={SIZE / 2}
+            r={RADIUS}
+            className="hero__track"
+            fill="none"
+            strokeWidth={STROKE}
+          />
+          <circle
+            cx={SIZE / 2}
+            cy={SIZE / 2}
+            r={RADIUS}
+            className="hero__progress"
+            fill="none"
+            strokeWidth={STROKE}
+            strokeLinecap="round"
+            strokeDasharray={CIRCUMFERENCE}
+            strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
+            transform={`rotate(-90 ${SIZE / 2} ${SIZE / 2})`}
+          />
+        </svg>
+
+        <div
+          className="hero__readout"
+          role="progressbar"
+          aria-valuenow={percent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={t('progressLabel')}
+        >
           <span className="hero__week">{age.weeks}</span>
-          <span className="hero__unit">
-            {t('weeksWord')}
-            <em>
-              {/* Isolated: "+4" is sign-plus-digit with no strong character,
-                  so an RTL base direction would render it as "4+". */}
-              <bdi dir="ltr">+{age.days}</bdi> {t('daysWord')}
-            </em>
+          <span className="hero__weeks-label">{t('weeksWord')}</span>
+          <span className="hero__days">
+            <bdi dir="ltr">+{age.days}</bdi> {t('daysWord')}
           </span>
-        </p>
-        <span className="chip chip--accent">
-          {t(TRIMESTER_KEY[trimesterOf(age)] satisfies keyof Strings)}
-        </span>
+        </div>
       </div>
 
-      <div
-        className="rail"
-        role="progressbar"
-        aria-valuenow={percent}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label={t('progressLabel')}
-      >
-        <span className="rail__fill" style={{ inlineSize: `${percent}%` }} />
-        <span className="rail__tick" style={{ insetInlineStart: '32.5%' }} />
-        <span className="rail__tick" style={{ insetInlineStart: '67.5%' }} />
-      </div>
+      <p className="hero__trimester">
+        {t(TRIMESTER_KEY[trimesterOf(age)] satisfies keyof Strings)}
+      </p>
 
-      <div className="hero__foot">
+      <div className="hero__meta">
         <span>
           {weeksRemaining(age)} {t('weeksToGo')}
         </span>
-        <span className="hero__due">
+        <span className="hero__dot" aria-hidden="true" />
+        <span>
           {t('dueShort')} {formatFullDate(dueDate, language)}
         </span>
       </div>

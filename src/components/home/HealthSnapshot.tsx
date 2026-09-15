@@ -2,21 +2,22 @@ import { useNavigate } from 'react-router-dom'
 import type { BloodPressureReading } from '@/domain/types'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { Sparkline } from '@/components/ui/Sparkline'
+import { Chevron } from '@/components/ui/Chevron'
 
-type Chip = { key: string; label: string; tone: 'blush' | 'butter' | 'sage' }
+type Factor = { key: string; label: string; tone: 'blush' | 'butter' | 'sage' }
 
 /**
- * Health snapshot: the few saved facts most worth surfacing, as chips, plus
- * the latest reading. Everything else lives behind "View history" and the
- * profile view.
+ * Health snapshot — secondary to the gestation hero by design.
  *
- * Nothing here is scored or flagged — no reading is marked normal or high.
+ * The saved factors read as quiet tags and the latest reading as a single
+ * tappable row. Nothing here is scored, flagged or colour-coded by value;
+ * interpretation belongs to the assessment.
  */
 export function HealthSnapshot({
-  chips,
+  factors,
   readings,
 }: {
-  chips: Chip[]
+  factors: Factor[]
   readings: BloodPressureReading[]
 }) {
   const { t } = useLanguage()
@@ -25,62 +26,40 @@ export function HealthSnapshot({
 
   return (
     <section className="snapshot">
-      <header className="snapshot__head">
-        <h2 className="snapshot__title">{t('snapshotTitle')}</h2>
+      <div className="section-head">
+        <h2 className="section-head__title">{t('snapshotTitle')}</h2>
         <button
           type="button"
-          className="link-btn"
+          className="text-btn"
           onClick={() => navigate('/history')}
         >
           {t('viewHistory')}
-          <Chevron />
         </button>
-      </header>
+      </div>
 
-      <div className="snapshot__body">
-        <ul className="chips">
-        {chips.map((chip) => (
-          <li key={chip.key} className={`chip chip--${chip.tone}`}>
-            {chip.label}
-          </li>
-        ))}
+      <div className="snapshot__card">
+        <ul className="tags">
+          {factors.map((factor) => (
+            <li key={factor.key} className={`tag tag--${factor.tone}`}>
+              {factor.label}
+            </li>
+          ))}
         </ul>
 
         <button
           type="button"
-          className="bp-row"
+          className="list__row list__row--flush"
           onClick={() => navigate('/history')}
           aria-label={`${t('bloodPressure')} ${latest.systolic}/${latest.diastolic} ${t('mmhg')} — ${t('viewHistory')}`}
         >
-          <span className="bp-row__label">{t('bloodPressure')}</span>
-          <span className="bp-row__value" dir="ltr">
-            {latest.systolic}/{latest.diastolic}
-            <em>{t('mmhg')}</em>
-          </span>
+          <span className="list__label">{t('bloodPressure')}</span>
           <Sparkline values={readings.map((r) => r.systolic)} />
+          <span className="snapshot__value" dir="ltr">
+            {latest.systolic}/{latest.diastolic}
+          </span>
+          <Chevron />
         </button>
       </div>
     </section>
-  )
-}
-
-function Chevron() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      className="chevron"
-    >
-      <path
-        d="m6 4 4 4-4 4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   )
 }

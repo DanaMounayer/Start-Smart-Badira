@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { GestationHero } from '@/components/home/GestationHero'
 import { HealthSnapshot } from '@/components/home/HealthSnapshot'
-import { QuickAccess } from '@/components/home/QuickAccess'
+import { InfoList } from '@/components/home/InfoList'
 import { StartBlock } from '@/components/home/StartBlock'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { useSession } from '@/app/session'
@@ -22,22 +22,15 @@ export function Home() {
   if (!profile) return <GuestHome />
 
   const readings = profile.bloodPressureReadings
-  const indicators = [
-    t('chipProfileSaved'),
-    isToday(profile.lastUpdatedAt) ? t('chipUpdatedToday') : t('chipUpdatedRecently'),
-  ]
 
   return (
     <>
-      <h1 className="page-greeting">{t('greeting')}</h1>
+      <h1 className="large-title">{t('greeting')}</h1>
 
-      <GestationHero
-        age={profile.gestationalAge}
-        dueDate={profile.estimatedDueDate}
-      />
+      <GestationHero age={profile.gestationalAge} dueDate={profile.estimatedDueDate} />
 
       <HealthSnapshot
-        chips={[
+        factors={[
           { key: 'htn', label: t('chronicHypertension'), tone: 'blush' as const },
           { key: 'family', label: t('familyHistoryChip'), tone: 'butter' as const },
           { key: 'bmi', label: `${t('bmi')} ${profile.bmi}`, tone: 'sage' as const },
@@ -45,40 +38,38 @@ export function Home() {
         readings={readings}
       />
 
-      <QuickAccess
-        tiles={[
-          { to: '/profile', label: 'navProfile', meta: t('navProfileMeta'), icon: 'profile' },
-          {
-            to: '/history',
-            label: 'navHistory',
-            meta: `${readings.length} ${t('chipRecentReadings')}`,
-            icon: 'history',
-          },
-          {
-            to: '/assessments',
-            label: 'navAssessments',
-            meta: t('noAssessmentsYet'),
-            icon: 'assessments',
-          },
-        ]}
-      />
+      <section className="group">
+        <InfoList
+          rows={[
+            { to: '/profile', label: 'navProfile', value: t('navProfileMeta') },
+            {
+              to: '/history',
+              label: 'navHistory',
+              value: `${readings.length} ${t('chipRecentReadings')}`,
+            },
+            { to: '/assessments', label: 'navAssessments', value: t('noAssessmentsYet') },
+          ]}
+        />
+        <button
+          type="button"
+          className="text-btn text-btn--block"
+          onClick={() => navigate('/profile/update')}
+        >
+          {t('updateInformation')}
+        </button>
+      </section>
 
       <StartBlock
-        indicators={indicators}
+        indicators={[
+          t('chipProfileSaved'),
+          isToday(profile.lastUpdatedAt) ? t('chipUpdatedToday') : t('chipUpdatedRecently'),
+        ]}
         reliabilityNote={{
           text: t('reliabilityHint'),
           action: t('reliabilityHintAction'),
           to: '/profile/update',
         }}
       />
-
-      <button
-        type="button"
-        className="btn btn--ghost btn--block"
-        onClick={() => navigate('/profile/update')}
-      >
-        {t('updateInformation')}
-      </button>
     </>
   )
 }
@@ -90,14 +81,14 @@ function GuestHome() {
 
   return (
     <>
-      <h1 className="page-greeting">{t('greetingGuest')}</h1>
+      <h1 className="large-title">{t('greetingGuest')}</h1>
 
-      <section className="hero hero--empty">
-        <p className="hero__empty-title">{t('guestHeroTitle')}</p>
-        <p className="muted muted--small">{t('guestHeroBody')}</p>
+      <section className="empty-hero">
+        <p className="empty-hero__title">{t('guestHeroTitle')}</p>
+        <p className="empty-hero__body">{t('guestHeroBody')}</p>
         <button
           type="button"
-          className="btn btn--ghost"
+          className="btn btn--tinted"
           onClick={() => navigate('/profile/update')}
         >
           {t('addMyInformation')}
@@ -113,11 +104,7 @@ function GuestHome() {
         }}
       />
 
-      <button
-        type="button"
-        className="btn btn--ghost btn--block"
-        onClick={() => navigate('/welcome')}
-      >
+      <button type="button" className="text-btn text-btn--block" onClick={() => navigate('/welcome')}>
         {t('signIn')}
       </button>
     </>

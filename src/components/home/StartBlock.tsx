@@ -2,16 +2,14 @@ import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '@/i18n/LanguageProvider'
 
 /**
- * The primary action, with the check-in context that used to occupy a large
- * dark card folded in beside it — the readiness of the saved profile matters
- * at the moment of starting, not as a headline.
+ * Primary action, with the readiness of the saved profile stated beside it
+ * rather than as a headline card, and a gentle note about what is missing.
  */
 export function StartBlock({
   indicators,
   reliabilityNote,
 }: {
   indicators: string[]
-  /** Optional gentle prompt about information that would improve Reliability. */
   reliabilityNote?: { text: string; action: string; to: string }
 }) {
   const { t } = useLanguage()
@@ -19,28 +17,18 @@ export function StartBlock({
 
   return (
     <section className="start">
-      {indicators.length > 0 && (
-        <ul className="start__indicators">
-          {indicators.map((label) => (
-            <li key={label}>{label}</li>
-          ))}
-        </ul>
-      )}
-
       {reliabilityNote && (
-        <p className="reliability-note">
-          <InfoDot />
-          <span>
-            {reliabilityNote.text}{' '}
-            <button
-              type="button"
-              className="link-inline"
-              onClick={() => navigate(reliabilityNote.to)}
-            >
-              {reliabilityNote.action}
-            </button>
+        <button
+          type="button"
+          className="note"
+          onClick={() => navigate(reliabilityNote.to)}
+        >
+          <InfoGlyph />
+          <span className="note__text">
+            {reliabilityNote.text}
+            <strong>{reliabilityNote.action}</strong>
           </span>
-        </p>
+        </button>
       )}
 
       <button
@@ -50,17 +38,23 @@ export function StartBlock({
       >
         {t('startAssessment')}
       </button>
-      <p className="start__support">{t('ctaSupport')}</p>
+
+      <p className="start__caption">
+        {indicators.length > 0 && (
+          <span className="start__ready">{indicators.join(' · ')}</span>
+        )}
+        {t('ctaSupport')}
+      </p>
     </section>
   )
 }
 
-function InfoDot() {
+function InfoGlyph() {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6.4" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M8 7.2v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="8" cy="4.9" r="0.9" fill="currentColor" />
+    <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <circle cx="9" cy="9" r="7.3" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M9 8.1v4.3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="9" cy="5.6" r="1" fill="currentColor" />
     </svg>
   )
 }

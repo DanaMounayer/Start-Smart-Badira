@@ -1,9 +1,13 @@
 /**
  * BADIRA design tokens.
  *
- * Palette taken from the BADIRA website: a deep aubergine anchor, warm cream
- * and blush-lilac grounds, and muted pastel accents. Direction-agnostic —
- * stylesheets use logical properties so one rule set serves LTR and RTL.
+ * Palette from the BADIRA website — deep aubergine, warm cream, blush-lilac,
+ * muted pastels. The system geometry follows premium iOS conventions: large
+ * radii, soft surfaces separated by contrast rather than borders, and
+ * elevation used sparingly.
+ *
+ * Direction-agnostic: stylesheets use logical properties so one rule set
+ * serves LTR and RTL.
  */
 :root {
   /* Brand — deep aubergine */
@@ -13,33 +17,34 @@
   --c-plum-500: #6B5780;
   --c-plum-300: #A796B5;
 
-  /* Pastel accents (from the Risk / Reliability / Time cards) */
-  --c-blush: #F0DADA;
-  --c-butter: #EDE8C6;
-  --c-sage: #D9E6D8;
-  --c-lilac: #EDE4EA;
+  /* Muted accents */
+  --c-blush: #F3E3E3;
+  --c-butter: #F0ECD2;
+  --c-sage: #E1EBE0;
+  --c-lilac: #EFE7EC;
 
   /* Grounds & ink */
-  --c-bg: #F6F2EE;
+  --c-bg: #F7F4F1;
   --c-surface: #FFFFFF;
-  --c-surface-alt: #EFE9EE;
-  --c-line: #E5DCE3;
-  --c-ink: #2B2331;
-  --c-ink-muted: #6F6577;
+  --c-surface-sunken: #F0EAEE;
+  --c-ink: #241D2A;
+  --c-ink-secondary: #5E5566;
+  --c-ink-tertiary: #8D8394;
+  /* Hairline separators, inset iOS-style. Never a full card border. */
+  --c-separator: rgb(36 29 42 / 8%);
 
-  /* Roles that flip between modes */
+  /* Roles */
   --c-primary: var(--c-plum-700);
-  --c-on-primary: #FBF8F5;
-  --c-hero-surface: var(--c-plum-800);
-  --c-hero-ink: #F4EFF4;
-  --c-hero-ink-muted: #BCADC6;
+  --c-on-primary: #FCFAF8;
+  --c-tint: var(--c-plum-500);
+  --c-track: rgb(59 47 69 / 10%);
   --c-spark: var(--c-plum-500);
 
-  /* History-chart series. Validated for CVD separation and contrast in both
+  /* History-chart series — validated for CVD separation and contrast in both
      modes; never used to imply a risk level. */
   --c-series-1: #7A4CA8;
   --c-series-2: #B45A2B;
-  --c-grid: #E5DCE3;
+  --c-grid: rgb(36 29 42 / 8%);
 
   /* Spacing */
   --s-1: 4px;
@@ -48,24 +53,28 @@
   --s-4: 16px;
   --s-5: 20px;
   --s-6: 28px;
+  --s-7: 40px;
 
-  /* Radii & elevation */
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 22px;
+  /* Radii — iOS continuous-corner scale */
+  --r-row: 14px;
+  --r-card: 22px;
+  --r-hero: 30px;
   --r-pill: 999px;
-  --shadow-card: 0 1px 2px rgb(43 35 49 / 5%), 0 6px 20px rgb(43 35 49 / 5%);
-  --shadow-cta: 0 8px 22px rgb(59 47 69 / 26%);
+
+  /* Elevation — one soft shadow, used sparingly */
+  --shadow-soft: 0 1px 3px rgb(36 29 42 / 3%), 0 10px 30px rgb(36 29 42 / 5%);
+  --shadow-cta: 0 4px 16px rgb(59 47 69 / 22%);
 
   /* Type */
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-arabic: 'Noto Kufi Arabic', 'Segoe UI', Tahoma, sans-serif;
-  /* Editorial serif for display text, echoing the website's headings.
-     System-resident only — no webfont fetch. */
-  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-arabic: 'SF Arabic', 'Noto Kufi Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
+    serif;
 
   /* Layout */
   --app-max-width: 430px;
+  --gutter: 20px;
 }
 
 [dir='rtl'] {
@@ -75,29 +84,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --c-bg: #1B1522;
-    --c-surface: #261F2F;
-    --c-surface-alt: #2F2739;
-    --c-line: #3A3145;
-    --c-ink: #F1EBF1;
-    --c-ink-muted: #A79DAE;
+    --c-bg: #141019;
+    --c-surface: #1F1926;
+    --c-surface-sunken: #2A2233;
+    --c-ink: #F3EEF3;
+    --c-ink-secondary: #B3A9BA;
+    --c-ink-tertiary: #857B8D;
+    --c-separator: rgb(243 238 243 / 10%);
 
-    --c-primary: #6B5780;
-    --c-on-primary: #FBF8F5;
-    --c-hero-surface: #2F2542;
-    --c-hero-ink: #F4EFF4;
-    --c-hero-ink-muted: #B4A6BE;
+    --c-primary: #7A6490;
+    --c-on-primary: #FCFAF8;
+    --c-tint: #B9A6C9;
+    --c-track: rgb(243 238 243 / 12%);
     --c-spark: var(--c-plum-300);
+
     --c-series-1: #9B6BC9;
     --c-series-2: #C8763F;
-    --c-grid: #3A3145;
+    --c-grid: rgb(243 238 243 / 10%);
 
-    --c-blush: #4A3439;
-    --c-butter: #46432C;
-    --c-sage: #35422F;
-    --c-lilac: #382E3D;
+    --c-blush: #3E2C33;
+    --c-butter: #3B3826;
+    --c-sage: #2C3829;
+    --c-lilac: #2E2637;
 
-    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%), 0 6px 20px rgb(0 0 0 / 28%);
-    --shadow-cta: 0 8px 22px rgb(0 0 0 / 40%);
+    --shadow-soft: 0 1px 3px rgb(0 0 0 / 30%), 0 10px 30px rgb(0 0 0 / 28%);
+    --shadow-cta: 0 4px 16px rgb(0 0 0 / 40%);
   }
 }
