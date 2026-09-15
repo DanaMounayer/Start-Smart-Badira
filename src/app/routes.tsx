@@ -1,18 +1,28 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from '@/components/AppShell'
-import { Welcome } from '@/screens/Welcome'
+import { Dashboard } from '@/screens/Dashboard'
+import { NotBuiltYet } from '@/screens/NotBuiltYet'
 
 /**
- * Route table. The three product screens will be added here:
- *   /profile  -> pregnancy profile / dashboard
- *   /assess   -> adaptive predictive assessment
- *   /result   -> Risk x Reliability x Time result
+ * Route table.
+ *
+ * `/` is Screen 1. The adaptive assessment (Screen 2) and the
+ * Risk x Reliability x Time result (Screen 3) take over their placeholder
+ * routes when they are built.
  */
 export function AppRoutes() {
   return (
     <AppShell>
       <Routes>
-        <Route path="/" element={<Welcome />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/assessment"
+          element={<NotBuiltYet titleKey="startAssessment" />}
+        />
+        <Route
+          path="/profile/update"
+          element={<NotBuiltYet titleKey="updateInformation" />}
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AppShell>

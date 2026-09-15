@@ -180,3 +180,392 @@ button {
   color: var(--c-text-muted);
   font-size: 14px;
 }
+
+/* ============================================================
+   Dashboard (Screen 1)
+   ============================================================ */
+
+.greeting {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.greeting__avatar {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--c-brand-500), var(--c-brand-900));
+  color: #fff;
+  font-size: 19px;
+  font-weight: 650;
+}
+
+.greeting__name {
+  font-size: 23px;
+  font-weight: 680;
+}
+
+.greeting__status {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--c-text-muted);
+  font-size: 13px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-text-muted);
+  flex: none;
+}
+
+.dot--live {
+  background: var(--c-brand-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-brand-500) 22%, transparent);
+}
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-block-end: var(--s-2);
+}
+
+.card--quiet {
+  background: var(--c-surface-alt);
+  box-shadow: none;
+}
+
+.muted--small {
+  font-size: 13px;
+}
+
+/* --- Gestation hero --- */
+.gestation {
+  gap: var(--s-4);
+}
+
+.gestation__main {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.gestation__ring {
+  position: relative;
+  flex: none;
+  width: 120px;
+  height: 120px;
+}
+
+.gestation__ring-track {
+  stroke: var(--c-surface-alt);
+  stroke-width: 10;
+}
+
+.gestation__ring-value {
+  stroke: var(--c-brand-500);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 600ms ease;
+}
+
+.gestation__ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.gestation__weeks {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.gestation__days {
+  margin-top: 2px;
+  color: var(--c-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.gestation__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gestation__eyebrow {
+  color: var(--c-text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gestation__trimester {
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.gestation__due {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--c-border);
+  font-size: 14px;
+}
+
+/* --- Profile summary --- */
+.profile-grid {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-grid__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.profile-grid__row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.profile-grid dt {
+  color: var(--c-text-muted);
+  font-size: 14px;
+  flex: none;
+}
+
+.profile-grid dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: end;
+}
+
+.profile-grid dd.is-absent {
+  font-weight: 500;
+  color: var(--c-text-muted);
+}
+
+/* --- Measurements --- */
+.measure__latest {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.measure__value {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+
+.measure__unit {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+}
+
+.pill--quiet {
+  background: var(--c-surface-alt);
+  color: var(--c-text-muted);
+}
+
+.reading-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.reading-list__item {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s-3);
+  padding-block: var(--s-2);
+  border-top: 1px solid var(--c-border);
+  font-size: 14px;
+}
+
+.reading-list__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.reading-list__source {
+  font-size: 12px;
+  text-align: end;
+}
+
+/* --- Chart --- */
+.chart {
+  margin: 0;
+}
+
+.chart__svg {
+  display: block;
+  overflow: visible;
+  /* Time runs left-to-right in both languages; this also keeps `text-anchor`
+     start/end resolving the same way regardless of page direction. */
+  direction: ltr;
+}
+
+.chart__grid {
+  stroke: var(--c-grid);
+  stroke-width: 1;
+}
+
+.chart__crosshair {
+  stroke: var(--c-border);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.chart__tick {
+  fill: var(--c-text-muted);
+  font-size: 10px;
+  text-anchor: end;
+}
+
+.chart__tick--x {
+  text-anchor: middle;
+}
+
+.chart__direct-label {
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.chart__legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  font-size: 12px;
+  color: var(--c-text-muted);
+}
+
+.chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.chart__legend-item i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.chart__readout {
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart__table {
+  margin-top: var(--s-3);
+  font-size: 13px;
+}
+
+.chart__table summary {
+  color: var(--c-text-muted);
+  cursor: pointer;
+}
+
+.chart__table table {
+  width: 100%;
+  margin-top: var(--s-2);
+  border-collapse: collapse;
+}
+
+.chart__table th,
+.chart__table td {
+  padding: var(--s-1) var(--s-2);
+  border-bottom: 1px solid var(--c-border);
+  text-align: start;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart__table th {
+  color: var(--c-text-muted);
+  font-weight: 500;
+}
+
+/* --- Model explainer --- */
+.triad {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  margin-block: var(--s-1);
+}
+
+.triad__axis {
+  padding: var(--s-1) var(--s-3);
+  border-radius: 999px;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.triad__times {
+  color: var(--c-text-muted);
+}
+
+/* --- Freshness --- */
+.last-updated {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--c-text-muted);
+  font-size: 13px;
+}
+
+/* --- Actions --- */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-1);
+}
+
+.btn--primary {
+  width: 100%;
+  font-size: 16px;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--c-brand-700) 26%, transparent);
+}
+
+.btn--secondary {
+  width: 100%;
+  background: transparent;
+  border-color: var(--c-border);
+  color: var(--c-text);
+  font-weight: 550;
+}

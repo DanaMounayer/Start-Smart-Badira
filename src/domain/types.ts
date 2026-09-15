@@ -5,27 +5,48 @@
  * They deliberately contain no clinical thresholds or scoring rules.
  */
 
+/** Gestational age expressed the way clinicians and users say it: "12w+4d". */
+export type GestationalAge = {
+  weeks: number
+  days: number
+}
+
+/** A blood-pressure reading. Both values share one unit (mmHg). */
+export type BloodPressureReading = {
+  id: string
+  systolic: number
+  diastolic: number
+  recordedAt: string
+  /** Where the reading came from, e.g. self-measured at home. */
+  source: 'home' | 'clinic'
+}
+
+/** A previous pregnancy and what is known about it. */
+export type PreviousPregnancy = {
+  id: string
+  year: number | null
+  /** Whether preeclampsia occurred. `null` means not known. */
+  hadPreeclampsia: boolean | null
+}
+
 /** Everything the prototype may know about a user's pregnancy. */
 export type PregnancyProfile = {
   id: string
-  displayName: string
-  /** Completed weeks of gestation, when known. */
-  gestationalWeek: number | null
-  medicalHistory: string[]
-  previousPregnancies: string[]
+  firstName: string
+  age: number
+  /** 1 = first pregnancy, 2 = second, and so on. */
+  pregnancyNumber: number
+  gestationalAge: GestationalAge
+  /** Estimated due date, ISO date string. */
+  estimatedDueDate: string
+  bmi: number | null
+  chronicConditions: string[]
   familyHistory: string[]
-  measurements: Measurement[]
+  previousPregnancies: PreviousPregnancy[]
+  bloodPressureReadings: BloodPressureReading[]
+  /** Symptoms the user has reported. Empty means none reported. */
   reportedSymptoms: string[]
   lastUpdatedAt: string
-}
-
-/** A single recorded value, e.g. a blood-pressure reading. */
-export type Measurement = {
-  id: string
-  kind: string
-  value: number
-  unit: string
-  recordedAt: string
 }
 
 /** How confident the system is allowed to be, given the inputs it has. */
