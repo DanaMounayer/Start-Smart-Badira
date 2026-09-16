@@ -89,8 +89,6 @@ export type InfluentialFactor = {
 
 export type BadiraResult = {
   id: string
-  /** True while this is a prototype result rather than a clinical one. */
-  demo: boolean
   risk: RiskReading
   reliability: ReliabilityReading
   time: TimeContext

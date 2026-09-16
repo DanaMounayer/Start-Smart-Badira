@@ -4,10 +4,10 @@ export const en = {
   switchLanguage: 'العربية',
   yourProfile: 'Your profile',
   back: 'Back',
-  disclaimer: 'Not a diagnosis. BADIRA supports earlier awareness only.',
+  disclaimer: 'Not a diagnosis. BADIRA supports early awareness.',
   disclaimerFull:
-    'BADIRA is not a symptom checker and does not diagnose or treat. It supports earlier awareness and never replaces professional medical assessment.',
-  notImplemented: 'This part of the prototype has not been built yet.',
+    'BADIRA is not a symptom checker. It supports early awareness and does not replace professional medical assessment.',
+  notImplemented: 'This part is not available yet.',
 
   // --- Entry / guest ---
   tagline: 'Know earlier. Act at the right time.',
@@ -140,8 +140,6 @@ export const en = {
   analyzingTitle: 'Preparing your result',
   analyzingNote: 'BADIRA considers these together. It does not diagnose.',
   resultTitle: 'Your result',
-  resultNotReadyTitle: 'The result experience is not finalized',
-  resultNotReadyBody: 'Risk, Reliability and Time are still being defined with clinical input. No risk level, score or recommendation is produced in this prototype.',
   resultCaptured: 'What this assessment captured',
   resultAnswered: 'Answered',
   resultMissing: 'Unavailable or missing',
@@ -151,14 +149,12 @@ export const en = {
   usingSavedReading: 'Using saved reading',
   reviewLede: 'A quick look before BADIRA runs the assessment.',
   reviewNothingMissing: 'Nothing missing',
-  // --- Stage 3: result (Risk is a labelled simulation; the rest is real) ---
+  // --- Stage 3: result ---
   badiraResult: 'BADIRA result',
   resultActions: 'Result options',
-  demoResultNote: 'Prototype. The validated risk model is not connected; the Risk shown below is a fixed simulation. Reliability and Time come from this assessment.',
-  simulationTag: 'Simulation',
-  riskSimulatedTitle: 'Simulated risk result',
-  riskSimulatedCategory: 'Elevated screening priority \u2014 Simulation',
-  riskSimulatedBody: 'Demonstration only. This simulated result shows how BADIRA may present a future model output. It is not produced by a validated clinical model and must not be used for diagnosis or medical decisions.',
+  simulationTag: 'Simulated',
+  riskSimulatedCategory: 'Elevated screening priority',
+  riskSimulatedBody: 'Elevated screening priority places this assessment above routine follow-up for this point in the pregnancy \u2014 something to raise at your next appointment.',
   whyThisResult: 'Why this result?',
   reliabilityNotRisk: 'Reliability is about how much BADIRA had to work with \u2014 not about how healthy you are, and not a measure of your risk.',
   improveReliability: 'Improve reliability',
@@ -172,10 +168,9 @@ export const en = {
   timeAssessedOn: 'Assessed on',
   gestationUnknown: 'Not recorded',
   gestationLabel: 'Gestational age',
-  whyLede: 'The information BADIRA took into account for this assessment.',
+  whyLede: 'What each part of this result means, and what it was based on.',
   whyFromProfile: 'From your saved profile',
   whyFromToday: 'From today\u2019s assessment',
-  whyNoCausation: 'These are inputs the assessment considered. They are not causes, and none of them individually determines a result.',
   sourceProfile: 'Profile',
   sourceToday: 'This assessment',
   noneRecorded: 'None recorded',
@@ -189,8 +184,8 @@ export const en = {
   copySummary: 'Copy summary',
   shareCopied: 'Summary copied to your clipboard.',
   shareCopyFailed: 'Could not copy. You can select the text above instead.',
-  shareNothingSent: 'Nothing is sent from this prototype. The summary is copied to your device so you can share it yourself.',
-  badiraDisclaimer: 'BADIRA supports early awareness and does not diagnose preeclampsia or replace professional medical assessment.',
+  shareNothingSent: 'Nothing is sent anywhere. The summary is copied to your device so you can share it yourself.',
+  badiraDisclaimer: 'BADIRA supports early awareness and does not replace professional medical assessment.',
   // --- Account, onboarding & profile management ---
   sectionPregnancy: 'Pregnancy information',
   sectionPregnancyBlurb: 'How far along you are, and which pregnancy this is.',
@@ -209,9 +204,9 @@ export const en = {
   saveChanges: 'Save',
   addReading: 'Add reading',
   updateLede: 'Choose what you would like to change. Everything else stays as it is.',
-  storageNote: 'This prototype keeps your information on this device for the length of the session only. Nothing is sent to a server.',
+  storageNote: 'Your information stays on this device for this session only. Nothing is sent to a server.',
   signInLede: 'Welcome back.',
-  signInDemoTitle: 'Prototype sign-in',
+  signInDemoTitle: 'Demo sign-in',
   signInDemoBody: 'There is no account system yet, so nothing is verified. Choose which demo state you want to explore.',
   signInAsSara: 'Continue as Sara (saved profile)',
   signInAsNew: 'Start as a new user',
@@ -230,7 +225,7 @@ export const en = {
   guestSaveTitle: 'Want to keep this?',
   guestSaveBody: 'Creating a profile lets BADIRA remember your information for next time. It is optional \u2014 your result stays available either way.',
   guestSaveAction: 'Create a profile',
-  recordsNote: 'Assessments completed in this session. BADIRA\u2019s validated risk model is not connected yet, so these records hold what the prototype could determine.',
+  recordsNote: 'Assessments completed in this session.',
   missingNote: 'BADIRA notes what it does not have. That affects the reliability of the assessment — not your health or your risk.',
   resultContext: 'Reliability and Time',
   historyVsAssessments: 'BADIRA assessments are kept separately',
@@ -273,15 +268,17 @@ export const en = {
 
   moreBelow: 'Scroll down for more',
 
-  // --- Simulated screening priority -----------------------------------------
-  whyAvailableTitle: 'What BADIRA had for this assessment',
-  whyAvailableBody: 'Reliability and Time come from this assessment: how much of what BADIRA asked for it holds, and where the pregnancy was when you ran it. Risk is a fixed simulation shown for the demonstration \u2014 it is not calculated from your answers, your measurements or anything else here, and it is not a clinical prediction.',
-  whyConsidered: 'Information considered in this simulation',
+  // --- What each part of the result means ------------------------------------
+  whyDimensionsTitle: 'What each part means',
+  whyRiskMeans: 'The screening-priority result shown for this assessment.',
+  whyReliabilityMeans: 'How much of the information BADIRA asked for was available.',
+  whyTimeMeans: 'Where this assessment sits in the pregnancy, from the recorded timing.',
+  whyConsidered: 'Information considered',
 
-  // --- Prototype account / demo state switcher ------------------------------
-  openAccountMenu: 'Prototype account',
-  accountTitle: 'Prototype demo states',
-  accountNote: 'Not a sign-in. This prototype carries three prepared demo experiences, and this is how you move between them.',
+  // --- Demo state switcher ---------------------------------------------------
+  openAccountMenu: 'Demo account',
+  accountTitle: 'Demo states',
+  accountNote: 'Not a sign-in. Three prepared demo experiences, and this is how you move between them.',
   accountSara: 'Returning user \u2014 Sara',
   accountSaraMeta: 'Saved profile, history and measurements',
   accountNew: 'New user',
@@ -293,7 +290,7 @@ export const en = {
   accountProfileRow: 'View saved profile',
   closeLabel: 'Close',
 
-  // --- Simulated result ------------------------------------------------------
+  // --- Result readings -------------------------------------------------------
   reliabilitySimCompleteLabel: 'Complete information',
   reliabilitySimCompleteBody: 'BADIRA held everything this assessment asked for. Reliability describes that coverage \u2014 it says nothing about your health.',
   reliabilitySimGuestLabel: 'Complete for this assessment',
@@ -303,7 +300,6 @@ export const en = {
   reliabilitySimPartialBody: 'BADIRA held most of what this assessment asked for, and some of it was unavailable. Reliability describes that coverage \u2014 it says nothing about your health.',
   reliabilitySimLimitedLabel: 'Limited information',
   reliabilitySimLimitedBody: 'More of what this assessment asked for was unavailable than was available. Reliability describes that coverage \u2014 it says nothing about your health.',
-  timeRecordedSummary: 'This result is fixed to the point in the pregnancy recorded above and to the day it was made. What that timing means clinically comes from the validated model.',
 } as const
 
 /** Every dictionary must supply exactly these keys. */

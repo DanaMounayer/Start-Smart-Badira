@@ -4,6 +4,9 @@ import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
 import { COVERAGE_COPY, RISK_COPY } from '@/domain/result/copy'
+import { trimesterOf } from '@/domain/gestation'
+
+const TRIMESTER_KEY = { 1: 'trimester1', 2: 'trimester2', 3: 'trimester3' } as const
 
 /**
  * Detailed report — readable by the woman and by a clinician.
@@ -27,8 +30,6 @@ export function ResultReport() {
 
   return (
     <SubScreen title={t('detailedReport')} backTo={`/result/${id}`}>
-      {result.demo && <p className="demo-note">{t('demoResultNote')}</p>}
-
       <dl className="report">
         <Row label={t('reportDate')} value={formatFullDate(result.time.assessedAt, language)} />
         <Row
@@ -47,10 +48,10 @@ export function ResultReport() {
           label={t('reliabilityLabel')}
           value={t(COVERAGE_COPY[result.reliability.coverage].labelKey)}
         />
+        {/* Time, as a reading rather than a paragraph about one. */}
         <Row
           label={t('timeLabel')}
-          value={t('timeRecordedSummary')}
-          block
+          value={age ? t(TRIMESTER_KEY[trimesterOf(age)]) : t('gestationUnknown')}
         />
       </dl>
 
@@ -60,9 +61,7 @@ export function ResultReport() {
         items={unavailable.map((i) => t(i.labelKey))}
         emptyLabel={t('reviewNothingMissing')}
       />
-      {/* The simulation weighs nothing, so there is no ranked list to show and
-          no "awaiting model" to fall back to: the report names what was
-          considered, which is the whole of what the prototype used. */}
+      {/* Nothing is ranked, so the report names what was considered. */}
       <ReportList
         label={t('whyConsidered')}
         items={

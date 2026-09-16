@@ -5,16 +5,16 @@ import { SubScreen } from '@/components/SubScreen'
 import { InfoGroup } from '@/components/result/InfoGroup'
 
 /**
- * "Why this result?" — model transparency.
+ * "Why this result?"
  *
- * Wording is deliberately non-causal: this screen names information that the
- * assessment took into account, never reasons the user "is at risk".
+ * Says what each of the three readings on the result means, then shows the
+ * information the assessment had behind it. Wording is deliberately
+ * non-causal: this screen names what was taken into account, never reasons
+ * the user "is at risk".
  *
- * `result.factors` stays empty in the prototype: the simulated risk state is
- * not calculated from the answers, so there is nothing weighted to rank, and
- * inventing one would assert a cause. The screen explains that and shows the
- * information BADIRA held instead — which is factual. The ranked-factor list
- * appears as soon as a validated model supplies one.
+ * `result.factors` carries a model's own explanation output. While it is
+ * empty there is nothing ranked to show, so the screen explains the three
+ * readings instead; the ranked list appears here as soon as one is supplied.
  */
 export function ResultWhy() {
   const { t } = useLanguage()
@@ -51,20 +51,27 @@ export function ResultWhy() {
           </ul>
         </section>
       ) : (
-        <section className="notice">
-          <p className="notice__title">
-            {t('whyAvailableTitle')}
-          </p>
-          <p className="notice__body">
-            {t('whyAvailableBody')}
-          </p>
+        <section className="info-group">
+          <h2 className="eyebrow">{t('whyDimensionsTitle')}</h2>
+          <dl className="report">
+            <div className="report__row report__row--block">
+              <dt>{t('riskLabel')}</dt>
+              <dd>{t('whyRiskMeans')}</dd>
+            </div>
+            <div className="report__row report__row--block">
+              <dt>{t('reliabilityLabel')}</dt>
+              <dd>{t('whyReliabilityMeans')}</dd>
+            </div>
+            <div className="report__row report__row--block">
+              <dt>{t('timeLabel')}</dt>
+              <dd>{t('whyTimeMeans')}</dd>
+            </div>
+          </dl>
         </section>
       )}
 
       <InfoGroup label={t('whyFromProfile')} items={fromProfile} />
       <InfoGroup label={t('whyFromToday')} items={fromToday} />
-
-      <p className="fineprint">{t('whyNoCausation')}</p>
     </SubScreen>
   )
 }

@@ -1520,13 +1520,6 @@ button {
   gap: var(--s-2);
 }
 
-/* The prototype note is transparency, not decoration: it stays, but sits as a
-   compact line rather than a block of prose. */
-.demo-note {
-  font-size: 12px;
-  line-height: 1.4;
-  padding: 9px var(--s-3);
-}
 
 .result__eyebrow {
   color: var(--c-ink-tertiary);
@@ -1561,14 +1554,6 @@ button {
   color: var(--c-primary);
 }
 
-.demo-note {
-  padding: 10px var(--s-4);
-  border-radius: var(--r-row);
-  background: var(--c-surface-sunken);
-  color: var(--c-ink-secondary);
-  font-size: 12.5px;
-  line-height: 1.45;
-}
 
 /* --- Risk: the centre of gravity --- */
 
@@ -1584,11 +1569,26 @@ button {
 }
 
 .risk__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
   color: var(--c-ink-secondary);
   font-size: 13px;
   font-weight: 640;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* Said once, beside the axis, and nowhere else on the card. */
+.risk__tag {
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-sunken);
+  color: var(--c-ink-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .risk__head {
@@ -2569,24 +2569,6 @@ button {
   user-select: none;
 }
 
-/* The simulated reading is two lines: what this is, then what it says. The
-   first sits back so the demonstration output below it reads as the output,
-   and neither is allowed to look like a finding. */
-.risk--simulated .risk__headline {
-  color: var(--c-ink-secondary);
-  font-size: 19px;
-}
-
-.risk__category {
-  /* Closer to the headline it belongs to than to the copy beneath it. */
-  margin-top: calc(-1 * var(--s-2));
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 580;
-  line-height: 1.22;
-  letter-spacing: -0.022em;
-  text-wrap: balance;
-}
 
 /* --- Scroll cue -----------------------------------------------------------
    A hint that the screen continues, pinned to the bottom of whatever is

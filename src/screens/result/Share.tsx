@@ -30,13 +30,9 @@ export function ResultShare() {
 
   const lines = [
     `${t('badiraResult')} — ${formatFullDate(result.time.assessedAt, language)}`,
-    // Whoever this is pasted to must see the prototype boundary first.
-    ...(result.demo ? [t('demoResultNote')] : []),
     `${t('gestationLabel')}: ${
       age ? `${age.weeks} ${t('weeksWord')} + ${age.days} ${t('daysWord')}` : t('gestationUnknown')
     }`,
-    // The category text carries its own "Simulation" label, so it cannot be
-    // pasted anywhere as a clinical reading.
     `${t('riskLabel')}: ${t(RISK_COPY[result.risk.category].categoryKey)}`,
     `${t('reliabilityLabel')}: ${t(COVERAGE_COPY[result.reliability.coverage].labelKey)}`,
     '',

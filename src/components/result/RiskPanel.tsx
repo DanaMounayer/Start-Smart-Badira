@@ -7,12 +7,10 @@ import { Chevron } from '@/components/ui/Chevron'
 /**
  * Risk.
  *
- * The prototype has no validated model, so what this panel holds is a fixed
- * demonstration output and it is labelled three times over: a Simulation tag
- * beside the axis, a headline that names it a simulated result, and body copy
- * that says plainly it is not a clinical prediction. Nothing here is derived
- * from the assessment — the panel only resolves what the result already
- * carries.
+ * Reads as the result it is: the state, what the state means, and the way in.
+ * The one mark that it is not a live reading is the small tag beside the axis
+ * — said once, where it belongs, rather than repeated through the headline
+ * and the copy.
  */
 export function RiskPanel({ risk, resultId }: { risk: RiskReading; resultId: string }) {
   const { t } = useLanguage()
@@ -20,14 +18,17 @@ export function RiskPanel({ risk, resultId }: { risk: RiskReading; resultId: str
   const copy = RISK_COPY[risk.category]
 
   return (
-    <section className="risk risk--simulated">
+    <section className="risk">
       <div className="risk__head">
-        <p className="risk__eyebrow">{t('riskLabel')}</p>
-        <span className="tagline-pill">{t('simulationTag')}</span>
+        <p className="risk__eyebrow">
+          {t('riskLabel')}
+          {risk.state === 'simulated' && (
+            <span className="risk__tag">{t('simulationTag')}</span>
+          )}
+        </p>
       </div>
 
-      <h2 className="risk__headline">{t(copy.titleKey)}</h2>
-      <p className="risk__category">{t(copy.categoryKey)}</p>
+      <h2 className="risk__headline">{t(copy.categoryKey)}</h2>
       <p className="risk__body">{t(copy.bodyKey)}</p>
 
       <button

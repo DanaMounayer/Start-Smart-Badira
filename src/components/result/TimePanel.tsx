@@ -15,9 +15,6 @@ export function TimePanel({ time }: { time: TimeContext }) {
   const age = time.gestationalAge
   const position = age ? progressOf(age) : 0
 
-  // One pill for the reading's provenance: awaiting the model, or a
-  // simulated demonstration state.
-
   return (
     <section className="context-panel">
       <div className="context-panel__head">
@@ -54,7 +51,6 @@ export function TimePanel({ time }: { time: TimeContext }) {
         <span className="time-stamp">
           {t('timeAssessedOn')} {formatFullDate(time.assessedAt, language)}
         </span>
-        {t('timeRecordedSummary')}
       </p>
     </section>
   )

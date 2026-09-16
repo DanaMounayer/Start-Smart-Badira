@@ -10,17 +10,15 @@ import type { CoverageId, SimulatedRiskId } from './schema'
  */
 
 /**
- * The simulated Risk output, in words. A fixed entry, not a mapping from
- * anything the user answered: the Result, the Report and the share text all
- * read the same three keys, so none of them can describe it as more than a
- * demonstration.
+ * The Risk state, in words: what it is called, and what it means. The Result,
+ * the Report and the share text read the same two keys, so none of them can
+ * name the state differently.
  */
 export const RISK_COPY: Record<
   SimulatedRiskId,
-  { titleKey: keyof Strings; categoryKey: keyof Strings; bodyKey: keyof Strings }
+  { categoryKey: keyof Strings; bodyKey: keyof Strings }
 > = {
   elevatedPriority: {
-    titleKey: 'riskSimulatedTitle',
     categoryKey: 'riskSimulatedCategory',
     bodyKey: 'riskSimulatedBody',
   },

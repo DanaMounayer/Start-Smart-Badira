@@ -38,7 +38,6 @@ export function Result() {
       <header className="result__head">
         <p className="result__eyebrow">{t('badiraResult')}</p>
         <Signature asHeading />
-        {result.demo && <p className="demo-note">{t('demoResultNote')}</p>}
       </header>
 
       <RiskPanel risk={result.risk} resultId={id} />

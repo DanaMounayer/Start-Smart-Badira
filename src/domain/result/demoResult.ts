@@ -81,8 +81,6 @@ export function buildDemoResult({ profile, answers }: DemoResultInput): BadiraRe
 
   return {
     id: 'demo',
-    // Every screen reads this to label the result as a simulation.
-    demo: true,
     // Fixed, not computed — see the note above.
     risk: { state: 'simulated', category: 'elevatedPriority' },
     reliability: {
