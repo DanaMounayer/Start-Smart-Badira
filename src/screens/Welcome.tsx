@@ -26,7 +26,8 @@ export function Welcome() {
       </button>
 
       <div className="welcome__brand">
-        <BadiraMark size={54} tone="var(--c-primary)" />
+        {/* The brand moment: the mark carries its gradient here. */}
+        <BadiraMark size={72} />
         <h1 className="welcome__name">{t('appName')}</h1>
         <p className="welcome__tagline">{t('tagline')}</p>
       </div>
