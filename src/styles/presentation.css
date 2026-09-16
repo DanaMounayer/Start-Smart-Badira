@@ -1,17 +1,23 @@
 /**
  * Desktop presentation wrapper.
  *
- * The prototype is a phone app, and on a laptop it otherwise floats in a wide
- * empty page. On a desktop viewport this puts the same app, at the same
- * width, inside a device frame on a stage — nothing inside the frame is
- * scaled, restyled or rearranged, and below the breakpoint none of this
- * applies, so the phone keeps its full-screen layout untouched.
+ * The prototype is a phone app, and on anything wider than a phone it
+ * otherwise floats in an empty page. Wherever there is room around it, this
+ * puts the same app, at the same width, inside a device frame on a stage —
+ * nothing inside the frame is scaled, restyled or rearranged, and where there
+ * is no room none of this applies, so the phone keeps its full-screen layout
+ * untouched.
  *
  * Everything here is scoped to that media query and to the frame, so it
  * cannot reach the app on a phone.
  */
 
-@media (min-width: 1024px) and (min-height: 640px) {
+/* The condition is "is there room for a phone and some air around it", not
+   "is this a desktop". The artifact is embedded in a panel whose viewport is
+   narrower than the laptop screen around it, so a desktop-width test never
+   fired there: the app just sat at its own max width in the middle of the
+   panel. 500px leaves the 412px device with room on both sides. */
+@media (min-width: 500px) and (min-height: 560px) {
   /* The stage. Plum light through a cream ground, so the frame sits in the
      product's own palette rather than on a neutral grey. */
   body {
@@ -24,10 +30,13 @@
   }
 
   #root {
+    /* Breathing room that gives way when the panel is short, so the whole
+       device stays visible rather than being cropped. */
+    --stage-pad: clamp(16px, 3vh, 32px);
     display: grid;
     place-items: center;
     min-height: 100vh;
-    padding: var(--s-6) var(--s-5);
+    padding: var(--stage-pad) clamp(10px, 3vw, 20px);
     box-sizing: border-box;
   }
 
@@ -42,7 +51,7 @@
     max-width: 100%;
     /* Never taller than the viewport allows: the whole phone stays visible
        on a 1080p screen without the page itself scrolling. */
-    height: min(844px, calc(100vh - 2 * var(--s-6) - 22px));
+    height: min(844px, calc(100vh - 2 * clamp(16px, 3vh, 32px) - 22px));
     min-height: 0;
     margin-inline: 0;
     border: 11px solid #0A080D;
