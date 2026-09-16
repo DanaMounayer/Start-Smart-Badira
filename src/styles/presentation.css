@@ -34,7 +34,9 @@
     /* The space actually available, not the window's idea of it. */
     height: 100%;
     min-height: 0;
-    padding: clamp(20px, 5vh, 48px) clamp(16px, 4vw, 40px);
+    /* The stage has to read as stage: enough of it above and below that the
+       device sits on the page rather than filling it. */
+    padding: clamp(32px, 8vh, 64px) clamp(16px, 4vw, 40px);
     overflow: hidden;
   }
 
@@ -48,7 +50,7 @@
     max-width: 100%;
     /* Never taller than the stage allows, so the bottom cannot be cropped,
        and never so tall that it reads as a slab. */
-    height: min(780px, 100%);
+    height: min(760px, 100%);
     min-height: 0;
     margin-inline: 0;
     border: 6px solid #15111C;
