@@ -29,7 +29,8 @@
   --c-surface-sunken: #F0EAEE;
   --c-ink: #241D2A;
   --c-ink-secondary: #5E5566;
-  --c-ink-tertiary: #8D8394;
+  /* Passes WCAG AA (>=4.5:1) on cream, surface, sunken and lilac grounds. */
+  --c-ink-tertiary: #6E6478;
   /* Hairline separators, inset iOS-style. Never a full card border. */
   --c-separator: rgb(36 29 42 / 8%);
 

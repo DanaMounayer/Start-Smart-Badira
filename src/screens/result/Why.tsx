@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom'
-import { useResult } from '@/app/useResult'
+import { Navigate, useParams } from 'react-router-dom'
+import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { InfoGroup } from '@/components/result/InfoGroup'
@@ -17,7 +17,11 @@ import { InfoGroup } from '@/components/result/InfoGroup'
 export function ResultWhy() {
   const { t } = useLanguage()
   const { id = 'demo' } = useParams()
-  const result = useResult()
+  const result = useStoredResult(id)
+
+  // A result only exists for a completed assessment; an unknown id has
+  // nothing to show, so it goes home rather than rendering an empty shell.
+  if (!result) return <Navigate to="/" replace />
 
   const fromProfile = result.information.filter(
     (item) => item.source === 'profile' && item.status === 'provided',

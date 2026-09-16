@@ -18,11 +18,15 @@ export function AppShell({ children }: { children: ReactNode }) {
     return <div className="app-shell app-shell--bare">{children}</div>
   }
 
+  // The main result states the full disclaimer itself; repeating the short
+  // one underneath would say the same thing twice on one screen.
+  const ownsDisclaimer = /^\/result\/[^/]+$/.test(pathname)
+
   return (
     <div className="app-shell">
       <AppBar initial={profile?.firstName.trim().charAt(0) ?? ''} />
       <main className="app-main">{children}</main>
-      <footer className="app-footer">{t('disclaimer')}</footer>
+      {!ownsDisclaimer && <footer className="app-footer">{t('disclaimer')}</footer>}
     </div>
   )
 }

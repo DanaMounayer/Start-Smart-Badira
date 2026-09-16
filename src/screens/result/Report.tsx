@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom'
-import { useResult } from '@/app/useResult'
+import { Navigate, useParams } from 'react-router-dom'
+import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
@@ -14,7 +14,11 @@ import { formatFullDate } from '@/lib/format'
 export function ResultReport() {
   const { t, language } = useLanguage()
   const { id = 'demo' } = useParams()
-  const result = useResult()
+  const result = useStoredResult(id)
+
+  // A result only exists for a completed assessment; an unknown id has
+  // nothing to show, so it goes home rather than rendering an empty shell.
+  if (!result) return <Navigate to="/" replace />
   const age = result.time.gestationalAge
 
   const held = result.information.filter((item) => item.status === 'provided')
@@ -68,7 +72,6 @@ export function ResultReport() {
         emptyLabel={t('awaitingModelShort')}
       />
 
-      <p className="result__disclaimer">{t('badiraDisclaimer')}</p>
     </SubScreen>
   )
 }

@@ -1,5 +1,5 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import { useResult } from '@/app/useResult'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { InfoGroup } from '@/components/result/InfoGroup'
@@ -15,21 +15,20 @@ import { InfoGroup } from '@/components/result/InfoGroup'
 export function ResultReliability() {
   const { t } = useLanguage()
   const { id = 'demo' } = useParams()
-  const result = useResult()
+  const result = useStoredResult(id)
   const navigate = useNavigate()
+
+  // A result only exists for a completed assessment; an unknown id has
+  // nothing to show, so it goes home rather than rendering an empty shell.
+  if (!result) return <Navigate to="/" replace />
 
   const held = result.information.filter((item) => item.status === 'provided')
   const unavailable = result.information.filter((item) => item.status === 'unavailable')
 
   return (
     <SubScreen title={t('improveReliability')} backTo={`/result/${id}`}>
-      <p className="lede">{t('reliabilityExplainer')}</p>
+      <p className="lede">{t('reliabilityNotRisk')}</p>
 
-      <section className="notice">
-        <p className="notice__body">{t('reliabilityNotRisk')}</p>
-      </section>
-
-      <InfoGroup label={t('reliabilityHas')} items={held} />
       <InfoGroup
         label={t('reliabilityMissing')}
         items={unavailable}
@@ -37,6 +36,15 @@ export function ResultReliability() {
         emptyLabel={t('reviewNothingMissing')}
       />
 
+      <details className="disclosure">
+        <summary className="disclosure__summary">
+          <span>{t('reliabilityHas')}</span>
+          <span className="disclosure__count">{held.length}</span>
+        </summary>
+        <div className="disclosure__body">
+          <InfoGroup label="" items={held} />
+        </div>
+      </details>
       {unavailable.length > 0 && (
         <section className="info-group">
           <h2 className="info-group__label">{t('reliabilityCouldHelp')}</h2>

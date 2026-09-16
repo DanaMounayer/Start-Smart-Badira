@@ -6,14 +6,13 @@ import { useAssessment } from './assessmentSession'
 import { useLanguage } from '@/i18n/LanguageProvider'
 
 /**
- * The result for the current assessment run.
+ * Builds a result from the answers currently in the assessment session.
  *
- * Derived from the session and the answers still held by the assessment
- * provider, so navigating between result sub-screens preserves it without a
- * separate store. A real backend would fetch by id instead; the screens only
- * ever see a `BadiraResult`.
+ * Used once, at the end of a run, to produce the snapshot that gets stored on
+ * the record. Screens never call this — they read the stored result, so a
+ * result URL cannot conjure a new one.
  */
-export function useResult(): BadiraResult {
+export function useBuiltResult(): BadiraResult {
   const { profile } = useSession()
   const { answers } = useAssessment()
   const { t, language } = useLanguage()
@@ -22,5 +21,19 @@ export function useResult(): BadiraResult {
     () => buildDemoResult({ profile, answers, t }),
     // `language` participates so labels re-resolve when the language changes.
     [profile, answers, t, language],
+  )
+}
+
+/**
+ * Reads a stored result by id.
+ *
+ * Returns null when no completed assessment matches, which is how the result
+ * routes refuse a URL typed directly or reloaded after the session reset.
+ */
+export function useStoredResult(id: string | undefined): BadiraResult | null {
+  const { assessments } = useSession()
+  return useMemo(
+    () => assessments.find((record) => record.id === id)?.result ?? null,
+    [assessments, id],
   )
 }

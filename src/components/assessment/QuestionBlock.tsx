@@ -144,6 +144,10 @@ export function QuestionBlock({
           onAnswer(missingReason === reason ? undefined : { kind: 'missing', reason })
         }
       />
+
+      {/* Appears only once something is actually marked unavailable, so the
+          connection to Reliability is made where it is earned. */}
+      {missingReason && <p className="missing-note">{t('missingNote')}</p>}
     </section>
   )
 }

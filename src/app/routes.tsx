@@ -3,7 +3,6 @@ import { AppShell } from '@/components/AppShell'
 import { Welcome } from '@/screens/Welcome'
 import { Home } from '@/screens/Home'
 import { History } from '@/screens/History'
-import { Profile } from '@/screens/Profile'
 import { Assessments } from '@/screens/Assessments'
 import { SignIn } from '@/screens/SignIn'
 import { Onboarding } from '@/screens/Onboarding'
@@ -39,7 +38,6 @@ export function AppRoutes() {
         <Route path="/profile" element={<ProfileOverview intent="view" />} />
         <Route path="/profile/update" element={<ProfileOverview intent="update" />} />
         <Route path="/profile/section/:id" element={<ProfileSection />} />
-        <Route path="/profile/full" element={<Profile />} />
         <Route path="/assessments" element={<Assessments />} />
 
         <Route path="/assessment" element={<AssessmentIntro />} />

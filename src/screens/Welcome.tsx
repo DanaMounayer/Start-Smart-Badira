@@ -21,7 +21,7 @@ export function Welcome() {
 
   return (
     <div className="welcome">
-      <button type="button" className="lang-toggle welcome__lang" onClick={toggleLanguage}>
+      <button type="button" className="pill-btn welcome__lang" onClick={toggleLanguage}>
         {t('switchLanguage')}
       </button>
 

@@ -1,9 +1,7 @@
-import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useResult } from '@/app/useResult'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useStoredResult } from '@/app/useResult'
 import { useAssessment } from '@/app/assessmentSession'
 import { useSession } from '@/app/session'
-import { countBy } from '@/domain/result/schema'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { Signature } from '@/components/result/Signature'
 import { RiskPanel } from '@/components/result/RiskPanel'
@@ -21,27 +19,16 @@ import { Chevron } from '@/components/ui/Chevron'
 export function Result() {
   const { t } = useLanguage()
   const { id = 'demo' } = useParams()
-  const result = useResult()
+  const result = useStoredResult(id)
   const { reset } = useAssessment()
-  const { mode, recordAssessment } = useSession()
+  const { mode } = useSession()
   const navigate = useNavigate()
 
-  // Completing an assessment adds it to this session's history. The record
-  // carries the true state of the readings — no result is invented for it.
-  useEffect(() => {
-    recordAssessment({
-      id: `${result.id}-${result.time.assessedAt}`,
-      completedAt: result.time.assessedAt,
-      gestationalAge: result.time.gestationalAge,
-      informationProvided: countBy(result.information, 'provided'),
-      informationUnavailable: countBy(result.information, 'unavailable'),
-    })
-    // Recording once per completed run; the record id is stable for it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // A result only exists for a completed assessment; a typed or reloaded URL
+  // has nothing to show and is sent home rather than inventing a result.
+  if (!result) return <Navigate to="/" replace />
 
   const actions = [
-    { key: 'why', label: t('whyThisResult'), to: `/result/${id}/why` },
     { key: 'reliability', label: t('improveReliability'), to: `/result/${id}/reliability` },
     { key: 'report', label: t('detailedReport'), to: `/result/${id}/report` },
     { key: 'share', label: t('shareWithDoctor'), to: `/result/${id}/share` },
@@ -51,7 +38,7 @@ export function Result() {
     <div className="result">
       <header className="result__head">
         <p className="result__eyebrow">{t('badiraResult')}</p>
-        <Signature />
+        <Signature asHeading />
         {result.demo && <p className="demo-note">{t('demoResultNote')}</p>}
       </header>
 

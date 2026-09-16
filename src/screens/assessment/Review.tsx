@@ -115,7 +115,6 @@ export function AssessmentReview() {
         >
           {t('analyzeWithBadira')}
         </button>
-        <p className="fineprint fineprint--center">{t('disclaimerFull')}</p>
       </div>
     </div>
   )

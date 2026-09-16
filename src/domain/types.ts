@@ -54,35 +54,3 @@ export type PregnancyProfile = {
   reportedSymptoms: string[]
   lastUpdatedAt: string
 }
-
-/** How confident the system is allowed to be, given the inputs it has. */
-export type ReliabilityLevel = 'insufficient' | 'limited' | 'adequate'
-
-/** Relative risk band. Bands are labels only — no thresholds are defined here. */
-export type RiskLevel = 'unknown' | 'low' | 'moderate' | 'elevated'
-
-/** How promptly professional assessment may be warranted. */
-export type TimeUrgency = 'unknown' | 'routine' | 'soon' | 'prompt'
-
-/** Information the system needs but does not have. */
-export type MissingInput = {
-  field: string
-  /** Why this input matters, expressed as an i18n-able key or plain text. */
-  reason: string
-}
-
-/**
- * The combined output of the assessment layer.
- *
- * Risk and Reliability are reported separately on purpose: a prediction the
- * system cannot stand behind must surface `missingInputs` instead of a
- * confident risk band.
- */
-export type AssessmentResult = {
-  risk: RiskLevel
-  reliability: ReliabilityLevel
-  time: TimeUrgency
-  missingInputs: MissingInput[]
-  /** Human-readable notes supporting the result. */
-  rationale: string[]
-}

@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { GestationalAge, PregnancyProfile } from '@/domain/types'
+import type { BadiraResult } from '@/domain/result/schema'
 import { saraProfile, emptyProfile } from '@/data/mockProfile'
 
 /**
@@ -20,13 +21,20 @@ import { saraProfile, emptyProfile } from '@/data/mockProfile'
  */
 export type SessionMode = 'signedIn' | 'guest'
 
-/** A completed run. Risk and Reliability stay absent — no model is connected. */
+/**
+ * A completed run.
+ *
+ * The record owns the result it produced, so a result URL renders from a
+ * stored snapshot rather than from whatever answers happen to be in memory.
+ * Risk and Reliability stay absent inside it — no model is connected.
+ */
 export type AssessmentRecord = {
   id: string
   completedAt: string
   gestationalAge: GestationalAge | null
   informationProvided: number
   informationUnavailable: number
+  result: BadiraResult
 }
 
 type SessionValue = {
