@@ -3,67 +3,64 @@
  *
  * The prototype is a phone app, and on anything wider than a phone it
  * otherwise floats in an empty page. Wherever there is room around it, this
- * puts the same app, at the same width, inside a device frame on a stage —
- * nothing inside the frame is scaled, restyled or rearranged, and where there
- * is no room none of this applies, so the phone keeps its full-screen layout
- * untouched.
+ * puts the same app, at the same 390px width, inside a light device shell on
+ * a stage. Nothing inside is scaled, restyled or rearranged, and where there
+ * is no room none of it applies, so the phone keeps its full-screen layout.
  *
- * Everything here is scoped to that media query and to the frame, so it
- * cannot reach the app on a phone.
+ * Height comes from the chain, never from `100vh`: the artifact runs in a
+ * panel whose height the viewport unit does not reliably describe, and a
+ * device sized against the window is a device whose bottom gets cut off.
+ * `100%` of the stage is what is actually available, and the cap keeps the
+ * shell from growing into a slab on a tall panel.
  */
 
-/* The condition is "is there room for a phone and some air around it", not
-   "is this a desktop". The artifact is embedded in a panel whose viewport is
-   narrower than the laptop screen around it, so a desktop-width test never
-   fired there: the app just sat at its own max width in the middle of the
-   panel. 500px leaves the 412px device with room on both sides. */
 @media (min-width: 500px) and (min-height: 560px) {
-  /* The stage. Plum light through a cream ground, so the frame sits in the
+  /* The stage. Plum light through a cream ground, so the shell sits in the
      product's own palette rather than on a neutral grey. */
   body {
-    min-height: 100vh;
+    height: 100%;
     background:
-      radial-gradient(1150px 640px at 50% -14%, rgb(94 74 114 / 34%), transparent 64%),
-      radial-gradient(900px 560px at 86% 112%, rgb(150 128 168 / 30%), transparent 62%),
-      linear-gradient(162deg, #F3EEEA 0%, #E6DCE4 50%, #D4C7DA 100%);
+      radial-gradient(1150px 640px at 50% -14%, rgb(94 74 114 / 26%), transparent 64%),
+      radial-gradient(900px 560px at 86% 112%, rgb(150 128 168 / 22%), transparent 62%),
+      linear-gradient(162deg, #F5F1EE 0%, #EBE2E8 52%, #DCD1E0 100%);
     background-attachment: fixed;
+    overflow: hidden;
   }
 
   #root {
-    /* Breathing room that gives way when the panel is short, so the whole
-       device stays visible rather than being cropped. */
-    --stage-pad: clamp(16px, 3vh, 32px);
+    box-sizing: border-box;
     display: grid;
     place-items: center;
-    min-height: 100vh;
-    padding: var(--stage-pad) clamp(10px, 3vw, 20px);
-    box-sizing: border-box;
+    /* The space actually available, not the window's idea of it. */
+    height: 100%;
+    min-height: 0;
+    padding: clamp(20px, 5vh, 48px) clamp(16px, 4vw, 40px);
+    overflow: hidden;
   }
 
-  /* The device. The bezel is the border, the screen is this element's own
-     scroll area, so the app scrolls inside the phone and the page does not. */
+  /* The device. A thin shell rather than a phone: the bezel is a hairline
+     frame, the screen is this element's own scroll area, so the app scrolls
+     inside and the page never does. */
   .app-shell {
-    /* content-box, so these are the dimensions of the screen rather than of
-       the device: the app gets exactly the 390x844 viewport it is built for,
-       and the bezel sits outside it. */
-    box-sizing: content-box;
-    width: 390px;
+    box-sizing: border-box;
+    /* 390 of screen, plus the shell either side. */
+    width: 402px;
     max-width: 100%;
-    /* Never taller than the viewport allows: the whole phone stays visible
-       on a 1080p screen without the page itself scrolling. */
-    height: min(844px, calc(100vh - 2 * clamp(16px, 3vh, 32px) - 22px));
+    /* Never taller than the stage allows, so the bottom cannot be cropped,
+       and never so tall that it reads as a slab. */
+    height: min(780px, 100%);
     min-height: 0;
     margin-inline: 0;
-    border: 11px solid #0A080D;
-    border-radius: 54px;
+    border: 6px solid #15111C;
+    border-radius: 40px;
     background: var(--c-bg);
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
     box-shadow:
-      0 2px 6px rgb(20 16 25 / 18%),
-      0 24px 60px rgb(20 16 25 / 22%),
-      0 60px 120px rgb(20 16 25 / 18%);
+      0 1px 2px rgb(20 16 25 / 10%),
+      0 18px 40px rgb(20 16 25 / 14%),
+      0 48px 90px rgb(20 16 25 / 12%);
     /* A phone has no visible track. */
     scrollbar-width: none;
   }
@@ -72,13 +69,7 @@
     display: none;
   }
 
-  /* The screen's own glass edge, just inside the bezel. */
-  .app-shell {
-    outline: 1px solid rgb(255 255 255 / 8%);
-    outline-offset: -12px;
-  }
-
-  /* The bar tracks window scrolling, which no longer moves inside the frame,
+  /* The bar tracks window scrolling, which no longer moves inside the shell,
      so it carries its scrolled ground from the start. Without this, content
      would ride up under a transparent bar. */
   .app-shell .navbar {
@@ -103,17 +94,17 @@
   @media (prefers-color-scheme: dark) {
     body {
       background:
-        radial-gradient(1100px 620px at 50% -12%, rgb(122 100 144 / 30%), transparent 62%),
-        radial-gradient(900px 560px at 88% 110%, rgb(61 48 74 / 55%), transparent 60%),
+        radial-gradient(1150px 640px at 50% -14%, rgb(122 100 144 / 26%), transparent 64%),
+        radial-gradient(900px 560px at 86% 112%, rgb(61 48 74 / 50%), transparent 62%),
         linear-gradient(162deg, #171320 0%, #120F19 55%, #0D0A12 100%);
     }
 
     .app-shell {
-      border-color: #000;
+      border-color: #2A2333;
       box-shadow:
-        0 2px 6px rgb(0 0 0 / 45%),
-        0 24px 60px rgb(0 0 0 / 50%),
-        0 60px 120px rgb(0 0 0 / 40%);
+        0 1px 2px rgb(0 0 0 / 40%),
+        0 18px 40px rgb(0 0 0 / 45%),
+        0 48px 90px rgb(0 0 0 / 38%);
     }
   }
 }
