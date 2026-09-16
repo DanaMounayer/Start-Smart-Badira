@@ -4,7 +4,7 @@ import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
-import { COVERAGE_COPY, PRIORITY_COPY } from '@/domain/result/copy'
+import { COVERAGE_COPY } from '@/domain/result/copy'
 
 /**
  * Share with doctor.
@@ -35,16 +35,8 @@ export function ResultShare() {
     `${t('gestationLabel')}: ${
       age ? `${age.weeks} ${t('weeksWord')} + ${age.days} ${t('daysWord')}` : t('gestationUnknown')
     }`,
-    `${t('riskLabel')}: ${
-      result.risk.state === 'awaitingModel'
-        ? t('awaitingModelShort')
-        : t(PRIORITY_COPY[result.risk.priority].labelKey)
-    }`,
-    `${t('reliabilityLabel')}: ${
-      result.reliability.state === 'awaitingModel'
-        ? t('awaitingModelShort')
-        : t(COVERAGE_COPY[result.reliability.coverage].labelKey)
-    }`,
+    `${t('riskLabel')}: ${t('riskNotConnectedTitle')}`,
+    `${t('reliabilityLabel')}: ${t(COVERAGE_COPY[result.reliability.coverage].labelKey)}`,
     '',
     `${t('reportInformationUsed')}: ${held.map((i) => t(i.labelKey)).join(' · ') || '—'}`,
     `${t('reportUnavailable')}: ${unavailable.map((i) => t(i.labelKey)).join(' · ') || '—'}`,

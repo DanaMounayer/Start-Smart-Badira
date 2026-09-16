@@ -53,10 +53,10 @@ export function ResultWhy() {
       ) : (
         <section className="notice">
           <p className="notice__title">
-            {result.demo ? t('whySimulationTitle') : t('whyNoModelTitle')}
+            {t('whyAvailableTitle')}
           </p>
           <p className="notice__body">
-            {result.demo ? t('whySimulationBody') : t('whyNoModelBody')}
+            {t('whyAvailableBody')}
           </p>
         </section>
       )}

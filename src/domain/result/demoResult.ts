@@ -3,25 +3,23 @@ import type { Answers } from '@/domain/assessment/schema'
 import { demoSpec } from '@/domain/assessment/demoSpec'
 import { missingQuestions, providedQuestions } from '@/domain/assessment/engine'
 import { SECTIONS, sectionState } from '@/domain/profile/sections'
-import { simulatedPriority } from './demoPriority'
 import type { BadiraResult, CoverageId, InformationItem } from './schema'
 
 /**
- * ⚠️ SIMULATED RESULT — NOT CLINICAL OUTPUT.
+ * The result of one assessment.
  *
- * No validated prediction model is connected. This module produces a
- * SIMULATION so the whole BADIRA experience — Risk, Reliability and Time as
- * three separate readings — can be demonstrated end to end, and every screen
- * says that is what it is showing.
+ * Two of the three readings are real work; the third is honest about not
+ * being available:
  *
- *   Risk        — a simulated screening-priority state chosen by the
- *                 deliberately arbitrary lookup in `demoPriority.ts`. Nothing
- *                 about it is weighted, scored, ranked or inferred, and the
- *                 lookup is not ordered by how much was answered.
+ *   Risk        — nothing. No validated model is connected, so there is no
+ *                 risk reading, and none is invented. A stand-in category,
+ *                 probability or priority would be read as a recommendation
+ *                 whatever it was labelled, so the screens say plainly that
+ *                 the model is not connected.
  *
- *   Reliability — information coverage, which the prototype genuinely knows:
- *                 how much of what it asked for it ended up holding. It
- *                 describes that coverage and nothing about health.
+ *   Reliability — determined from this assessment: how much of what BADIRA
+ *                 asked for it ended up holding. It describes that coverage
+ *                 and nothing about health.
  *
  *   Time        — the recorded gestational age and date, both factual.
  *
@@ -84,19 +82,19 @@ export function buildDemoResult({ profile, answers }: DemoResultInput): BadiraRe
     id: 'demo',
     // Every screen reads this to label the result as a simulation.
     demo: true,
-    risk: { state: 'simulated', priority: simulatedPriority(answers) },
+    risk: { state: 'awaitingModel' },
     reliability: {
-      state: 'simulated',
+      state: 'measured',
       coverage: coverageOf(provided, unavailable, profile !== null),
     },
     time: {
       gestationalAge: profile?.gestationalAge ?? null,
       assessedAt: new Date().toISOString(),
-      interpretation: { state: 'simulated' },
+      interpretation: { state: 'recorded' },
     },
     information,
-    // No influential factors: naming what "counted most" would assert a cause,
-    // and the simulation has no weights to report.
+    // No influential factors: there is no model to report weights from, and
+    // naming what "counted most" would assert a cause.
     factors: [],
   }
 }

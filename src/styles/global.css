@@ -2538,9 +2538,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-3);
+  gap: 6px var(--s-3);
+  /* The reading is a phrase, not a word: when it cannot sit beside the
+     gestational age it takes its own line rather than wrapping the age. */
+  flex-wrap: wrap;
   /* Clears the chevron, which is centred on this line. */
   padding-inline-end: var(--s-4);
+}
+
+.record__line .record__meta {
+  flex: 1 0 auto;
 }
 
 .record__line .record__meta {
@@ -2558,9 +2565,9 @@ button {
   user-select: none;
 }
 
-/* The record's simulated state, so history agrees with the result it opens. */
-.record__state {
-  color: var(--c-ink);
-  font-size: 14px;
-  font-weight: 600;
+/* Risk has no reading to show, so its headline sits back rather than shouting
+   a placeholder at the top of the result. */
+.risk--pending .risk__headline {
+  color: var(--c-ink-secondary);
+  font-size: 22px;
 }

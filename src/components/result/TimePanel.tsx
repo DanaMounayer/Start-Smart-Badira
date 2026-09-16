@@ -22,11 +22,6 @@ export function TimePanel({ time }: { time: TimeContext }) {
     <section className="context-panel">
       <div className="context-panel__head">
         <h3 className="panel-title">{t('timeLabel')}</h3>
-        <span className="tagline-pill">
-          {time.interpretation.state === 'awaitingModel'
-            ? t('awaitingModelShort')
-            : t('simulatedShort')}
-        </span>
       </div>
 
       <p className="time-at">
@@ -59,9 +54,7 @@ export function TimePanel({ time }: { time: TimeContext }) {
         <span className="time-stamp">
           {t('timeAssessedOn')} {formatFullDate(time.assessedAt, language)}
         </span>
-        {time.interpretation.state === 'simulated'
-          ? t('timeSimSummary')
-          : t('timeBelongsNote')}
+        {t('timeRecordedSummary')}
       </p>
     </section>
   )

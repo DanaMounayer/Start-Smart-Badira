@@ -12,33 +12,31 @@ import type { GestationalAge } from '@/domain/types'
  * i18n keys only and every screen resolves them at render. Storing resolved
  * strings is what froze a result in the language it was completed in.
  *
- * Each reading keeps its `awaitingModel` state for the day a validated model
- * is connected and the prototype's simulation is no longer what is shown.
+ * Two of the three readings are things the prototype genuinely determines.
+ * The third is not, and says so.
  */
-
-/**
- * A simulated screening-priority state. Ids only — the wording lives in the
- * dictionaries, and the mapping from an assessment to one of these lives in
- * `demoPriority.ts`, which explains how arbitrary it is.
- */
-export type PriorityId = 'routine' | 'earlier' | 'closer'
 
 /** How much of what the assessment asked for it ended up holding. */
 export type CoverageId = 'complete' | 'completeNoProfile' | 'partial' | 'limited'
 
-export type RiskReading =
-  | { state: 'awaitingModel' }
-  | { state: 'simulated'; priority: PriorityId }
+/**
+ * Risk.
+ *
+ * One state, and it is honest: no validated model is connected, so BADIRA has
+ * no risk reading to give. The prototype does not stand in a category, a
+ * probability, a priority or an action in its place — an invented risk state
+ * is read as a recommendation however it is labelled.
+ */
+export type RiskReading = { state: 'awaitingModel' }
 
 /**
  * How much information this particular assessment had behind it.
  *
- * Explicitly NOT a measure of the user's health risk, and not a score: the
- * coverage id below groups a count of what was and was not provided.
+ * Determined, not invented: the coverage id groups a count of what the
+ * assessment asked for and what it ended up holding. Explicitly NOT a measure
+ * of the user's health risk, and not a score.
  */
-export type ReliabilityReading =
-  | { state: 'awaitingModel' }
-  | { state: 'simulated'; coverage: CoverageId }
+export type ReliabilityReading = { state: 'measured'; coverage: CoverageId }
 
 /** Where the pregnancy was when this result was produced. */
 export type TimeContext = {
@@ -46,10 +44,10 @@ export type TimeContext = {
   /** ISO timestamp of the assessment. */
   assessedAt: string
   /**
-   * What this timing means. The prototype presents the recorded point in the
-   * pregnancy and says so; no timing rule is invented.
+   * The recorded point in the pregnancy, presented as context. Factual: no
+   * clinical timing rule is invented, here or anywhere.
    */
-  interpretation: { state: 'awaitingModel' } | { state: 'simulated' }
+  interpretation: { state: 'recorded' }
 }
 
 export type InformationSource = 'profile' | 'assessment'
@@ -82,7 +80,7 @@ export type InfluentialFactor = {
 
 export type BadiraResult = {
   id: string
-  /** True when the readings are demonstration content rather than clinical. */
+  /** True while this is a prototype result rather than a clinical one. */
   demo: boolean
   risk: RiskReading
   reliability: ReliabilityReading

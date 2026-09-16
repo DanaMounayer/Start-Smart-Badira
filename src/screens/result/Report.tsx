@@ -3,7 +3,7 @@ import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
-import { COVERAGE_COPY, PRIORITY_COPY } from '@/domain/result/copy'
+import { COVERAGE_COPY } from '@/domain/result/copy'
 
 /**
  * Detailed report — readable by the woman and by a clinician.
@@ -41,28 +41,16 @@ export function ResultReport() {
         />
         <Row
           label={t('riskLabel')}
-          value={
-            result.risk.state === 'awaitingModel'
-              ? t('awaitingModelShort')
-              : t(PRIORITY_COPY[result.risk.priority].labelKey)
-          }
+          value={t('riskNotConnectedTitle')}
         />
         <Row
           label={t('reliabilityLabel')}
-          value={
-            result.reliability.state === 'awaitingModel'
-              ? t('awaitingModelShort')
-              : t(COVERAGE_COPY[result.reliability.coverage].labelKey)
-          }
+          value={t(COVERAGE_COPY[result.reliability.coverage].labelKey)}
         />
         <Row
           label={t('timeLabel')}
-          value={
-            result.time.interpretation.state === 'awaitingModel'
-              ? t('awaitingModelShort')
-              : t('timeSimSummary')
-          }
-          block={result.time.interpretation.state === 'simulated'}
+          value={t('timeRecordedSummary')}
+          block
         />
       </dl>
 

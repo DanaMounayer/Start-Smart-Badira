@@ -154,12 +154,10 @@ export const en = {
   // --- Stage 3: result (model readings await the validated model) ---
   badiraResult: 'BADIRA result',
   resultActions: 'Result options',
-  demoResultNote: 'Prototype simulation. No validated model is connected \u2014 this result is demonstration content, not a clinical prediction.',
-  awaitingModelShort: 'Awaiting model',
-  riskAwaitingTitle: 'Your risk estimate is not available yet',
-  riskAwaitingBody: 'BADIRA will show its preeclampsia risk estimate here once the validated model is connected. Nothing is estimated in this prototype.',
+  demoResultNote: 'Prototype. The validated risk model is not connected yet; Reliability and Time below come from this assessment.',
+  riskNotConnectedTitle: 'Model not connected',
+  riskNotConnectedBody: 'BADIRA\u2019s clinical risk prediction will appear here when the validated model is connected. This prototype does not estimate, simulate or stand in for it.',
   whyThisResult: 'Why this result?',
-  reliabilityExplainer: 'Reliability reflects the information available for this assessment. It is separate from your estimated risk.',
   reliabilityNotRisk: 'Reliability is about how much BADIRA had to work with \u2014 not about how healthy you are, and not a measure of your risk.',
   improveReliability: 'Improve reliability',
   infoProvided: 'Information available',
@@ -170,14 +168,11 @@ export const en = {
   reliabilityCouldHelpBody: 'Adding the items above would give BADIRA more to base its assessment on.',
   reliabilityNoPromise: 'Adding information does not change your health. It gives BADIRA a stronger basis for its assessment, which may raise or lower what it estimates.',
   timeAssessedOn: 'Assessed on',
-  timeBelongsNote: 'This result belongs to this point in your pregnancy.',
   gestationUnknown: 'Not recorded',
   gestationLabel: 'Gestational age',
   whyLede: 'The information BADIRA took into account for this assessment.',
   whyFromProfile: 'From your saved profile',
   whyFromToday: 'From today\u2019s assessment',
-  whyNoModelTitle: 'No model explanation yet',
-  whyNoModelBody: 'Once the validated model is connected, the information it weighed most will be listed here. Until then, BADIRA shows everything it used.',
   whyNoCausation: 'These are inputs the assessment considered. They are not causes, and none of them individually determines a result.',
   sourceProfile: 'Profile',
   sourceToday: 'This assessment',
@@ -233,7 +228,7 @@ export const en = {
   guestSaveTitle: 'Want to keep this?',
   guestSaveBody: 'Creating a profile lets BADIRA remember your information for next time. It is optional \u2014 your result stays available either way.',
   guestSaveAction: 'Create a profile',
-  recordsNote: 'Results shown in this prototype are simulated for demonstration only. No validated clinical model is connected.',
+  recordsNote: 'Assessments completed in this session. BADIRA\u2019s validated risk model is not connected yet, so these records hold what the prototype could determine.',
   missingNote: 'BADIRA notes what it does not have. That affects the reliability of the assessment — not your health or your risk.',
   resultContext: 'Reliability and Time',
   historyVsAssessments: 'BADIRA assessments are kept separately',
@@ -275,14 +270,8 @@ export const en = {
   updatedToday: 'Today',
 
   // --- Simulated screening priority -----------------------------------------
-  priorityRoutineLabel: 'Routine screening priority',
-  priorityRoutineBody: 'In this simulation BADIRA places this assessment on its routine path: keep to the schedule you already have, and run another assessment when something changes.',
-  priorityEarlierLabel: 'Earlier screening priority',
-  priorityEarlierBody: 'In this simulation BADIRA suggests looking again sooner than the routine path, and bringing what you recorded to your next appointment.',
-  priorityCloserLabel: 'Closer screening priority',
-  priorityCloserBody: 'In this simulation BADIRA flags this assessment for closer attention, and suggests raising it with your care team at your next contact.',
-  whySimulationTitle: 'How this state was chosen',
-  whySimulationBody: 'The prototype matches your answers against a small set of demonstration patterns and reads the result off a fixed table. The table is arbitrary: it is not ordered by how much you answered, nothing is weighted or scored, and no answer is treated as more serious than another. It exists so a demonstration can show different outcomes.',
+  whyAvailableTitle: 'What BADIRA had for this assessment',
+  whyAvailableBody: 'Reliability and Time come from this assessment: how much of what BADIRA asked for it holds, and where the pregnancy was when you ran it. Risk waits for the validated model \u2014 no risk state is produced or implied here.',
   whyConsidered: 'Information considered in this simulation',
 
   // --- Prototype account / demo state switcher ------------------------------
@@ -301,7 +290,6 @@ export const en = {
   closeLabel: 'Close',
 
   // --- Simulated result ------------------------------------------------------
-  simulatedShort: 'Simulated',
   reliabilitySimCompleteLabel: 'Complete information',
   reliabilitySimCompleteBody: 'BADIRA held everything this assessment asked for. Reliability describes that coverage \u2014 it says nothing about your health.',
   reliabilitySimGuestLabel: 'Complete for this assessment',
@@ -311,7 +299,7 @@ export const en = {
   reliabilitySimPartialBody: 'BADIRA held most of what this assessment asked for, and some of it was unavailable. Reliability describes that coverage \u2014 it says nothing about your health.',
   reliabilitySimLimitedLabel: 'Limited information',
   reliabilitySimLimitedBody: 'More of what this assessment asked for was unavailable than was available. Reliability describes that coverage \u2014 it says nothing about your health.',
-  timeSimSummary: 'This result is fixed to the point in the pregnancy recorded above and to the day it was made. What that timing means clinically comes from the validated model and is not simulated here.',
+  timeRecordedSummary: 'This result is fixed to the point in the pregnancy recorded above and to the day it was made. What that timing means clinically comes from the validated model.',
 } as const
 
 /** Every dictionary must supply exactly these keys. */

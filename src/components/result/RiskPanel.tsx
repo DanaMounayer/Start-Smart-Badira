@@ -1,38 +1,30 @@
 import { useNavigate } from 'react-router-dom'
 import type { RiskReading } from '@/domain/result/schema'
-import { PRIORITY_COPY } from '@/domain/result/copy'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { Chevron } from '@/components/ui/Chevron'
 
 /**
- * Risk — the result's centre of gravity.
+ * Risk.
  *
- * Contains no threshold, band or colour rule. It renders whichever reading it
- * is given: the prototype's simulated screening-priority state, labelled as a
- * simulation, or the awaiting-model notice when no reading exists.
+ * The prototype has no validated model, so this panel says exactly that and
+ * shows nothing in its place. It holds the position Risk will occupy, which
+ * is the honest thing to demonstrate: a stand-in category or priority reads
+ * as a recommendation however carefully it is labelled.
  */
 export function RiskPanel({ risk, resultId }: { risk: RiskReading; resultId: string }) {
   const { t } = useLanguage()
   const navigate = useNavigate()
 
   return (
-    <section className="risk">
+    <section className="risk risk--pending">
       <div className="risk__head">
         <p className="risk__eyebrow">{t('riskLabel')}</p>
-        <span className="tagline-pill">
-          {risk.state === 'awaitingModel' ? t('awaitingModelShort') : t('simulatedShort')}
-        </span>
       </div>
 
-      {risk.state === 'awaitingModel' ? (
+      {risk.state === 'awaitingModel' && (
         <>
-          <h2 className="risk__headline">{t('riskAwaitingTitle')}</h2>
-          <p className="risk__body">{t('riskAwaitingBody')}</p>
-        </>
-      ) : (
-        <>
-          <h2 className="risk__headline">{t(PRIORITY_COPY[risk.priority].labelKey)}</h2>
-          <p className="risk__body">{t(PRIORITY_COPY[risk.priority].bodyKey)}</p>
+          <h2 className="risk__headline">{t('riskNotConnectedTitle')}</h2>
+          <p className="risk__body">{t('riskNotConnectedBody')}</p>
         </>
       )}
 

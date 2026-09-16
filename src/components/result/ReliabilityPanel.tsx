@@ -7,10 +7,10 @@ import { Chevron } from '@/components/ui/Chevron'
 /**
  * Reliability — how well the available information supports this prediction.
  *
- * Kept visually distinct from Risk and captioned as such, because the two are
- * easy to confuse. The counts shown are a factual inventory of the
- * assessment's inputs, not a score: no reliability formula exists yet and
- * none is invented here.
+ * Kept visually distinct from Risk, because the two are easy to confuse. The
+ * counts shown are a factual inventory of the assessment's inputs, not a
+ * score — this reading describes how much information stood behind the
+ * assessment, and nothing about health.
  */
 export function ReliabilityPanel({ result }: { result: BadiraResult }) {
   const { t } = useLanguage()
@@ -21,28 +21,16 @@ export function ReliabilityPanel({ result }: { result: BadiraResult }) {
 
   // One pill for the reading's provenance: awaiting the model, or a
   // simulated demonstration state.
-  const reading =
-    result.reliability.state === 'simulated'
-      ? COVERAGE_COPY[result.reliability.coverage]
-      : null
+  const reading = COVERAGE_COPY[result.reliability.coverage]
 
   return (
     <section className="context-panel">
       <div className="context-panel__head">
         <h3 className="panel-title">{t('reliabilityLabel')}</h3>
-        <span className="tagline-pill">
-          {reading ? t('simulatedShort') : t('awaitingModelShort')}
-        </span>
       </div>
 
-      {reading ? (
-        <>
-          <p className="context-panel__reading">{t(reading.labelKey)}</p>
-          <p className="context-panel__note">{t(reading.bodyKey)}</p>
-        </>
-      ) : (
-        <p className="context-panel__note">{t('reliabilityExplainer')}</p>
-      )}
+      <p className="context-panel__reading">{t(reading.labelKey)}</p>
+      <p className="context-panel__note">{t(reading.bodyKey)}</p>
 
       <dl className="tally">
         <div className="tally__item">
