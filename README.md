@@ -193,7 +193,7 @@ src/
   domain/       Gestation, profile sections, assessment spec and engine, result model
   i18n/         Language provider and the EN/AR dictionaries
   styles/       Design tokens, global styles, desktop presentation frame
-docs/           Screen map and implementation checkpoint
+docs/           Screen map
 ```
 
 Adding a string means adding the key to `src/i18n/en.ts` and its Arabic value to

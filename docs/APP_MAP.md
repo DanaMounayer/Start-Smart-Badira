@@ -20,7 +20,7 @@ told plainly that Reliability will be limited without one.
 | `/` | **Home** — gestational age, health snapshot, access to detail, missing-information hint, start assessment | built |
 | `/profile` | Full pregnancy profile | built (read-only) |
 | `/history` | Measurements & history | built |
-| `/assessments` | Previous BADIRA assessments | built (empty state) |
+| `/assessments` | Previous BADIRA assessments — records from this session, each reopenable | built |
 | `/profile/update` | Choose a section to change | built |
 | `/profile/section/:id` | Edit one section | built |
 | `/onboarding` | First-time setup, section-based and resumable | built |
@@ -28,16 +28,15 @@ told plainly that Reliability will be limited without one.
 ### Onboarding
 
 Onboarding is **not** a fixed short list of questions. The pregnancy profile is
-organised into sections, completed over time rather than in one sitting, and a
-partially complete profile is a valid state that simply carries lower
-Reliability. Sections currently anticipated:
+organised into five sections, completed over time rather than in one sitting,
+and a partially complete profile is a valid state that simply carries lower
+Reliability:
 
 - Pregnancy information
 - Health history
 - Family history
 - Previous pregnancy information
 - Measurements
-- Further sections to be finalised
 
 Sections are built from fields that already exist in the profile model; no
 clinical question was invented to fill a screen. Each section reports as
@@ -96,15 +95,21 @@ they receive. No component contains a threshold, band or cutoff.
 | `/result/:id/report` | Detailed report | built |
 | `/result/:id/share` | Share a structured summary | built |
 
-**No prediction model is connected, so no result is produced.** Risk,
-Reliability and the Time interpretation are returned in their `awaitingModel`
-state and the UI says so. There are no percentages, probabilities, bands,
-cutoffs, timing rules or recommendations anywhere in the codebase.
+**No validated clinical prediction model is connected.** Of the three readings,
+two are determined from the assessment itself and one is a demonstration:
 
-What the screens do show is factual, read from the profile and the user's own
-answers: the inventory of information the assessment had and did not have, the
-gestational age, and the assessment date. Reliability is captioned throughout
-as separate from the user's health risk.
+| Reading | What it is |
+| --- | --- |
+| **Risk** | A fixed simulated demonstration output, identical on every assessment and derived from nothing — not the answers, the measurements, the history, what was missing, or Reliability. It occupies the position a validated model will fill. Every screen that shows it carries a `Simulated` label. |
+| **Reliability** | Computed from information coverage: how much of what the assessment asked for it actually held. It describes coverage of information, and is captioned throughout as separate from the user's health. |
+| **Time** | The recorded gestational age and the assessment date, both factual. |
+
+There are no percentages, probabilities, bands, cutoffs, timing rules or
+recommendations anywhere in the codebase, and no reading is combined with
+another into a score.
+
+The screens also show the factual inventory read from the profile and the
+user's own answers: what the assessment had, and what it did not.
 
 Sharing transmits nothing: the summary is copied to the device, and the screen
 says so rather than implying a doctor received it.
@@ -121,7 +126,21 @@ says so rather than implying a doctor received it.
 
 ## Model boundary
 
-No clinical prediction model is connected. `src/domain/assessment/` defines an
-`AssessmentEngine` interface with a placeholder that encodes no medical rules;
-a validated model replaces it without UI changes. Demo data is fictional and
-marked as such in code.
+No validated clinical prediction model is connected, and the prototype does not
+claim otherwise: the Risk reading is a labelled simulation, not a prediction.
+
+Two seams, in different files:
+
+- **The question set.** `src/domain/assessment/demoSpec.ts` holds every
+  question, option and visibility rule, and carries the warning that none of it
+  is clinical content. `schema.ts` types it and `engine.ts` decides what is
+  visible. Replacing the spec is how a clinical question set lands; the engine,
+  the screens and the state layer do not change.
+- **The Risk output.** `src/domain/result/demoResult.ts` builds the result,
+  emitting the fixed simulated Risk alongside the Reliability it counts and the
+  Time it reads. A validated model replaces that one branch; Reliability, Time,
+  the result schema and every screen already work as they will afterwards.
+
+Results carry ids and i18n keys rather than resolved text, so a saved
+assessment renders in whichever language it is later opened in. Demo data is
+fictional and marked as such in code.
