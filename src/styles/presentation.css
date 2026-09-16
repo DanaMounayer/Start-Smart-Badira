@@ -3,19 +3,22 @@
  *
  * The prototype is a phone app, and on anything wider than a phone it
  * otherwise floats in an empty page. Wherever there is room around it, this
- * puts the same app, at the same 390px width, inside a light device shell on
- * a stage. Nothing inside is scaled, restyled or rearranged, and where there
- * is no room none of it applies, so the phone keeps its full-screen layout.
+ * puts the same app inside a device on a stage.
  *
- * Height comes from the chain, never from `100vh`: the artifact runs in a
- * panel whose height the viewport unit does not reliably describe, and a
- * device sized against the window is a device whose bottom gets cut off.
- * `100%` of the stage is what is actually available, and the cap keeps the
- * shell from growing into a slab on a tall panel.
+ * The device is always 390x844 of screen — the viewport the app is built for —
+ * inside a 6px shell. When the panel cannot fit that, the whole device is
+ * scaled down as one: screen, shell, radius and app together, so the phone
+ * keeps its proportions instead of turning into a short wide box. The app
+ * still lays out at 390x844 behind the transform, so nothing inside it
+ * reflows, and it scrolls inside the device as it always did.
+ *
+ * `presentationFit.ts` supplies the scale, because a ratio of two lengths is
+ * the one thing CSS cannot compute. Everything else is here, and all of it is
+ * scoped to the media query, so below it the app is untouched.
  */
 
 @media (min-width: 500px) and (min-height: 560px) {
-  /* The stage. Plum light through a cream ground, so the shell sits in the
+  /* The stage. Plum light through a cream ground, so the device sits in the
      product's own palette rather than on a neutral grey. */
   body {
     height: 100%;
@@ -29,36 +32,40 @@
 
   #root {
     box-sizing: border-box;
-    display: grid;
-    place-items: center;
-    /* The space actually available, not the window's idea of it. */
+    /* The device is centred on the stage rather than laid out in it: at less
+       than full scale its layout box is taller than the stage, and centring
+       that box would push the device it draws off the bottom. */
+    position: relative;
+    display: block;
+    /* The space actually available: the artifact panel's height is not what
+       the viewport units describe. */
     height: 100%;
     min-height: 0;
-    /* The stage has to read as stage: enough of it above and below that the
-       device sits on the page rather than filling it. */
-    padding: clamp(32px, 8vh, 64px) clamp(16px, 4vw, 40px);
+    padding: clamp(30px, 5vh, 56px) clamp(16px, 4vw, 40px);
     overflow: hidden;
   }
 
-  /* The device. A thin shell rather than a phone: the bezel is a hairline
-     frame, the screen is this element's own scroll area, so the app scrolls
-     inside and the page never does. */
+  /* The device. 390 of screen plus 6 of shell on each side, at the app's own
+     aspect; the scale fits it to the stage without changing that. */
   .app-shell {
     box-sizing: border-box;
-    /* 390 of screen, plus the shell either side. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 402px;
-    max-width: 100%;
-    /* Never taller than the stage allows, so the bottom cannot be cropped,
-       and never so tall that it reads as a slab. */
-    height: min(760px, 100%);
+    height: 856px;
     min-height: 0;
     margin-inline: 0;
     border: 6px solid #15111C;
     border-radius: 40px;
     background: var(--c-bg);
+    /* The screen — and the app's own background — is clipped to the inner
+       radius by the scroll container. */
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
+    transform: translate(-50%, -50%) scale(var(--device-scale, 1));
+    transform-origin: center center;
     box-shadow:
       0 1px 2px rgb(20 16 25 / 10%),
       0 18px 40px rgb(20 16 25 / 14%),
@@ -71,7 +78,7 @@
     display: none;
   }
 
-  /* The bar tracks window scrolling, which no longer moves inside the shell,
+  /* The bar tracks window scrolling, which no longer moves inside the device,
      so it carries its scrolled ground from the start. Without this, content
      would ride up under a transparent bar. */
   .app-shell .navbar {
