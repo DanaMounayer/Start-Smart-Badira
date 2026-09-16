@@ -10,8 +10,8 @@ import { COVERAGE_COPY } from '@/domain/result/copy'
  * Previous BADIRA assessments.
  *
  * Records are created only by completing an assessment in this session. No
- * past result is fabricated, and each record carries the true state of its
- * readings: awaiting the validated model.
+ * past result is fabricated: each record carries the snapshot its own
+ * assessment produced, simulated Risk label included.
  */
 export function Assessments() {
   const { t, language } = useLanguage()

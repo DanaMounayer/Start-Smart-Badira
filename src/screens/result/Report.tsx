@@ -3,14 +3,14 @@ import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
-import { COVERAGE_COPY } from '@/domain/result/copy'
+import { COVERAGE_COPY, RISK_COPY } from '@/domain/result/copy'
 
 /**
  * Detailed report — readable by the woman and by a clinician.
  *
  * A structured document, not a debug dump: every section is labelled in plain
- * language, and the readings that await the model say so rather than showing
- * an empty field.
+ * language, and the simulated Risk carries its "Simulation" label into the
+ * document rather than reading as a finding.
  */
 export function ResultReport() {
   const { t, language } = useLanguage()
@@ -41,7 +41,7 @@ export function ResultReport() {
         />
         <Row
           label={t('riskLabel')}
-          value={t('riskNotConnectedTitle')}
+          value={t(RISK_COPY[result.risk.category].categoryKey)}
         />
         <Row
           label={t('reliabilityLabel')}

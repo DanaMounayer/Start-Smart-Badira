@@ -151,12 +151,14 @@ export const en = {
   usingSavedReading: 'Using saved reading',
   reviewLede: 'A quick look before BADIRA runs the assessment.',
   reviewNothingMissing: 'Nothing missing',
-  // --- Stage 3: result (model readings await the validated model) ---
+  // --- Stage 3: result (Risk is a labelled simulation; the rest is real) ---
   badiraResult: 'BADIRA result',
   resultActions: 'Result options',
-  demoResultNote: 'Prototype. The validated risk model is not connected yet; Reliability and Time below come from this assessment.',
-  riskNotConnectedTitle: 'Model not connected',
-  riskNotConnectedBody: 'BADIRA\u2019s clinical risk prediction will appear here when the validated model is connected. This prototype does not estimate, simulate or stand in for it.',
+  demoResultNote: 'Prototype. The validated risk model is not connected; the Risk shown below is a fixed simulation. Reliability and Time come from this assessment.',
+  simulationTag: 'Simulation',
+  riskSimulatedTitle: 'Simulated risk result',
+  riskSimulatedCategory: 'Elevated screening priority \u2014 Simulation',
+  riskSimulatedBody: 'Demonstration only. This simulated result shows how BADIRA may present a future model output. It is not produced by a validated clinical model and must not be used for diagnosis or medical decisions.',
   whyThisResult: 'Why this result?',
   reliabilityNotRisk: 'Reliability is about how much BADIRA had to work with \u2014 not about how healthy you are, and not a measure of your risk.',
   improveReliability: 'Improve reliability',
@@ -273,7 +275,7 @@ export const en = {
 
   // --- Simulated screening priority -----------------------------------------
   whyAvailableTitle: 'What BADIRA had for this assessment',
-  whyAvailableBody: 'Reliability and Time come from this assessment: how much of what BADIRA asked for it holds, and where the pregnancy was when you ran it. Risk waits for the validated model \u2014 no risk state is produced or implied here.',
+  whyAvailableBody: 'Reliability and Time come from this assessment: how much of what BADIRA asked for it holds, and where the pregnancy was when you ran it. Risk is a fixed simulation shown for the demonstration \u2014 it is not calculated from your answers, your measurements or anything else here, and it is not a clinical prediction.',
   whyConsidered: 'Information considered in this simulation',
 
   // --- Prototype account / demo state switcher ------------------------------

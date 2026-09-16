@@ -4,7 +4,7 @@ import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
-import { COVERAGE_COPY } from '@/domain/result/copy'
+import { COVERAGE_COPY, RISK_COPY } from '@/domain/result/copy'
 
 /**
  * Share with doctor.
@@ -35,7 +35,9 @@ export function ResultShare() {
     `${t('gestationLabel')}: ${
       age ? `${age.weeks} ${t('weeksWord')} + ${age.days} ${t('daysWord')}` : t('gestationUnknown')
     }`,
-    `${t('riskLabel')}: ${t('riskNotConnectedTitle')}`,
+    // The category text carries its own "Simulation" label, so it cannot be
+    // pasted anywhere as a clinical reading.
+    `${t('riskLabel')}: ${t(RISK_COPY[result.risk.category].categoryKey)}`,
     `${t('reliabilityLabel')}: ${t(COVERAGE_COPY[result.reliability.coverage].labelKey)}`,
     '',
     `${t('reportInformationUsed')}: ${held.map((i) => t(i.labelKey)).join(' · ') || '—'}`,

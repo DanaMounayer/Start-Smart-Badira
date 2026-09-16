@@ -13,21 +13,30 @@ import type { GestationalAge } from '@/domain/types'
  * strings is what froze a result in the language it was completed in.
  *
  * Two of the three readings are things the prototype genuinely determines.
- * The third is not, and says so.
+ * The third is a labelled simulation, and says so.
  */
 
 /** How much of what the assessment asked for it ended up holding. */
 export type CoverageId = 'complete' | 'completeNoProfile' | 'partial' | 'limited'
 
 /**
+ * The demonstration outputs Risk can carry. One, for now: a fixed value the
+ * prototype shows so a demo audience can see the shape of a future model
+ * output.
+ */
+export type SimulatedRiskId = 'elevatedPriority'
+
+/**
  * Risk.
  *
- * One state, and it is honest: no validated model is connected, so BADIRA has
- * no risk reading to give. The prototype does not stand in a category, a
- * probability, a priority or an action in its place — an invented risk state
- * is read as a recommendation however it is labelled.
+ * No validated model is connected, and this reading does not pretend one is:
+ * `simulated` is a fixed demonstration output, identical on every assessment.
+ * It is deliberately not derived from symptoms, measurements, history,
+ * missing information, Reliability or a lookup over any of them — a value
+ * that moved with the answers would be read as a prediction. Every screen
+ * that shows it labels it a simulation.
  */
-export type RiskReading = { state: 'awaitingModel' }
+export type RiskReading = { state: 'simulated'; category: SimulatedRiskId }
 
 /**
  * How much information this particular assessment had behind it.
@@ -70,7 +79,7 @@ export type InformationItem = {
 /**
  * A factor the model weighed. Populated only from a model's own explanation
  * output — never inferred by the UI, and never described as having caused
- * anything. The simulation produces none: it has no weights to report.
+ * anything. The simulation produces none: a fixed value weighs nothing.
  */
 export type InfluentialFactor = {
   id: string

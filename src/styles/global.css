@@ -184,7 +184,9 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--s-6);
-  padding: var(--s-2) var(--gutter) var(--s-7);
+  /* A breath under the bar, the same on every screen, so no screen's first
+     line sits against it. */
+  padding: var(--s-5) var(--gutter) var(--s-7);
 }
 
 .app-footer {
@@ -2567,11 +2569,23 @@ button {
   user-select: none;
 }
 
-/* Risk has no reading to show, so its headline sits back rather than shouting
-   a placeholder at the top of the result. */
-.risk--pending .risk__headline {
+/* The simulated reading is two lines: what this is, then what it says. The
+   first sits back so the demonstration output below it reads as the output,
+   and neither is allowed to look like a finding. */
+.risk--simulated .risk__headline {
   color: var(--c-ink-secondary);
-  font-size: 22px;
+  font-size: 19px;
+}
+
+.risk__category {
+  /* Closer to the headline it belongs to than to the copy beneath it. */
+  margin-top: calc(-1 * var(--s-2));
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 580;
+  line-height: 1.22;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
 }
 
 /* --- Scroll cue -----------------------------------------------------------
@@ -2642,7 +2656,6 @@ button {
 
 .app-main--home {
   gap: var(--s-3);
-  padding-top: 2px;
   padding-bottom: var(--s-2);
 }
 

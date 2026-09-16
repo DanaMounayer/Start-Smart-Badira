@@ -8,14 +8,15 @@ import type { BadiraResult, CoverageId, InformationItem } from './schema'
 /**
  * The result of one assessment.
  *
- * Two of the three readings are real work; the third is honest about not
- * being available:
+ * Two of the three readings are real work; the third is a labelled
+ * demonstration:
  *
- *   Risk        — nothing. No validated model is connected, so there is no
- *                 risk reading, and none is invented. A stand-in category,
- *                 probability or priority would be read as a recommendation
- *                 whatever it was labelled, so the screens say plainly that
- *                 the model is not connected.
+ *   Risk        — a fixed simulated output, the same on every assessment. It
+ *                 is not derived from the answers, the measurements, the
+ *                 history, what was missing or the Reliability beside it: a
+ *                 value that moved with the inputs would be read as a
+ *                 prediction. It exists to show the shape of a future model
+ *                 output, and every screen labels it a simulation.
  *
  *   Reliability — determined from this assessment: how much of what BADIRA
  *                 asked for it ended up holding. It describes that coverage
@@ -82,7 +83,8 @@ export function buildDemoResult({ profile, answers }: DemoResultInput): BadiraRe
     id: 'demo',
     // Every screen reads this to label the result as a simulation.
     demo: true,
-    risk: { state: 'awaitingModel' },
+    // Fixed, not computed — see the note above.
+    risk: { state: 'simulated', category: 'elevatedPriority' },
     reliability: {
       state: 'measured',
       coverage: coverageOf(provided, unavailable, profile !== null),
@@ -93,8 +95,8 @@ export function buildDemoResult({ profile, answers }: DemoResultInput): BadiraRe
       interpretation: { state: 'recorded' },
     },
     information,
-    // No influential factors: there is no model to report weights from, and
-    // naming what "counted most" would assert a cause.
+    // No influential factors: a fixed value weighs nothing, and naming what
+    // "counted most" would assert a cause.
     factors: [],
   }
 }
