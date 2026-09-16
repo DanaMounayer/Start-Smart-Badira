@@ -29,7 +29,6 @@ export function Result() {
   if (!result) return <Navigate to="/" replace />
 
   const actions = [
-    { key: 'reliability', label: t('improveReliability'), to: `/result/${id}/reliability` },
     { key: 'report', label: t('detailedReport'), to: `/result/${id}/report` },
     { key: 'share', label: t('shareWithDoctor'), to: `/result/${id}/share` },
   ]
@@ -44,10 +43,10 @@ export function Result() {
 
       <RiskPanel risk={result.risk} resultId={id} />
 
-      <div className="result__context">
+      <section className="context-stack" aria-label={t('resultContext')}>
         <ReliabilityPanel result={{ ...result, id }} />
         <TimePanel time={result.time} />
-      </div>
+      </section>
 
       <nav className="list" aria-label={t('resultActions')}>
         {actions.map((action) => (

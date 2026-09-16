@@ -200,9 +200,9 @@ button {
 
 .large-title {
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: var(--t-title-l);
   font-weight: 600;
-  letter-spacing: -0.024em;
+  letter-spacing: -0.022em;
   margin-block: var(--s-2) calc(-1 * var(--s-3));
 }
 
@@ -213,12 +213,6 @@ button {
   gap: var(--s-3);
   padding-inline: var(--s-1);
   margin-bottom: var(--s-3);
-}
-
-.section-head__title {
-  font-size: 15px;
-  font-weight: 640;
-  letter-spacing: -0.01em;
 }
 
 .text-btn {
@@ -337,7 +331,7 @@ button {
 
 .empty-hero__title {
   font-family: var(--font-display);
-  font-size: 21px;
+  font-size: var(--t-title-m);
   font-weight: 580;
 }
 
@@ -535,7 +529,7 @@ button {
 
 .subscreen__title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: var(--t-title-m);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -560,12 +554,6 @@ button {
   border-radius: var(--r-card);
   background: var(--c-surface);
   box-shadow: var(--shadow-soft);
-}
-
-.card__title {
-  font-size: 16px;
-  font-weight: 640;
-  letter-spacing: -0.015em;
 }
 
 .card--empty {
@@ -756,11 +744,20 @@ button {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--s-7);
+  gap: var(--s-6);
   padding: var(--s-7) var(--gutter) var(--s-6);
   padding-top: max(var(--s-7), env(safe-area-inset-top));
   min-height: 100vh;
+}
+
+/* The brand sits high; the actions take the slack and settle above the
+   disclaimer, so the empty space reads as breathing room rather than a gap. */
+.welcome__brand {
+  margin-top: var(--s-6);
+}
+
+.welcome__actions {
+  margin-top: auto;
 }
 
 .welcome__lang {
@@ -774,11 +771,12 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--s-3);
+  margin-top: var(--s-6);
 }
 
 .welcome__name {
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: var(--t-title-l);
   font-weight: 620;
   letter-spacing: 0.01em;
 }
@@ -793,6 +791,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
+  margin-top: auto;
 }
 
 .welcome__note,
@@ -803,7 +802,7 @@ button {
 }
 
 .welcome__disclaimer {
-  margin-top: auto;
+  margin-top: var(--s-5);
 }
 
 /* A list and the action that belongs to it read as one group. */
@@ -862,7 +861,7 @@ button {
 
 .ask__prompt {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: var(--t-title-l);
   font-weight: 580;
   line-height: 1.2;
   letter-spacing: -0.024em;
@@ -1349,16 +1348,6 @@ button {
   letter-spacing: -0.014em;
 }
 
-.group__label {
-  font-size: 13px;
-  font-weight: 620;
-  letter-spacing: 0.04em;
-  color: var(--c-ink-tertiary);
-  text-transform: uppercase;
-  padding-inline: var(--s-1);
-  margin-bottom: var(--s-3);
-}
-
 .group__empty {
   color: var(--c-ink-tertiary);
   font-size: 15px;
@@ -1480,7 +1469,7 @@ button {
 
 .analyzing__title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: var(--t-title-m);
   font-weight: 580;
   letter-spacing: -0.02em;
 }
@@ -1518,13 +1507,21 @@ button {
 .result {
   display: flex;
   flex-direction: column;
-  gap: var(--s-6);
+  gap: var(--s-5);
 }
 
 .result__head {
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
+}
+
+/* The prototype note is transparency, not decoration: it stays, but sits as a
+   compact line rather than a block of prose. */
+.demo-note {
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 9px var(--s-3);
 }
 
 .result__eyebrow {
@@ -1541,7 +1538,7 @@ button {
   flex-wrap: wrap;
   align-items: baseline;
   font-family: var(--font-display);
-  font-size: 27px;
+  font-size: var(--t-title-l);
   font-weight: 600;
   letter-spacing: -0.022em;
   line-height: 1.2;
@@ -1640,10 +1637,20 @@ button {
 
 /* --- Reliability & Time: context around the risk --- */
 
-.result__context {
+.context-stack {
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
+  border-radius: var(--r-card);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* Grouping only. The divider keeps Reliability and Time visually separate;
+   they remain two readings with their own headings, states and explanations,
+   and are never presented as one combined output. */
+.context-stack > .context-panel + .context-panel {
+  box-shadow: inset 0 0.5px 0 var(--c-separator);
 }
 
 .context-panel {
@@ -1651,9 +1658,6 @@ button {
   flex-direction: column;
   gap: var(--s-3);
   padding: var(--s-5);
-  border-radius: var(--r-card);
-  background: var(--c-surface);
-  box-shadow: var(--shadow-soft);
 }
 
 .context-panel__head {
@@ -1661,12 +1665,6 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-}
-
-.context-panel__title {
-  font-size: 19px;
-  font-weight: 620;
-  letter-spacing: -0.016em;
 }
 
 .tagline-pill {
@@ -1809,15 +1807,6 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
-}
-
-.info-group__label {
-  font-size: 13px;
-  font-weight: 620;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--c-ink-tertiary);
-  padding-inline: var(--s-1);
 }
 
 .info-group__empty,
@@ -2032,17 +2021,44 @@ button {
   gap: var(--s-5);
 }
 
+/* A value field reads as a row on the section's surface: label leading,
+   value trailing — the grouped-inset pattern used elsewhere in the app. */
 .field-row {
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
 }
 
+.field-row--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 56px;
+  padding: var(--s-2) var(--s-4);
+  background: var(--c-surface);
+}
+
+.field-row--inline + .field-row--inline {
+  box-shadow: inset 0 0.5px 0 var(--c-separator);
+}
+
+.field-group {
+  border-radius: var(--r-card);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
 .field-row__label {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 520;
   letter-spacing: -0.012em;
   padding-inline: var(--s-1);
+}
+
+.field-row--inline .field-row__label {
+  flex: 1;
+  padding-inline: 0;
 }
 
 .field-row__hint {
@@ -2251,4 +2267,78 @@ button {
   .missing-note {
     animation: none;
   }
+}
+
+/* ============================================================
+   Shared heading roles
+   ============================================================ */
+
+/* Titles a panel or card owns. Replaces the separate card, section-head and
+   context-panel title rules, which differed only by a point or two. */
+.panel-title {
+  font-size: var(--t-title-s);
+  font-weight: 640;
+  letter-spacing: -0.015em;
+}
+
+/* The label above a group. Replaces the two identical group-label rules. */
+.eyebrow {
+  font-size: var(--t-eyebrow);
+  font-weight: 620;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-ink-tertiary);
+  padding-inline: var(--s-1);
+}
+
+.pair--trailing {
+  flex: none;
+  gap: var(--s-4);
+}
+
+.pair--trailing .numbox--inline {
+  min-width: 0;
+}
+
+.time-stamp {
+  display: block;
+  color: var(--c-ink);
+  font-weight: 560;
+  margin-bottom: 2px;
+}
+
+/* The shared content surface. Replaces the standalone `.card` treatment so
+   detail screens use the same grouping language as the rest of the app. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  border-radius: var(--r-card);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.panel--flush {
+  padding: 0 var(--s-5);
+}
+
+/* Declared after `.numbox` so the inline variant wins on equal specificity:
+   on a row the value is plain text, not a box inside a box. */
+.numbox--inline {
+  flex: none;
+  width: auto;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  justify-content: flex-end;
+}
+
+.numbox--inline .numbox__input {
+  width: 3.5ch;
+  flex: none;
+  font-size: 19px;
+  text-align: end;
 }

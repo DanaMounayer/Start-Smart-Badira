@@ -17,6 +17,21 @@ const FAMILY_OPTIONS: { id: string; labelKey: keyof Strings }[] = [
   { id: 'motherPreeclampsia', labelKey: 'motherPreeclampsia' },
 ]
 
+/** Simple value fields sit together on one surface as label/value rows. */
+const VALUE_FIELDS: FieldId[] = ['gestationalAge', 'pregnancyNumber', 'age', 'bmi']
+
+/** Groups consecutive value fields so they render as one inset list. */
+function groupFields(fields: FieldId[]): { kind: 'values' | 'single'; items: FieldId[] }[] {
+  const runs: { kind: 'values' | 'single'; items: FieldId[] }[] = []
+  for (const field of fields) {
+    const kind = VALUE_FIELDS.includes(field) ? 'values' : 'single'
+    const last = runs[runs.length - 1]
+    if (kind === 'values' && last?.kind === 'values') last.items.push(field)
+    else runs.push({ kind, items: [field] })
+  }
+  return runs
+}
+
 /**
  * Editors for the profile fields a section owns.
  *
@@ -34,17 +49,17 @@ export function SectionFields({
 }) {
   const { t } = useLanguage()
 
-  return (
-    <div className="fields">
-      {fields.map((field) => {
-        switch (field) {
+  const renderField = (field: FieldId) => {
+    {
+      switch (field) {
           case 'gestationalAge':
             return (
-              <Field key={field} label={t('gestationLabel')}>
+              <Field key={field} label={t('gestationLabel')} inline>
                 {/* No dir override: these are two labelled fields, so they
                     follow page direction and "weeks" is read first. */}
-                <div className="pair">
+                <div className="pair pair--trailing">
                   <NumberBox
+                    inline
                     value={draft.gestationalAge?.weeks ?? ''}
                     suffix={t('weeksWord')}
                     ariaLabel={t('weeksWord')}
@@ -62,6 +77,7 @@ export function SectionFields({
                     }}
                   />
                   <NumberBox
+                    inline
                     value={draft.gestationalAge?.days ?? ''}
                     suffix={t('daysWord')}
                     ariaLabel={t('daysWord')}
@@ -82,8 +98,9 @@ export function SectionFields({
 
           case 'pregnancyNumber':
             return (
-              <Field key={field} label={t('pregnancyNumber')}>
+              <Field key={field} label={t('pregnancyNumber')} inline>
                 <NumberBox
+                  inline
                   value={draft.pregnancyNumber ?? ''}
                   ariaLabel={t('pregnancyNumber')}
                   onChange={(value) =>
@@ -95,8 +112,9 @@ export function SectionFields({
 
           case 'age':
             return (
-              <Field key={field} label={t('age')}>
+              <Field key={field} label={t('age')} inline>
                 <NumberBox
+                  inline
                   value={draft.age ?? ''}
                   suffix={t('years')}
                   ariaLabel={t('age')}
@@ -107,8 +125,9 @@ export function SectionFields({
 
           case 'bmi':
             return (
-              <Field key={field} label={t('bmi')}>
+              <Field key={field} label={t('bmi')} inline>
                 <NumberBox
+                  inline
                   value={draft.bmi ?? ''}
                   suffix={t('bmiUnit')}
                   ariaLabel={t('bmi')}
@@ -177,16 +196,46 @@ export function SectionFields({
                 />
               </Field>
             )
-        }
-      })}
+      }
+    }
+  }
+
+  return (
+    <div className="fields">
+      {groupFields(fields).map((run, i) =>
+        run.kind === 'values' ? (
+          <div className="field-group" key={`g${i}`}>
+            {run.items.map((field) => renderField(field))}
+          </div>
+        ) : (
+          <div key={`s${i}`}>{run.items.map((field) => renderField(field))}</div>
+        ),
+      )}
     </div>
   )
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+  inline = false,
+}: {
+  label: string
+  children: React.ReactNode
+  /** Inline rows sit on the shared section surface; blocks stand alone. */
+  inline?: boolean
+}) {
+  if (inline) {
+    return (
+      <section className="field-row field-row--inline">
+        <p className="field-row__label">{label}</p>
+        {children}
+      </section>
+    )
+  }
   return (
     <section className="field-row">
-      <p className="field-row__label">{label}</p>
+      <p className="eyebrow">{label}</p>
       {children}
     </section>
   )
@@ -197,14 +246,16 @@ function NumberBox({
   suffix,
   ariaLabel,
   onChange,
+  inline = false,
 }: {
   value: number | ''
   suffix?: string
   ariaLabel: string
   onChange: (value: number | '') => void
+  inline?: boolean
 }) {
   return (
-    <label className="numbox">
+    <label className={inline ? 'numbox numbox--inline' : 'numbox'}>
       <input
         className="numbox__input"
         type="text"

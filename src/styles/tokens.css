@@ -73,6 +73,13 @@
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
     serif;
 
+  /* Type scale by role, not by screen. A heading picks the tier that matches
+     what it is, so the same kind of thing is the same size everywhere. */
+  --t-title-l: 30px; /* the screen's own subject */
+  --t-title-m: 24px; /* a sub-screen's title */
+  --t-title-s: 17px; /* a panel or card title */
+  --t-eyebrow: 13px; /* a group label above a list */
+
   /* Layout */
   --app-max-width: 430px;
   --gutter: 20px;

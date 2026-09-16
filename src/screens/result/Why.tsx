@@ -36,7 +36,7 @@ export function ResultWhy() {
 
       {result.factors.length > 0 ? (
         <section className="info-group">
-          <h2 className="info-group__label">{t('whyInfluential')}</h2>
+          <h2 className="info-eyebrow">{t('whyInfluential')}</h2>
           <ul className="info-list">
             {result.factors.map((factor) => (
               <li key={factor.id} className="info-list__item">

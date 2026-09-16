@@ -34,7 +34,7 @@ export function AssessmentIntro() {
 
       {available.length > 0 && (
         <section className="group">
-          <h2 className="group__label">{t('introAvailable')}</h2>
+          <h2 className="eyebrow">{t('introAvailable')}</h2>
           <ul className="ticks">
             {available.map((key) => (
               <li key={key} className="tick">
@@ -47,7 +47,7 @@ export function AssessmentIntro() {
       )}
 
       <section className="group">
-        <h2 className="group__label">{t('introNeeded')}</h2>
+        <h2 className="eyebrow">{t('introNeeded')}</h2>
         <ul className="ticks">
           {needed.map((key) => (
             <li key={key} className="tick tick--open">

@@ -47,7 +47,7 @@ export function ResultReliability() {
       </details>
       {unavailable.length > 0 && (
         <section className="info-group">
-          <h2 className="info-group__label">{t('reliabilityCouldHelp')}</h2>
+          <h2 className="info-eyebrow">{t('reliabilityCouldHelp')}</h2>
           <p className="info-group__body">{t('reliabilityCouldHelpBody')}</p>
         </section>
       )}

@@ -27,7 +27,7 @@ export function HealthSnapshot({
   return (
     <section className="snapshot">
       <div className="section-head">
-        <h2 className="section-head__title">{t('snapshotTitle')}</h2>
+        <h2 className="panel-title">{t('snapshotTitle')}</h2>
         <button
           type="button"
           className="text-btn"

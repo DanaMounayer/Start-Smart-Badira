@@ -20,7 +20,7 @@ export function InfoGroup({
 
   return (
     <section className="info-group">
-      <h2 className="info-group__label">{label}</h2>
+      <h2 className="info-eyebrow">{label}</h2>
       {items.length === 0 ? (
         <p className="info-group__empty">{emptyLabel ?? t('noneRecorded')}</p>
       ) : (

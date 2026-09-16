@@ -21,7 +21,7 @@ export function ReliabilityPanel({ result }: { result: BadiraResult }) {
   return (
     <section className="context-panel">
       <div className="context-panel__head">
-        <h3 className="context-panel__title">{t('reliabilityLabel')}</h3>
+        <h3 className="panel-title">{t('reliabilityLabel')}</h3>
         {result.reliability.state === 'awaitingModel' && (
           <span className="tagline-pill">{t('awaitingModelShort')}</span>
         )}

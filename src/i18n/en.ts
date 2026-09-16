@@ -236,6 +236,10 @@ export const en = {
   guestSaveAction: 'Create a profile',
   recordsNote: 'Assessments completed in this session. Risk and Reliability stay unavailable until the validated model is connected.',
   missingNote: 'BADIRA notes what it does not have. That affects the reliability of the assessment — not your health or your risk.',
+  resultContext: 'Reliability and Time',
+  historyVsAssessments: 'BADIRA assessments are kept separately',
+  historyEmptyTitle: 'No measurements yet',
+  historyEmptyBody: 'Readings you add appear here with their dates, so BADIRA can draw on them over time.',
   // --- History view ---
   historyTitle: 'Measurement history',
   chartTitle: 'Blood pressure over time',
