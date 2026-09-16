@@ -4,9 +4,12 @@
 
 **A bilingual, mobile-first prototype for earlier awareness of preeclampsia risk in pregnancy.**
 
-### 🌐 [**Live Prototype — badira-ai.netlify.app**](https://badira-ai.netlify.app)
+[![BADIRA Website](https://img.shields.io/badge/BADIRA%20Website-badira--ai.vercel.app-3B2F45?style=for-the-badge)](https://badira-ai.vercel.app/) &nbsp; [![Interactive Prototype](https://img.shields.io/badge/Interactive%20Prototype-badira--ai.netlify.app-6B4E7D?style=for-the-badge)](https://badira-ai.netlify.app/)
 
-[![Live](https://img.shields.io/badge/demo-live-6B4E7D?style=flat-square)](https://badira-ai.netlify.app)
+🌐 **[BADIRA Website | بادرة](https://badira-ai.vercel.app/)** — the project website
+&nbsp;·&nbsp;
+📱 **[Interactive Prototype](https://badira-ai.netlify.app/)** — the working SmartStart prototype
+
 [![Status](https://img.shields.io/badge/status-SmartStart%20prototype-8B7BA3?style=flat-square)](#project-status)
 [![Languages](https://img.shields.io/badge/languages-English%20%7C%20العربية-A8829E?style=flat-square)](#key-features)
 [![License](https://img.shields.io/badge/license-MIT-555?style=flat-square)](LICENSE)
@@ -72,16 +75,17 @@ shown as exactly that, and the user is told what would strengthen it.
 - **Light and dark themes** — follows the system setting
 - **Responsive presentation** — phone layout on mobile, framed device view on desktop
 
-## Prototype
+## Links
+
+| | |
+| --- | --- |
+| 🌐 **[BADIRA Website](https://badira-ai.vercel.app/)** | The BADIRA project website — what BADIRA is and the thinking behind it. |
+| 📱 **[Interactive Prototype](https://badira-ai.netlify.app/)** | The working SmartStart prototype documented in this repository. |
 
 The prototype runs entirely in the browser — no installation, no account, no data
-leaves the device.
-
-### 🌐 **[badira-ai.netlify.app](https://badira-ai.netlify.app)**
-
-Open it on a phone for the intended experience, or on a laptop, where it is
-presented inside a device frame. Use the toggle in the header to switch between
-English and العربية at any point.
+leaves the device. Open it on a phone for the intended experience, or on a
+laptop, where it is presented inside a device frame. Use the toggle in the header
+to switch between English and العربية at any point.
 
 ## Screenshots
 
