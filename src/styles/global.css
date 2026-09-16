@@ -2656,18 +2656,21 @@ button {
 
 .app-main--home {
   gap: var(--s-3);
-  padding-bottom: var(--s-2);
+  padding-bottom: var(--s-1);
 }
 
+/* The greeting stands clear of the card under it: the flex gap plus this
+   margin, rather than the negative pull that had the two touching. The
+   pixels come back from the spacing further down the screen, below. */
 .app-main--home .large-title {
-  margin-block: 0 calc(-1 * var(--s-3));
+  margin-block: 0 var(--s-1);
 }
 
 /* Hero: the ring is the single biggest block on the screen, so it gives up
    the most. The readout inside it is untouched. */
 .app-main--home .hero {
   gap: var(--s-2);
-  padding: var(--s-3) var(--s-5) var(--s-3);
+  padding: var(--s-3) var(--s-5) var(--s-2);
 }
 
 .app-main--home .hero__ring > svg {
@@ -2681,7 +2684,7 @@ button {
 
 .app-main--home .tags {
   gap: 6px;
-  padding: var(--s-2) var(--s-3) 6px;
+  padding: 6px var(--s-3) var(--s-1);
 }
 
 .app-main--home .tag {
@@ -2702,7 +2705,7 @@ button {
 }
 
 .app-main--home .start {
-  gap: var(--s-3);
+  gap: var(--s-2);
 }
 
 .app-main--home .btn--primary {
