@@ -2246,13 +2246,17 @@ button {
    ============================================================ */
 
 /* Small chrome controls keep their visual size but carry a 44px hit area,
-   the way a native control does. */
+   the way a native control does. Anchored on two edges, not four: giving it
+   all four insets over-constrains the box, and the edge the browser drops is
+   the one that depends on direction — which pushed the hit area off the
+   control, and off the page, in Arabic. */
 .pill-btn::after,
 .avatar::after,
 .icon-btn::after {
   content: '';
   position: absolute;
-  inset: 50%;
+  top: 50%;
+  left: 50%;
   width: 44px;
   height: 44px;
   transform: translate(-50%, -50%);
