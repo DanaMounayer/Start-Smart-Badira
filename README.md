@@ -6,12 +6,8 @@
 
 [![BADIRA Website](https://img.shields.io/badge/BADIRA%20Website-badira--ai.vercel.app-3B2F45?style=for-the-badge)](https://badira-ai.vercel.app/) &nbsp; [![Interactive Prototype](https://img.shields.io/badge/Interactive%20Prototype-badira--ai.netlify.app-6B4E7D?style=for-the-badge)](https://badira-ai.netlify.app/)
 
-🌐 **[BADIRA Website | بادرة](https://badira-ai.vercel.app/)** — the project website
-&nbsp;·&nbsp;
-📱 **[Interactive Prototype](https://badira-ai.netlify.app/)** — the working SmartStart prototype
-
-[![Status](https://img.shields.io/badge/status-SmartStart%20prototype-8B7BA3?style=flat-square)](#project-status)
-[![Languages](https://img.shields.io/badge/languages-English%20%7C%20العربية-A8829E?style=flat-square)](#key-features)
+[![Status](https://img.shields.io/badge/status-SmartStart%20Prototype-8B7BA3?style=flat-square)](#project-status)
+[![Languages](https://img.shields.io/badge/languages-English%20%26%20Arabic-A8829E?style=flat-square)](#key-features)
 [![License](https://img.shields.io/badge/license-MIT-555?style=flat-square)](LICENSE)
 
 </div>
