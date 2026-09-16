@@ -2360,3 +2360,11 @@ button {
   font-size: 19px;
   text-align: end;
 }
+
+.record__time {
+  margin-inline-start: var(--s-2);
+  color: var(--c-ink-tertiary);
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}

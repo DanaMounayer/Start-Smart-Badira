@@ -33,16 +33,3 @@ export function BadiraMark({
     </svg>
   )
 }
-
-/** The mark on its brand ground — used for the app icon and the avatar slot. */
-export function BadiraBadge({ size = 32 }: { size?: number }) {
-  return (
-    <span
-      className="badira-badge"
-      style={{ width: size, height: size }}
-      aria-hidden="true"
-    >
-      <BadiraMark size={size * 0.68} tone="var(--c-on-primary)" />
-    </span>
-  )
-}

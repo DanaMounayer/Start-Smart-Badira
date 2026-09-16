@@ -42,3 +42,10 @@ export const isToday = (iso: string): boolean => {
  */
 export const formatAxisDate = (iso: string): string =>
   new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' })
+
+/** Time of day, for telling same-day records apart. */
+export const formatTime = (iso: string, language: Language): string =>
+  new Date(iso).toLocaleTimeString(LOCALES[language], {
+    hour: 'numeric',
+    minute: '2-digit',
+  })

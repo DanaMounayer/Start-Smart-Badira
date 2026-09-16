@@ -181,7 +181,7 @@ export const en = {
   whyNoModelBody: 'Once the validated model is connected, the information it weighed most will be listed here. Until then, BADIRA shows everything it used.',
   whyNoCausation: 'These are inputs the assessment considered. They are not causes, and none of them individually determines a result.',
   sourceProfile: 'Profile',
-  sourceToday: 'Today',
+  sourceToday: 'This assessment',
   noneRecorded: 'None recorded',
   detailedReport: 'Detailed report',
   reportDate: 'Assessment date',
@@ -244,6 +244,7 @@ export const en = {
   guestSignInToSave: 'Sign in to save your information',
   reliabilityHintSections: 'Part of your profile is not filled in yet.',
   reliabilityHintAction2: 'Complete it',
+  noneYet: 'None yet',
   // --- History view ---
   historyTitle: 'Measurement history',
   chartTitle: 'Blood pressure over time',

@@ -183,7 +183,7 @@ export const ar: Strings = {
   whyNoModelBody: 'عند وصل النموذج المعتمد ستُدرج هنا المعلومات الأكثر تأثيرًا في تقديره. وحتى ذلك الحين تعرض بادرة كل ما استخدمته.',
   whyNoCausation: 'هذه مدخلات أخذها التقييم بعين الاعتبار، وليست أسبابًا، ولا يحدّد أي منها النتيجة بمفرده.',
   sourceProfile: 'الملف',
-  sourceToday: 'اليوم',
+  sourceToday: 'هذا التقييم',
   noneRecorded: 'لا شيء مسجّل',
   detailedReport: 'التقرير التفصيلي',
   reportDate: 'تاريخ التقييم',
@@ -246,6 +246,7 @@ export const ar: Strings = {
   guestSignInToSave: 'سجّلي الدخول لحفظ معلوماتك',
   reliabilityHintSections: 'لم يُستكمل جزء من ملفك بعد.',
   reliabilityHintAction2: 'أكمليه',
+  noneYet: 'لا يوجد بعد',
   // --- History view ---
   historyTitle: 'سجل القياسات',
   chartTitle: 'ضغط الدم عبر الزمن',

@@ -3,7 +3,7 @@ import { useSession } from '@/app/session'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { Chevron } from '@/components/ui/Chevron'
-import { formatFullDate } from '@/lib/format'
+import { formatFullDate, formatTime } from '@/lib/format'
 
 /**
  * Previous BADIRA assessments.
@@ -51,6 +51,10 @@ export function Assessments() {
             <div className="record__head">
               <p className="record__date">
                 {formatFullDate(record.completedAt, language)}
+                {/* Isolated so the clock digits never merge with the year in Arabic. */}
+                <bdi className="record__time">
+                  {formatTime(record.completedAt, language)}
+                </bdi>
               </p>
               <span className="tagline-pill">{t('awaitingModelShort')}</span>
             </div>

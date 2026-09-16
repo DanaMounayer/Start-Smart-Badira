@@ -2,7 +2,9 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -34,8 +36,19 @@ type AssessmentValue = {
 const AssessmentContext = createContext<AssessmentValue | null>(null)
 
 export function AssessmentProvider({ children }: { children: ReactNode }) {
-  const { profile } = useSession()
+  const { profile, mode } = useSession()
   const [answers, setAnswers] = useState<Answers>({})
+
+  // A run belongs to whoever started it. Switching identity mid-assessment
+  // discards the answers so far rather than handing them to the next person.
+  const identity = `${mode}:${profile?.id ?? 'none'}`
+  const lastIdentity = useRef(identity)
+  useEffect(() => {
+    if (lastIdentity.current !== identity) {
+      lastIdentity.current = identity
+      setAnswers({})
+    }
+  }, [identity])
 
   const setAnswer = useCallback(
     (questionId: string, answer: Answer | undefined) => {

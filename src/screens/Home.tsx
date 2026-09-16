@@ -73,7 +73,9 @@ export function Home() {
             {
               to: '/history',
               label: 'navHistory',
-              value: `${readings.length} ${t('chipRecentReadings')}`,
+              value: readings.length
+                ? `${readings.length} ${t('chipRecentReadings')}`
+                : t('noneYet'),
             },
             {
             to: '/assessments',
