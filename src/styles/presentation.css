@@ -1,0 +1,110 @@
+/**
+ * Desktop presentation wrapper.
+ *
+ * The prototype is a phone app, and on a laptop it otherwise floats in a wide
+ * empty page. On a desktop viewport this puts the same app, at the same
+ * width, inside a device frame on a stage — nothing inside the frame is
+ * scaled, restyled or rearranged, and below the breakpoint none of this
+ * applies, so the phone keeps its full-screen layout untouched.
+ *
+ * Everything here is scoped to that media query and to the frame, so it
+ * cannot reach the app on a phone.
+ */
+
+@media (min-width: 1024px) and (min-height: 640px) {
+  /* The stage. Plum light through a cream ground, so the frame sits in the
+     product's own palette rather than on a neutral grey. */
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(1150px 640px at 50% -14%, rgb(94 74 114 / 34%), transparent 64%),
+      radial-gradient(900px 560px at 86% 112%, rgb(150 128 168 / 30%), transparent 62%),
+      linear-gradient(162deg, #F3EEEA 0%, #E6DCE4 50%, #D4C7DA 100%);
+    background-attachment: fixed;
+  }
+
+  #root {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: var(--s-6) var(--s-5);
+    box-sizing: border-box;
+  }
+
+  /* The device. The bezel is the border, the screen is this element's own
+     scroll area, so the app scrolls inside the phone and the page does not. */
+  .app-shell {
+    /* content-box, so these are the dimensions of the screen rather than of
+       the device: the app gets exactly the 390x844 viewport it is built for,
+       and the bezel sits outside it. */
+    box-sizing: content-box;
+    width: 390px;
+    max-width: 100%;
+    /* Never taller than the viewport allows: the whole phone stays visible
+       on a 1080p screen without the page itself scrolling. */
+    height: min(844px, calc(100vh - 2 * var(--s-6) - 22px));
+    min-height: 0;
+    margin-inline: 0;
+    border: 11px solid #0A080D;
+    border-radius: 54px;
+    background: var(--c-bg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    box-shadow:
+      0 2px 6px rgb(20 16 25 / 18%),
+      0 24px 60px rgb(20 16 25 / 22%),
+      0 60px 120px rgb(20 16 25 / 18%);
+    /* A phone has no visible track. */
+    scrollbar-width: none;
+  }
+
+  .app-shell::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The screen's own glass edge, just inside the bezel. */
+  .app-shell {
+    outline: 1px solid rgb(255 255 255 / 8%);
+    outline-offset: -12px;
+  }
+
+  /* The bar tracks window scrolling, which no longer moves inside the frame,
+     so it carries its scrolled ground from the start. Without this, content
+     would ride up under a transparent bar. */
+  .app-shell .navbar {
+    background: color-mix(in srgb, var(--c-bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: 0 0.5px 0 var(--c-separator);
+  }
+
+  /* Screens that size themselves against the viewport are sized against the
+     phone's screen instead, which is what the viewport means to an app running
+     inside a phone. Same rules, same numbers — only the reference changes. */
+  .app-shell .welcome,
+  .app-shell .analyzing {
+    min-height: 100%;
+  }
+
+  .app-shell .ask {
+    min-height: calc(100% - 150px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background:
+        radial-gradient(1100px 620px at 50% -12%, rgb(122 100 144 / 30%), transparent 62%),
+        radial-gradient(900px 560px at 88% 110%, rgb(61 48 74 / 55%), transparent 60%),
+        linear-gradient(162deg, #171320 0%, #120F19 55%, #0D0A12 100%);
+    }
+
+    .app-shell {
+      border-color: #000;
+      box-shadow:
+        0 2px 6px rgb(0 0 0 / 45%),
+        0 24px 60px rgb(0 0 0 / 50%),
+        0 60px 120px rgb(0 0 0 / 40%);
+    }
+  }
+}
