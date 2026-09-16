@@ -27,15 +27,11 @@
     height: 100%;
   }
 
-  /* The stage. Plum light through a cream ground, so the device sits in the
-     product's own palette rather than on a neutral grey. */
+  /* The stage. One pale blush, flat: the device is the thing being looked at,
+     so the ground behind it stays quiet. */
   body {
     height: 100%;
-    background:
-      radial-gradient(1150px 640px at 50% -14%, rgb(94 74 114 / 26%), transparent 64%),
-      radial-gradient(900px 560px at 86% 112%, rgb(150 128 168 / 22%), transparent 62%),
-      linear-gradient(162deg, #F5F1EE 0%, #EBE2E8 52%, #DCD1E0 100%);
-    background-attachment: fixed;
+    background: #F9F0F0;
     overflow: hidden;
   }
 
@@ -110,11 +106,10 @@
   }
 
   @media (prefers-color-scheme: dark) {
+    /* The same flat stage, at the weight a dark room asks for: a pale ground
+       behind a dark device would be the brightest thing in the room. */
     body {
-      background:
-        radial-gradient(1150px 640px at 50% -14%, rgb(122 100 144 / 26%), transparent 64%),
-        radial-gradient(900px 560px at 86% 112%, rgb(61 48 74 / 50%), transparent 62%),
-        linear-gradient(162deg, #171320 0%, #120F19 55%, #0D0A12 100%);
+      background: #16121A;
     }
 
     .app-shell {
