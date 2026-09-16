@@ -2550,3 +2550,10 @@ button {
 .record__line .tagline-pill {
   flex: none;
 }
+
+/* The brand mark is artwork: only its height is set, the width follows. */
+.badira-mark {
+  display: block;
+  width: auto;
+  user-select: none;
+}

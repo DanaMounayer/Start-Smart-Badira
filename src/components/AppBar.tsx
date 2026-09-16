@@ -24,7 +24,7 @@ export function AppBar({ initial }: { initial: string }) {
   return (
     <header className={`navbar${scrolled ? ' is-scrolled' : ''}`}>
       <span className="navbar__brand">
-        <BadiraMark size={22} tone="var(--c-primary)" />
+        <BadiraMark size={24} />
         <span className="navbar__wordmark">{t('appName')}</span>
       </span>
 
