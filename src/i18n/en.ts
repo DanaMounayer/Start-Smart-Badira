@@ -234,7 +234,7 @@ export const en = {
   guestSaveTitle: 'Want to keep this?',
   guestSaveBody: 'Creating a profile lets BADIRA remember your information for next time. It is optional \u2014 your result stays available either way.',
   guestSaveAction: 'Create a profile',
-  recordsNote: 'Assessments completed in this session. Risk and Reliability stay unavailable until the validated model is connected.',
+  recordsNote: 'Results shown in this prototype are simulated for demonstration only. No validated clinical model is connected.',
   missingNote: 'BADIRA notes what it does not have. That affects the reliability of the assessment — not your health or your risk.',
   resultContext: 'Reliability and Time',
   historyVsAssessments: 'BADIRA assessments are kept separately',
