@@ -2573,3 +2573,134 @@ button {
   color: var(--c-ink-secondary);
   font-size: 22px;
 }
+
+/* --- Scroll cue -----------------------------------------------------------
+   A hint that the screen continues, pinned to the bottom of whatever is
+   scrolling. It sits above the content but never over it: the button is small,
+   centred, and the strip below it is not interactive. */
+
+.scroll-cue {
+  /* A zero-height rail pinned to the bottom of whatever is scrolling. The
+     button hangs above it, out of flow, so the thing that announces scrolling
+     never creates any. */
+  position: sticky;
+  bottom: 0;
+  z-index: 15;
+  height: 0;
+  pointer-events: none;
+}
+
+.scroll-cue__button {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -17px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c-surface) 88%, transparent);
+  color: var(--c-ink-secondary);
+  box-shadow:
+    0 1px 2px rgb(36 29 42 / 10%),
+    0 6px 18px rgb(36 29 42 / 12%);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.scroll-cue__button.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.scroll-cue__button:active {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue__button {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* ============================================================
+   Home — compact
+   ============================================================
+
+   Home is the one screen that has to be readable at a glance, and inside a
+   390x844 device it was running about 300px past the fold. Nothing is
+   removed and no type is shrunk: the same title, ring, snapshot, list and
+   start block are all still here, drawn with tighter spacing and a smaller
+   progress ring. Scoped to `--home` so every other screen keeps the roomier
+   rhythm. */
+
+.app-main--home {
+  gap: var(--s-3);
+  padding-top: 2px;
+  padding-bottom: var(--s-2);
+}
+
+.app-main--home .large-title {
+  margin-block: 0 calc(-1 * var(--s-3));
+}
+
+/* Hero: the ring is the single biggest block on the screen, so it gives up
+   the most. The readout inside it is untouched. */
+.app-main--home .hero {
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-5) var(--s-3);
+}
+
+.app-main--home .hero__ring > svg {
+  width: 132px;
+  height: 132px;
+}
+
+.app-main--home .snapshot .section-head {
+  margin-bottom: var(--s-1);
+}
+
+.app-main--home .tags {
+  gap: 6px;
+  padding: var(--s-2) var(--s-3) 6px;
+}
+
+.app-main--home .tag {
+  padding-block: 4px;
+}
+
+.app-main--home .list__row {
+  min-height: 44px;
+  padding-block: var(--s-2);
+}
+
+.app-main--home .group {
+  gap: var(--s-1);
+}
+
+.app-main--home .text-btn--block {
+  min-height: 40px;
+}
+
+.app-main--home .start {
+  gap: var(--s-3);
+}
+
+.app-main--home .btn--primary {
+  min-height: 50px;
+}
+
+.app-main--home .start__caption {
+  line-height: 1.4;
+}
+
+/* The footer belongs to the same screenful, so it tightens with it. */
+.app-main--home ~ .app-footer {
+  padding-bottom: max(var(--s-2), env(safe-area-inset-bottom));
+}

@@ -269,6 +269,8 @@ export const en = {
   lastUpdated: 'Last updated',
   updatedToday: 'Today',
 
+  moreBelow: 'Scroll down for more',
+
   // --- Simulated screening priority -----------------------------------------
   whyAvailableTitle: 'What BADIRA had for this assessment',
   whyAvailableBody: 'Reliability and Time come from this assessment: how much of what BADIRA asked for it holds, and where the pregnancy was when you ran it. Risk waits for the validated model \u2014 no risk state is produced or implied here.',

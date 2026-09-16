@@ -22,30 +22,36 @@ export function AppBar({ initial }: { initial: string }) {
   }, [])
 
   return (
-    <header className={`navbar${scrolled ? ' is-scrolled' : ''}`}>
-      <span className="navbar__brand">
-        <BadiraMark size={32} forHeader />
-        <span className="navbar__wordmark">{t('appName')}</span>
-      </span>
+    <>
+      <header className={`navbar${scrolled ? ' is-scrolled' : ''}`}>
+        <span className="navbar__brand">
+          <BadiraMark size={32} forHeader />
+          <span className="navbar__wordmark">{t('appName')}</span>
+        </span>
 
-      <span className="navbar__actions">
-        <button type="button" className="pill-btn" onClick={toggleLanguage}>
-          {t('switchLanguage')}
-        </button>
-        <button
-          type="button"
-          className="avatar"
-          onClick={() => setAccountOpen(true)}
-          aria-label={t('openAccountMenu')}
-          aria-haspopup="dialog"
-          aria-expanded={accountOpen}
-        >
-          {initial || <PersonGlyph />}
-        </button>
-      </span>
+        <span className="navbar__actions">
+          <button type="button" className="pill-btn" onClick={toggleLanguage}>
+            {t('switchLanguage')}
+          </button>
+          <button
+            type="button"
+            className="avatar"
+            onClick={() => setAccountOpen(true)}
+            aria-label={t('openAccountMenu')}
+            aria-haspopup="dialog"
+            aria-expanded={accountOpen}
+          >
+            {initial || <PersonGlyph />}
+          </button>
+        </span>
 
+      </header>
+
+      {/* Outside the bar on purpose: the bar's backdrop-filter makes it the
+          containing block for anything fixed inside it, which collapsed this
+          overlay to the height of the bar. */}
       {accountOpen && <AccountMenu onClose={() => setAccountOpen(false)} />}
-    </header>
+    </>
   )
 }
 

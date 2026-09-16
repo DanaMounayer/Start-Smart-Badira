@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AppBar } from './AppBar'
+import { ScrollCue } from './ScrollCue'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { useSession } from '@/app/session'
 
@@ -11,7 +12,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
 
   // The welcome screen carries its own brand lockup and language toggle.
-  if (pathname === '/welcome') return <div className="app-shell">{children}</div>
+  if (pathname === '/welcome') {
+    return (
+      <div className="app-shell">
+        {children}
+        <ScrollCue />
+      </div>
+    )
+  }
 
   // The analysis transition is a full-bleed moment with no chrome at all.
   if (pathname === '/assessment/analyzing') {
@@ -25,8 +33,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
       <AppBar initial={profile?.firstName.trim().charAt(0) ?? ''} />
-      <main className="app-main">{children}</main>
+      <main className={`app-main${pathname === '/' ? ' app-main--home' : ''}`}>
+        {children}
+      </main>
       {!ownsDisclaimer && <footer className="app-footer">{t('disclaimer')}</footer>}
+      <ScrollCue />
     </div>
   )
 }

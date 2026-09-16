@@ -18,6 +18,15 @@
  */
 
 @media (min-width: 500px) and (min-height: 560px) {
+  /* The chain the stage's height is measured along. `#root` takes its height
+     from the body and the body from the document; without this the document's
+     own height is auto, every 100% below it collapses to auto, and the device
+     — which is taken out of flow to be centred — has no stage to be fitted
+     to. */
+  html {
+    height: 100%;
+  }
+
   /* The stage. Plum light through a cream ground, so the device sits in the
      product's own palette rather than on a neutral grey. */
   body {
