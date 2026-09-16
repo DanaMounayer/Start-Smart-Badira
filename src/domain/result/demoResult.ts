@@ -30,7 +30,9 @@ import type {
  *                 prototype genuinely knows: how many of the things it asked
  *                 for it ended up holding. The bands below are presentation
  *                 groupings over that count. They describe the completeness of
- *                 the information, never the user's health.
+ *                 the information, never the user's health. A guest who answers
+ *                 everything is told that it was complete for this assessment,
+ *                 since no saved profile stood behind it.
  *
  *   Time        — the recorded gestational age and the date, both factual,
  *                 presented as context. No timing rule is invented: what a
@@ -66,14 +68,24 @@ const simulatedRisk = (t: Translate): RiskReading => ({
 const simulatedReliability = (
   provided: number,
   unavailable: number,
+  hasProfile: boolean,
   t: Translate,
 ): ReliabilityReading => {
   if (unavailable === 0) {
-    return {
-      state: 'available',
-      label: t('reliabilitySimCompleteLabel'),
-      summary: t('reliabilitySimCompleteBody'),
-    }
+    // Answering everything asked is not the same as answering everything with
+    // a saved pregnancy profile behind it, and a guest is told which one this
+    // was rather than being left to assume the stronger one.
+    return hasProfile
+      ? {
+          state: 'available',
+          label: t('reliabilitySimCompleteLabel'),
+          summary: t('reliabilitySimCompleteBody'),
+        }
+      : {
+          state: 'available',
+          label: t('reliabilitySimGuestLabel'),
+          summary: t('reliabilitySimGuestBody'),
+        }
   }
   if (provided >= unavailable) {
     return {
@@ -137,7 +149,7 @@ export function buildDemoResult({ profile, answers, t }: DemoResultInput): Badir
     // Every screen reads this to label the result as a simulation.
     demo: true,
     risk: simulatedRisk(t),
-    reliability: simulatedReliability(provided, unavailable, t),
+    reliability: simulatedReliability(provided, unavailable, profile !== null, t),
     time: {
       gestationalAge: profile?.gestationalAge ?? null,
       assessedAt: new Date().toISOString(),

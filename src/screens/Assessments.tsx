@@ -48,13 +48,21 @@ export function Assessments() {
             className="record"
             onClick={() => navigate(`/result/${record.id}`)}
           >
-            <div className="record__head">
-              <p className="record__date">
-                {formatFullDate(record.completedAt, language)}
-                {/* Isolated so the clock digits never merge with the year in Arabic. */}
-                <bdi className="record__time">
-                  {formatTime(record.completedAt, language)}
-                </bdi>
+            {/* The date owns its line: with the tag beside it, a full date and
+                time wrapped at phone width. The tag rides the shorter line
+                below, where both fit without collision. */}
+            <p className="record__date">
+              {formatFullDate(record.completedAt, language)}
+              {/* Isolated so the clock digits never merge with the year in Arabic. */}
+              <bdi className="record__time">
+                {formatTime(record.completedAt, language)}
+              </bdi>
+            </p>
+            <div className="record__line">
+              <p className="record__meta">
+                {record.gestationalAge
+                  ? `${record.gestationalAge.weeks} ${t('weeksWord')} + ${record.gestationalAge.days} ${t('daysWord')}`
+                  : t('gestationUnknown')}
               </p>
               <span className="tagline-pill">
                 {record.result.risk.state === 'awaitingModel'
@@ -62,11 +70,6 @@ export function Assessments() {
                   : t('simulatedShort')}
               </span>
             </div>
-            <p className="record__meta">
-              {record.gestationalAge
-                ? `${record.gestationalAge.weeks} ${t('weeksWord')} + ${record.gestationalAge.days} ${t('daysWord')}`
-                : t('gestationUnknown')}
-            </p>
             <p className="record__counts">
               {t('infoProvided')}: {record.informationProvided} ·{' '}
               {t('infoUnavailable')}: {record.informationUnavailable}

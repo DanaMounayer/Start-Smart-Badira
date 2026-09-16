@@ -2194,13 +2194,6 @@ button {
   box-shadow: inset 0 0.5px 0 var(--c-separator);
 }
 
-.record__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3);
-}
-
 .record__date {
   font-size: 16px;
   font-weight: 600;
@@ -2537,4 +2530,23 @@ button {
   font-weight: 400;
   line-height: 1.5;
   text-align: start;
+}
+
+/* The record's secondary line carries its tag: at phone width a full date and
+   time leaves no room beside it, and this line has room to spare. */
+.record__line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  /* Clears the chevron, which is centred on this line. */
+  padding-inline-end: var(--s-4);
+}
+
+.record__line .record__meta {
+  min-width: 0;
+}
+
+.record__line .tagline-pill {
+  flex: none;
 }

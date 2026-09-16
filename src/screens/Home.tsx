@@ -69,7 +69,18 @@ export function Home() {
       <section className="group">
         <InfoList
           rows={[
-            { to: '/profile', label: 'navProfile', value: t('navProfileMeta') },
+            {
+              to: '/profile',
+              label: 'navProfile',
+              // An empty profile has no details to describe, so the row asks
+              // for them instead of claiming them.
+              value:
+                done === 0
+                  ? t('addDetails')
+                  : done === total
+                    ? t('navProfileMeta')
+                    : `${done}/${total} ${t('sectionsComplete')}`,
+            },
             {
               to: '/history',
               label: 'navHistory',
