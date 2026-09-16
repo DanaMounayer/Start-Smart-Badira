@@ -3,6 +3,7 @@ import { useStoredResult } from '@/app/useResult'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { formatFullDate } from '@/lib/format'
+import { COVERAGE_COPY, PRIORITY_COPY } from '@/domain/result/copy'
 
 /**
  * Detailed report — readable by the woman and by a clinician.
@@ -40,14 +41,18 @@ export function ResultReport() {
         />
         <Row
           label={t('riskLabel')}
-          value={result.risk.state === 'awaitingModel' ? t('awaitingModelShort') : result.risk.label}
+          value={
+            result.risk.state === 'awaitingModel'
+              ? t('awaitingModelShort')
+              : t(PRIORITY_COPY[result.risk.priority].labelKey)
+          }
         />
         <Row
           label={t('reliabilityLabel')}
           value={
             result.reliability.state === 'awaitingModel'
               ? t('awaitingModelShort')
-              : result.reliability.label
+              : t(COVERAGE_COPY[result.reliability.coverage].labelKey)
           }
         />
         <Row
@@ -55,22 +60,29 @@ export function ResultReport() {
           value={
             result.time.interpretation.state === 'awaitingModel'
               ? t('awaitingModelShort')
-              : result.time.interpretation.summary
+              : t('timeSimSummary')
           }
-          block={result.time.interpretation.state === 'available'}
+          block={result.time.interpretation.state === 'simulated'}
         />
       </dl>
 
-      <ReportList label={t('reportInformationUsed')} items={held.map((i) => i.label)} />
+      <ReportList label={t('reportInformationUsed')} items={held.map((i) => t(i.labelKey))} />
       <ReportList
         label={t('reportUnavailable')}
-        items={unavailable.map((i) => i.label)}
+        items={unavailable.map((i) => t(i.labelKey))}
         emptyLabel={t('reviewNothingMissing')}
       />
+      {/* The simulation weighs nothing, so there is no ranked list to show and
+          no "awaiting model" to fall back to: the report names what was
+          considered, which is the whole of what the prototype used. */}
       <ReportList
-        label={t('whyInfluential')}
-        items={result.factors.map((f) => f.label)}
-        emptyLabel={t('awaitingModelShort')}
+        label={t('whyConsidered')}
+        items={
+          result.factors.length > 0
+            ? result.factors.map((f) => t(f.labelKey))
+            : held.map((i) => t(i.labelKey))
+        }
+        emptyLabel={t('noneRecorded')}
       />
 
     </SubScreen>

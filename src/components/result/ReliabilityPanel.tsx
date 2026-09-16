@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { countBy, type BadiraResult } from '@/domain/result/schema'
+import { COVERAGE_COPY } from '@/domain/result/copy'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { Chevron } from '@/components/ui/Chevron'
 
@@ -20,24 +21,24 @@ export function ReliabilityPanel({ result }: { result: BadiraResult }) {
 
   // One pill for the reading's provenance: awaiting the model, or a
   // simulated demonstration state.
-  const tag =
-    result.reliability.state === 'awaitingModel'
-      ? t('awaitingModelShort')
-      : result.demo
-        ? t('simulatedShort')
-        : null
+  const reading =
+    result.reliability.state === 'simulated'
+      ? COVERAGE_COPY[result.reliability.coverage]
+      : null
 
   return (
     <section className="context-panel">
       <div className="context-panel__head">
         <h3 className="panel-title">{t('reliabilityLabel')}</h3>
-        {tag && <span className="tagline-pill">{tag}</span>}
+        <span className="tagline-pill">
+          {reading ? t('simulatedShort') : t('awaitingModelShort')}
+        </span>
       </div>
 
-      {result.reliability.state === 'available' ? (
+      {reading ? (
         <>
-          <p className="context-panel__reading">{result.reliability.label}</p>
-          <p className="context-panel__note">{result.reliability.summary}</p>
+          <p className="context-panel__reading">{t(reading.labelKey)}</p>
+          <p className="context-panel__note">{t(reading.bodyKey)}</p>
         </>
       ) : (
         <p className="context-panel__note">{t('reliabilityExplainer')}</p>

@@ -3,123 +3,59 @@ import type { Answers } from '@/domain/assessment/schema'
 import { demoSpec } from '@/domain/assessment/demoSpec'
 import { missingQuestions, providedQuestions } from '@/domain/assessment/engine'
 import { SECTIONS, sectionState } from '@/domain/profile/sections'
-import type { Strings } from '@/i18n'
-import type {
-  BadiraResult,
-  InformationItem,
-  ReliabilityReading,
-  RiskReading,
-} from './schema'
+import { simulatedPriority } from './demoPriority'
+import type { BadiraResult, CoverageId, InformationItem } from './schema'
 
 /**
  * ⚠️ SIMULATED RESULT — NOT CLINICAL OUTPUT.
  *
- * No validated prediction model is connected to this prototype. This module
- * produces a SIMULATION so the complete BADIRA experience — Risk, Reliability
- * and Time as three separate readings — can be demonstrated end to end. Every
- * screen labels it as a simulation.
+ * No validated prediction model is connected. This module produces a
+ * SIMULATION so the whole BADIRA experience — Risk, Reliability and Time as
+ * three separate readings — can be demonstrated end to end, and every screen
+ * says that is what it is showing.
  *
- * What each dimension is, and is not:
+ *   Risk        — a simulated screening-priority state chosen by the
+ *                 deliberately arbitrary lookup in `demoPriority.ts`. Nothing
+ *                 about it is weighted, scored, ranked or inferred, and the
+ *                 lookup is not ordered by how much was answered.
  *
- *   Risk        — one fixed demonstration state, identical for every demo
- *                 assessment. It is NOT derived from the user's answers, so
- *                 nothing here can imply that an answer caused or calculated
- *                 it. No probability, percentage, band or cutoff exists.
+ *   Reliability — information coverage, which the prototype genuinely knows:
+ *                 how much of what it asked for it ended up holding. It
+ *                 describes that coverage and nothing about health.
  *
- *   Reliability — varies with information coverage, which is the one thing the
- *                 prototype genuinely knows: how many of the things it asked
- *                 for it ended up holding. The bands below are presentation
- *                 groupings over that count. They describe the completeness of
- *                 the information, never the user's health. A guest who answers
- *                 everything is told that it was complete for this assessment,
- *                 since no saved profile stood behind it.
+ *   Time        — the recorded gestational age and date, both factual.
  *
- *   Time        — the recorded gestational age and the date, both factual,
- *                 presented as context. No timing rule is invented: what a
- *                 point in pregnancy means is left to the validated model.
- *
- * `awaitingModel` remains part of the schema and every screen still renders
- * it; it is simply not where the demo journey ends.
+ * The result carries ids and i18n keys only, never resolved text, so a saved
+ * result renders in whatever language it is later opened in.
  */
 
-type Translate = (key: keyof Strings) => string
-
-/**
- * The single Smart Start demo scenario.
- *
- * Deliberately constant: the same demonstration produces the same Risk state
- * every time, so a demo can never suggest that running it later, or answering
- * differently, moved a risk estimate.
- */
-const simulatedRisk = (t: Translate): RiskReading => ({
-  state: 'available',
-  label: t('riskSimLabel'),
-  // No `value`: a number here would read as a probability, and none exists.
-  summary: t('riskSimSummary'),
-})
-
-/**
- * Information coverage, grouped for presentation.
- *
- * Complete when nothing was left unanswered; partial while BADIRA holds at
- * least as much as it lacks; limited below that. These are groupings of a
- * count, and carry no clinical meaning.
- */
-const simulatedReliability = (
+/** Coverage bands: groupings of a count, with no clinical meaning. */
+const coverageOf = (
   provided: number,
   unavailable: number,
   hasProfile: boolean,
-  t: Translate,
-): ReliabilityReading => {
-  if (unavailable === 0) {
-    // Answering everything asked is not the same as answering everything with
-    // a saved pregnancy profile behind it, and a guest is told which one this
-    // was rather than being left to assume the stronger one.
-    return hasProfile
-      ? {
-          state: 'available',
-          label: t('reliabilitySimCompleteLabel'),
-          summary: t('reliabilitySimCompleteBody'),
-        }
-      : {
-          state: 'available',
-          label: t('reliabilitySimGuestLabel'),
-          summary: t('reliabilitySimGuestBody'),
-        }
-  }
-  if (provided >= unavailable) {
-    return {
-      state: 'available',
-      label: t('reliabilitySimPartialLabel'),
-      summary: t('reliabilitySimPartialBody'),
-    }
-  }
-  return {
-    state: 'available',
-    label: t('reliabilitySimLimitedLabel'),
-    summary: t('reliabilitySimLimitedBody'),
-  }
+): CoverageId => {
+  // Answering everything asked is not the same as answering everything with a
+  // saved pregnancy profile behind it, and a guest is told which one this was.
+  if (unavailable === 0) return hasProfile ? 'complete' : 'completeNoProfile'
+  return provided >= unavailable ? 'partial' : 'limited'
 }
 
 export type DemoResultInput = {
   profile: PregnancyProfile | null
   answers: Answers
-  /** Resolves an i18n key; passed in so this module stays UI-free. */
-  t: Translate
 }
 
-export function buildDemoResult({ profile, answers, t }: DemoResultInput): BadiraResult {
+export function buildDemoResult({ profile, answers }: DemoResultInput): BadiraResult {
   const context = { answers, profile }
 
   const information: InformationItem[] = [
     // What the saved profile actually holds, section by section. A profile
-    // that exists is not a profile that is filled: an empty section counts as
-    // information BADIRA did not have, or a new user would appear to have
-    // supplied everything simply by signing in.
+    // that exists is not a profile that is filled.
     ...(profile
       ? SECTIONS.map((section) => ({
           id: `profile.${section.id}`,
-          label: t(section.titleKey),
+          labelKey: section.titleKey,
           source: 'profile' as const,
           status:
             sectionState(profile, section) === 'empty'
@@ -129,13 +65,13 @@ export function buildDemoResult({ profile, answers, t }: DemoResultInput): Badir
       : []),
     ...providedQuestions(demoSpec, context).map((question) => ({
       id: question.id,
-      label: t(question.promptKey),
+      labelKey: question.promptKey,
       source: 'assessment' as const,
       status: 'provided' as const,
     })),
     ...missingQuestions(demoSpec, context).map((question) => ({
       id: question.id,
-      label: t(question.promptKey),
+      labelKey: question.promptKey,
       source: 'assessment' as const,
       status: 'unavailable' as const,
     })),
@@ -148,17 +84,19 @@ export function buildDemoResult({ profile, answers, t }: DemoResultInput): Badir
     id: 'demo',
     // Every screen reads this to label the result as a simulation.
     demo: true,
-    risk: simulatedRisk(t),
-    reliability: simulatedReliability(provided, unavailable, profile !== null, t),
+    risk: { state: 'simulated', priority: simulatedPriority(answers) },
+    reliability: {
+      state: 'simulated',
+      coverage: coverageOf(provided, unavailable, profile !== null),
+    },
     time: {
       gestationalAge: profile?.gestationalAge ?? null,
       assessedAt: new Date().toISOString(),
-      interpretation: { state: 'available', summary: t('timeSimSummary') },
+      interpretation: { state: 'simulated' },
     },
     information,
-    // No influential factors: naming what "counted most" would be a causal
-    // claim, and the simulation has no weights to report. The Why screen
-    // shows the information BADIRA actually held instead.
+    // No influential factors: naming what "counted most" would assert a cause,
+    // and the simulation has no weights to report.
     factors: [],
   }
 }

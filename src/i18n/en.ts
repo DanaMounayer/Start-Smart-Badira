@@ -174,7 +174,6 @@ export const en = {
   gestationUnknown: 'Not recorded',
   gestationLabel: 'Gestational age',
   whyLede: 'The information BADIRA took into account for this assessment.',
-  whyInfluential: 'Information that influenced this assessment',
   whyFromProfile: 'From your saved profile',
   whyFromToday: 'From today\u2019s assessment',
   whyNoModelTitle: 'No model explanation yet',
@@ -275,6 +274,17 @@ export const en = {
   lastUpdated: 'Last updated',
   updatedToday: 'Today',
 
+  // --- Simulated screening priority -----------------------------------------
+  priorityRoutineLabel: 'Routine screening priority',
+  priorityRoutineBody: 'In this simulation BADIRA places this assessment on its routine path: keep to the schedule you already have, and run another assessment when something changes.',
+  priorityEarlierLabel: 'Earlier screening priority',
+  priorityEarlierBody: 'In this simulation BADIRA suggests looking again sooner than the routine path, and bringing what you recorded to your next appointment.',
+  priorityCloserLabel: 'Closer screening priority',
+  priorityCloserBody: 'In this simulation BADIRA flags this assessment for closer attention, and suggests raising it with your care team at your next contact.',
+  whySimulationTitle: 'How this state was chosen',
+  whySimulationBody: 'The prototype matches your answers against a small set of demonstration patterns and reads the result off a fixed table. The table is arbitrary: it is not ordered by how much you answered, nothing is weighted or scored, and no answer is treated as more serious than another. It exists so a demonstration can show different outcomes.',
+  whyConsidered: 'Information considered in this simulation',
+
   // --- Prototype account / demo state switcher ------------------------------
   openAccountMenu: 'Prototype account',
   accountTitle: 'Prototype demo states',
@@ -292,8 +302,6 @@ export const en = {
 
   // --- Simulated result ------------------------------------------------------
   simulatedShort: 'Simulated',
-  riskSimLabel: 'Demonstration risk state',
-  riskSimSummary: 'This prototype shows one fixed demonstration state here so the whole experience can be seen. It is the same for every demo assessment, it is not produced from your answers, and it is not a prediction about you.',
   reliabilitySimCompleteLabel: 'Complete information',
   reliabilitySimCompleteBody: 'BADIRA held everything this assessment asked for. Reliability describes that coverage \u2014 it says nothing about your health.',
   reliabilitySimGuestLabel: 'Complete for this assessment',
@@ -304,8 +312,6 @@ export const en = {
   reliabilitySimLimitedLabel: 'Limited information',
   reliabilitySimLimitedBody: 'More of what this assessment asked for was unavailable than was available. Reliability describes that coverage \u2014 it says nothing about your health.',
   timeSimSummary: 'This result is fixed to the point in the pregnancy recorded above and to the day it was made. What that timing means clinically comes from the validated model and is not simulated here.',
-  whySimulatedTitle: 'This result is simulated',
-  whySimulatedBody: 'The risk state shown is fixed demonstration content, not a calculation from your answers, so there is nothing weighted to explain. What BADIRA actually held is listed below.',
 } as const
 
 /** Every dictionary must supply exactly these keys. */

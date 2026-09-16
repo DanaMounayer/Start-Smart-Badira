@@ -1,42 +1,44 @@
+import type { Strings } from '@/i18n'
 import type { GestationalAge } from '@/domain/types'
 
 /**
  * The shape of a BADIRA result.
  *
  * Risk, Reliability and Time are three separate readings and are never
- * combined into one score. Each model-derived reading is a discriminated
- * union whose default state is `awaitingModel`: no validated prediction model
- * is connected, so there is nothing to report and the UI says so rather than
- * showing a placeholder number.
+ * combined into one score.
  *
- * When a validated model arrives it supplies the `available` variant. No
- * component contains a threshold, band or cutoff — the UI renders whatever
- * valid result object it is given.
+ * Nothing here holds user-facing text. A result is stored on the record that
+ * produced it and outlives the language it was made in, so it carries ids and
+ * i18n keys only and every screen resolves them at render. Storing resolved
+ * strings is what froze a result in the language it was completed in.
+ *
+ * Each reading keeps its `awaitingModel` state for the day a validated model
+ * is connected and the prototype's simulation is no longer what is shown.
  */
 
-/** BADIRA's estimated risk. Labels and any value come from the model. */
+/**
+ * A simulated screening-priority state. Ids only — the wording lives in the
+ * dictionaries, and the mapping from an assessment to one of these lives in
+ * `demoPriority.ts`, which explains how arbitrary it is.
+ */
+export type PriorityId = 'routine' | 'earlier' | 'closer'
+
+/** How much of what the assessment asked for it ended up holding. */
+export type CoverageId = 'complete' | 'completeNoProfile' | 'partial' | 'limited'
+
 export type RiskReading =
   | { state: 'awaitingModel' }
-  | {
-      state: 'available'
-      /** Model-supplied classification, already localized. */
-      label: string
-      /** Optional numeric output, if the validated model provides one. */
-      value?: { amount: number; unit: 'percent' }
-      /** Plain-language summary, model-supplied. */
-      summary: string
-    }
+  | { state: 'simulated'; priority: PriorityId }
 
 /**
- * How well the available information supports this particular prediction.
+ * How much information this particular assessment had behind it.
  *
- * Explicitly NOT a measure of the user's health risk. There is no formula
- * here and none is invented; the counts the UI shows are a factual inventory
- * of what the assessment did and did not have.
+ * Explicitly NOT a measure of the user's health risk, and not a score: the
+ * coverage id below groups a count of what was and was not provided.
  */
 export type ReliabilityReading =
   | { state: 'awaitingModel' }
-  | { state: 'available'; label: string; summary: string }
+  | { state: 'simulated'; coverage: CoverageId }
 
 /** Where the pregnancy was when this result was produced. */
 export type TimeContext = {
@@ -44,10 +46,10 @@ export type TimeContext = {
   /** ISO timestamp of the assessment. */
   assessedAt: string
   /**
-   * Why this timing matters clinically. Awaiting validated interpretation —
-   * no timing rule is invented.
+   * What this timing means. The prototype presents the recorded point in the
+   * pregnancy and says so; no timing rule is invented.
    */
-  interpretation: { state: 'awaitingModel' } | { state: 'available'; summary: string }
+  interpretation: { state: 'awaitingModel' } | { state: 'simulated' }
 }
 
 export type InformationSource = 'profile' | 'assessment'
@@ -61,32 +63,33 @@ export type InformationStatus =
 /** One piece of information the assessment did or did not have. */
 export type InformationItem = {
   id: string
-  label: string
+  /** An i18n key, never a resolved string — see the note at the top. */
+  labelKey: keyof Strings
   source: InformationSource
   status: InformationStatus
 }
 
 /**
- * A factor the model weighed. Populated only from the model's own
- * explanation output — never inferred by the UI, and never described as
- * having caused anything.
+ * A factor the model weighed. Populated only from a model's own explanation
+ * output — never inferred by the UI, and never described as having caused
+ * anything. The simulation produces none: it has no weights to report.
  */
 export type InfluentialFactor = {
   id: string
-  label: string
+  labelKey: keyof Strings
   source: InformationSource
 }
 
 export type BadiraResult = {
   id: string
-  /** True when any model-derived content is demonstration data, not clinical. */
+  /** True when the readings are demonstration content rather than clinical. */
   demo: boolean
   risk: RiskReading
   reliability: ReliabilityReading
   time: TimeContext
   /** Factual inventory drawn from the profile and this assessment. */
   information: InformationItem[]
-  /** Model explanation output. Empty until a model supplies it. */
+  /** Model explanation output. Empty in the prototype. */
   factors: InfluentialFactor[]
 }
 

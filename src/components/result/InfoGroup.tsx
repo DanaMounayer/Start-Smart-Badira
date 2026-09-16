@@ -27,7 +27,7 @@ export function InfoGroup({
         <ul className={`info-list info-list--${tone}`}>
           {items.map((item) => (
             <li key={`${item.source}-${item.id}`} className="info-list__item">
-              <span className="info-list__label">{item.label}</span>
+              <span className="info-list__label">{t(item.labelKey)}</span>
               <span className="info-list__source">
                 {item.source === 'profile' ? t('sourceProfile') : t('sourceToday')}
               </span>

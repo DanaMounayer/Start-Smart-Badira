@@ -41,11 +41,11 @@ export function Result() {
         {result.demo && <p className="demo-note">{t('demoResultNote')}</p>}
       </header>
 
-      <RiskPanel risk={result.risk} resultId={id} demo={result.demo} />
+      <RiskPanel risk={result.risk} resultId={id} />
 
       <section className="context-stack" aria-label={t('resultContext')}>
         <ReliabilityPanel result={{ ...result, id }} />
-        <TimePanel time={result.time} demo={result.demo} />
+        <TimePanel time={result.time} />
       </section>
 
       <nav className="list" aria-label={t('resultActions')}>

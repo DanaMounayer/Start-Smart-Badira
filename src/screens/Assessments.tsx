@@ -4,6 +4,7 @@ import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
 import { Chevron } from '@/components/ui/Chevron'
 import { formatFullDate, formatTime } from '@/lib/format'
+import { PRIORITY_COPY } from '@/domain/result/copy'
 
 /**
  * Previous BADIRA assessments.
@@ -70,6 +71,11 @@ export function Assessments() {
                   : t('simulatedShort')}
               </span>
             </div>
+            {record.result.risk.state === 'simulated' && (
+              <p className="record__state">
+                {t(PRIORITY_COPY[record.result.risk.priority].labelKey)}
+              </p>
+            )}
             <p className="record__counts">
               {t('infoProvided')}: {record.informationProvided} ·{' '}
               {t('infoUnavailable')}: {record.informationUnavailable}

@@ -38,11 +38,11 @@ export function ResultWhy() {
 
       {result.factors.length > 0 ? (
         <section className="info-group">
-          <h2 className="eyebrow">{t('whyInfluential')}</h2>
+          <h2 className="eyebrow">{t('whyConsidered')}</h2>
           <ul className="info-list">
             {result.factors.map((factor) => (
               <li key={factor.id} className="info-list__item">
-                <span className="info-list__label">{factor.label}</span>
+                <span className="info-list__label">{t(factor.labelKey)}</span>
                 <span className="info-list__source">
                   {factor.source === 'profile' ? t('sourceProfile') : t('sourceToday')}
                 </span>
@@ -53,10 +53,10 @@ export function ResultWhy() {
       ) : (
         <section className="notice">
           <p className="notice__title">
-            {result.demo ? t('whySimulatedTitle') : t('whyNoModelTitle')}
+            {result.demo ? t('whySimulationTitle') : t('whyNoModelTitle')}
           </p>
           <p className="notice__body">
-            {result.demo ? t('whySimulatedBody') : t('whyNoModelBody')}
+            {result.demo ? t('whySimulationBody') : t('whyNoModelBody')}
           </p>
         </section>
       )}

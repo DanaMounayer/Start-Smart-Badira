@@ -2557,3 +2557,10 @@ button {
   width: auto;
   user-select: none;
 }
+
+/* The record's simulated state, so history agrees with the result it opens. */
+.record__state {
+  color: var(--c-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
