@@ -1,0 +1,120 @@
+/**
+ * Desktop presentation wrapper.
+ *
+ * The prototype is a phone app, and on anything wider than a phone it
+ * otherwise floats in an empty page. Wherever there is room around it, this
+ * puts the same app inside a device on a stage.
+ *
+ * The device is always 390x844 of screen — the viewport the app is built for —
+ * inside a 6px shell. When the panel cannot fit that, the whole device is
+ * scaled down as one: screen, shell, radius and app together, so the phone
+ * keeps its proportions instead of turning into a short wide box. The app
+ * still lays out at 390x844 behind the transform, so nothing inside it
+ * reflows, and it scrolls inside the device as it always did.
+ *
+ * `presentationFit.ts` supplies the scale, because a ratio of two lengths is
+ * the one thing CSS cannot compute. Everything else is here, and all of it is
+ * scoped to the media query, so below it the app is untouched.
+ */
+
+@media (min-width: 500px) and (min-height: 560px) {
+  /* The chain the stage's height is measured along. `#root` takes its height
+     from the body and the body from the document; without this the document's
+     own height is auto, every 100% below it collapses to auto, and the device
+     — which is taken out of flow to be centred — has no stage to be fitted
+     to. */
+  html {
+    height: 100%;
+  }
+
+  /* The stage. One pale blush, flat: the device is the thing being looked at,
+     so the ground behind it stays quiet. */
+  body {
+    height: 100%;
+    background: #F9F0F0;
+    overflow: hidden;
+  }
+
+  #root {
+    box-sizing: border-box;
+    /* The device is centred on the stage rather than laid out in it: at less
+       than full scale its layout box is taller than the stage, and centring
+       that box would push the device it draws off the bottom. */
+    position: relative;
+    display: block;
+    /* The space actually available: the artifact panel's height is not what
+       the viewport units describe. */
+    height: 100%;
+    min-height: 0;
+    padding: clamp(30px, 5vh, 56px) clamp(16px, 4vw, 40px);
+    overflow: hidden;
+  }
+
+  /* The device. 390 of screen plus 6 of shell on each side, at the app's own
+     aspect; the scale fits it to the stage without changing that. */
+  .app-shell {
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 402px;
+    height: 856px;
+    min-height: 0;
+    margin-inline: 0;
+    border: 6px solid #15111C;
+    border-radius: 40px;
+    background: var(--c-bg);
+    /* The screen — and the app's own background — is clipped to the inner
+       radius by the scroll container. */
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    transform: translate(-50%, -50%) scale(var(--device-scale, 1));
+    transform-origin: center center;
+    box-shadow:
+      0 1px 2px rgb(20 16 25 / 10%),
+      0 18px 40px rgb(20 16 25 / 14%),
+      0 48px 90px rgb(20 16 25 / 12%);
+    /* A phone has no visible track. */
+    scrollbar-width: none;
+  }
+
+  .app-shell::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The bar tracks window scrolling, which no longer moves inside the device,
+     so it carries its scrolled ground from the start. Without this, content
+     would ride up under a transparent bar. */
+  .app-shell .navbar {
+    background: color-mix(in srgb, var(--c-bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: 0 0.5px 0 var(--c-separator);
+  }
+
+  /* Screens that size themselves against the viewport are sized against the
+     phone's screen instead, which is what the viewport means to an app running
+     inside a phone. Same rules, same numbers — only the reference changes. */
+  .app-shell .welcome,
+  .app-shell .analyzing {
+    min-height: 100%;
+  }
+
+  .app-shell .ask {
+    min-height: calc(100% - 150px);
+  }
+
+  /* The stage does not follow the system theme. BADIRA's own dark theme still
+     runs inside the phone; the ground it sits on is the presentation's, and it
+     stays the same blush in either. */
+  @media (prefers-color-scheme: dark) {
+    .app-shell {
+      border-color: #2A2333;
+      box-shadow:
+        0 1px 2px rgb(0 0 0 / 40%),
+        0 18px 40px rgb(0 0 0 / 45%),
+        0 48px 90px rgb(0 0 0 / 38%);
+    }
+  }
+}

@@ -1,0 +1,121 @@
+/**
+ * BADIRA design tokens.
+ *
+ * Palette from the BADIRA website — deep aubergine, warm cream, blush-lilac,
+ * muted pastels. The system geometry follows premium iOS conventions: large
+ * radii, soft surfaces separated by contrast rather than borders, and
+ * elevation used sparingly.
+ *
+ * Direction-agnostic: stylesheets use logical properties so one rule set
+ * serves LTR and RTL.
+ */
+:root {
+  /* Brand — deep aubergine */
+  --c-plum-900: #261E2D;
+  --c-plum-800: #312742;
+  --c-plum-700: #3B2F45;
+  --c-plum-500: #6B5780;
+  --c-plum-300: #A796B5;
+
+  /* Muted accents */
+  --c-blush: #F3E3E3;
+  --c-butter: #F0ECD2;
+  --c-sage: #E1EBE0;
+  --c-lilac: #EFE7EC;
+
+  /* Grounds & ink */
+  --c-bg: #F7F4F1;
+  --c-surface: #FFFFFF;
+  --c-surface-sunken: #F0EAEE;
+  --c-ink: #241D2A;
+  --c-ink-secondary: #5E5566;
+  /* Passes WCAG AA (>=4.5:1) on cream, surface, sunken and lilac grounds. */
+  --c-ink-tertiary: #6E6478;
+  /* Hairline separators, inset iOS-style. Never a full card border. */
+  --c-separator: rgb(36 29 42 / 8%);
+
+  /* Roles */
+  --c-primary: var(--c-plum-700);
+  --c-on-primary: #FCFAF8;
+  --c-tint: var(--c-plum-500);
+  --c-track: rgb(59 47 69 / 10%);
+  --c-spark: var(--c-plum-500);
+
+  /* History-chart series — validated for CVD separation and contrast in both
+     modes; never used to imply a risk level. */
+  --c-series-1: #7A4CA8;
+  --c-series-2: #B45A2B;
+  --c-grid: rgb(36 29 42 / 8%);
+
+  /* Spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 28px;
+  --s-7: 40px;
+
+  /* Radii — iOS continuous-corner scale */
+  --r-row: 14px;
+  --r-card: 22px;
+  --r-hero: 30px;
+  --r-pill: 999px;
+
+  /* Elevation — one soft shadow, used sparingly */
+  --shadow-soft: 0 1px 3px rgb(36 29 42 / 3%), 0 10px 30px rgb(36 29 42 / 5%);
+  --shadow-cta: 0 4px 16px rgb(59 47 69 / 22%);
+
+  /* Type */
+  --font-sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-arabic: 'SF Arabic', 'Noto Kufi Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
+    serif;
+
+  /* Type scale by role, not by screen. A heading picks the tier that matches
+     what it is, so the same kind of thing is the same size everywhere. */
+  --t-title-l: 30px; /* the screen's own subject */
+  --t-title-m: 24px; /* a sub-screen's title */
+  --t-title-s: 17px; /* a panel or card title */
+  --t-eyebrow: 13px; /* a group label above a list */
+
+  /* Layout */
+  --app-max-width: 430px;
+  --gutter: 20px;
+}
+
+[dir='rtl'] {
+  --font-sans: var(--font-arabic);
+  --font-display: var(--font-arabic);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #141019;
+    --c-surface: #1F1926;
+    --c-surface-sunken: #2A2233;
+    --c-ink: #F3EEF3;
+    --c-ink-secondary: #B3A9BA;
+    --c-ink-tertiary: #857B8D;
+    --c-separator: rgb(243 238 243 / 10%);
+
+    --c-primary: #7A6490;
+    --c-on-primary: #FCFAF8;
+    --c-tint: #B9A6C9;
+    --c-track: rgb(243 238 243 / 12%);
+    --c-spark: var(--c-plum-300);
+
+    --c-series-1: #9B6BC9;
+    --c-series-2: #C8763F;
+    --c-grid: rgb(243 238 243 / 10%);
+
+    --c-blush: #3E2C33;
+    --c-butter: #3B3826;
+    --c-sage: #2C3829;
+    --c-lilac: #2E2637;
+
+    --shadow-soft: 0 1px 3px rgb(0 0 0 / 30%), 0 10px 30px rgb(0 0 0 / 28%);
+    --shadow-cta: 0 4px 16px rgb(0 0 0 / 40%);
+  }
+}
