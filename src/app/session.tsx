@@ -59,20 +59,25 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<PregnancyProfile | null>(saraProfile)
   const [assessments, setAssessments] = useState<AssessmentRecord[]>([])
 
+  // Switching demo identity starts that identity from scratch: records belong
+  // to whoever produced them and must not follow the next person in.
   const signInAsDemo = useCallback(() => {
     setMode('signedIn')
     setProfile(saraProfile)
+    setAssessments([])
   }, [])
 
   const signInAsNewUser = useCallback(() => {
     setMode('signedIn')
     setProfile(emptyProfile())
+    setAssessments([])
   }, [])
 
   const continueAsGuest = useCallback(() => {
     setMode('guest')
     // A guest carries no profile, so no signed-in data can reach them.
     setProfile(null)
+    setAssessments([])
   }, [])
 
   const updateProfile = useCallback((patch: Partial<PregnancyProfile>) => {

@@ -18,6 +18,7 @@ const isoDay = (date: Date) => date.toISOString().slice(0, 10)
 export const saraProfile: PregnancyProfile = {
   id: 'demo-sara',
   firstName: 'Sara',
+  displayName: { en: 'Sara', ar: 'سارة' },
   age: 31,
   pregnancyNumber: 2,
   gestationalAge: { ...GESTATIONAL_AGE },
@@ -64,6 +65,8 @@ export const saraProfile: PregnancyProfile = {
 export const emptyProfile = (): PregnancyProfile => ({
   id: 'new-user',
   firstName: '',
+  // A new user has not told us their name, so nothing is assumed.
+  displayName: null,
   age: null,
   pregnancyNumber: null,
   gestationalAge: null,

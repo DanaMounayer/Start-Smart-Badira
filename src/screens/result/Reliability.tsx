@@ -36,18 +36,34 @@ export function ResultReliability() {
         emptyLabel={t('reviewNothingMissing')}
       />
 
-      <details className="disclosure">
-        <summary className="disclosure__summary">
-          <span>{t('reliabilityHas')}</span>
-          <span className="disclosure__count">{held.length}</span>
+      <details className="summary summary--known">
+        <summary className="summary__head">
+          <span className="summary__label">{t('reliabilityHas')}</span>
+          <span className="summary__count">{held.length}</span>
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+            className="summary__caret"
+          >
+            <path
+              d="m4 6 4 4 4-4"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </summary>
-        <div className="disclosure__body">
+        <div className="summary__body">
           <InfoGroup label="" items={held} />
         </div>
       </details>
       {unavailable.length > 0 && (
         <section className="info-group">
-          <h2 className="info-eyebrow">{t('reliabilityCouldHelp')}</h2>
+          <h2 className="eyebrow">{t('reliabilityCouldHelp')}</h2>
           <p className="info-group__body">{t('reliabilityCouldHelpBody')}</p>
         </section>
       )}

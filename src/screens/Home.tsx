@@ -6,6 +6,7 @@ import { StartBlock } from '@/components/home/StartBlock'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { useSession } from '@/app/session'
 import { isToday } from '@/lib/format'
+import { profileCompletion } from '@/domain/profile/sections'
 
 /**
  * Screen 1 — home.
@@ -15,17 +16,19 @@ import { isToday } from '@/lib/format'
  * /assessments.
  */
 export function Home() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const { profile, assessments } = useSession()
   const navigate = useNavigate()
 
   if (!profile) return <GuestHome />
 
   const readings = profile.bloodPressureReadings
+  const { done, total } = profileCompletion(profile)
+  const incompleteSections = total - done
 
   return (
     <>
-      <h1 className="large-title">{t('greeting')}</h1>
+      <h1 className="large-title">{greet(profile.displayName, language, t)}</h1>
 
       {profile.gestationalAge && profile.estimatedDueDate ? (
         <GestationHero
@@ -95,14 +98,33 @@ export function Home() {
           t('chipProfileSaved'),
           isToday(profile.lastUpdatedAt) ? t('chipUpdatedToday') : t('chipUpdatedRecently'),
         ]}
-        reliabilityNote={{
-          text: t('reliabilityHint'),
-          action: t('reliabilityHintAction'),
-          to: '/profile/update',
-        }}
+        // Only claimed when the profile genuinely has unfilled sections.
+        reliabilityNote={
+          incompleteSections > 0
+            ? {
+                text: t('reliabilityHintSections'),
+                action: t('reliabilityHintAction2'),
+                to: '/profile/update',
+              }
+            : undefined
+        }
       />
     </>
   )
+}
+
+/**
+ * Greets by name when the profile has one, and without a name when it does
+ * not. A new user is never addressed as somebody else.
+ */
+function greet(
+  displayName: Record<'en' | 'ar', string> | null,
+  language: 'en' | 'ar',
+  t: (key: 'greetingHello') => string,
+): string {
+  const hello = t('greetingHello')
+  if (!displayName) return hello
+  return `${hello}${language === 'ar' ? '، ' : ', '}${displayName[language]}`
 }
 
 /** Guest variant: nothing is saved, so the screen asks rather than reports. */
@@ -117,23 +139,19 @@ function GuestHome() {
       <section className="empty-hero">
         <p className="empty-hero__title">{t('guestHeroTitle')}</p>
         <p className="empty-hero__body">{t('guestHeroBody')}</p>
+        {/* A guest has no profile to add to, so this leads where it can
+            actually help rather than to a page that refuses them. */}
         <button
           type="button"
           className="btn btn--tinted"
-          onClick={() => navigate('/profile/update')}
+          onClick={() => navigate('/signin')}
         >
-          {t('addMyInformation')}
+          {t('guestSignInToSave')}
         </button>
       </section>
 
-      <StartBlock
-        indicators={[]}
-        reliabilityNote={{
-          text: t('guestReliabilityHint'),
-          action: t('addMyInformation'),
-          to: '/profile/update',
-        }}
-      />
+      {/* States the consequence without repeating the action above it. */}
+      <StartBlock indicators={[]} reliabilityNote={{ text: t('guestReliabilityHint') }} />
 
       <button type="button" className="text-btn text-btn--block" onClick={() => navigate('/welcome')}>
         {t('signIn')}

@@ -2166,10 +2166,28 @@ button {
 /* --- Assessment records --- */
 
 .record {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 4px;
+  width: 100%;
   padding: var(--s-4);
+  padding-inline-end: var(--s-6);
+  text-align: start;
+  transition: background-color 140ms ease;
+}
+
+.record:active {
+  background: var(--c-surface-sunken);
+}
+
+.record__go {
+  position: absolute;
+  inset-inline-end: var(--s-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-ink-tertiary);
 }
 
 .record + .record {

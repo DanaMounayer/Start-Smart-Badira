@@ -10,26 +10,33 @@ export function StartBlock({
   reliabilityNote,
 }: {
   indicators: string[]
-  reliabilityNote?: { text: string; action: string; to: string }
+  /** `action`/`to` are optional: some notes only state a consequence. */
+  reliabilityNote?: { text: string; action?: string; to?: string }
 }) {
   const { t } = useLanguage()
   const navigate = useNavigate()
 
   return (
     <section className="start">
-      {reliabilityNote && (
-        <button
-          type="button"
-          className="note"
-          onClick={() => navigate(reliabilityNote.to)}
-        >
-          <InfoGlyph />
-          <span className="note__text">
-            {reliabilityNote.text}
-            <strong>{reliabilityNote.action}</strong>
-          </span>
-        </button>
-      )}
+      {reliabilityNote &&
+        (reliabilityNote.to ? (
+          <button
+            type="button"
+            className="note"
+            onClick={() => navigate(reliabilityNote.to as string)}
+          >
+            <InfoGlyph />
+            <span className="note__text">
+              {reliabilityNote.text}
+              <strong>{reliabilityNote.action}</strong>
+            </span>
+          </button>
+        ) : (
+          <p className="note">
+            <InfoGlyph />
+            <span className="note__text">{reliabilityNote.text}</span>
+          </p>
+        ))}
 
       <button
         type="button"

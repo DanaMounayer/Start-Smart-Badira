@@ -38,7 +38,13 @@ export type PreviousPregnancy = {
  */
 export type PregnancyProfile = {
   id: string
+  /** Used for the avatar initial. Empty until the user has a name. */
   firstName: string
+  /**
+   * How to address this person, per language. Null when unknown, in which
+   * case the app greets without a name rather than guessing one.
+   */
+  displayName: Record<'en' | 'ar', string> | null
   age: number | null
   /** 1 = first pregnancy, 2 = second, and so on. */
   pregnancyNumber: number | null

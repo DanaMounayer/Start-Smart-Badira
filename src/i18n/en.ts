@@ -240,6 +240,10 @@ export const en = {
   historyVsAssessments: 'BADIRA assessments are kept separately',
   historyEmptyTitle: 'No measurements yet',
   historyEmptyBody: 'Readings you add appear here with their dates, so BADIRA can draw on them over time.',
+  greetingHello: 'Hello',
+  guestSignInToSave: 'Sign in to save your information',
+  reliabilityHintSections: 'Part of your profile is not filled in yet.',
+  reliabilityHintAction2: 'Complete it',
   // --- History view ---
   historyTitle: 'Measurement history',
   chartTitle: 'Blood pressure over time',

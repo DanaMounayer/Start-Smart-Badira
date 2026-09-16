@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSession } from '@/app/session'
 import { useLanguage } from '@/i18n/LanguageProvider'
 import { SubScreen } from '@/components/SubScreen'
+import { Chevron } from '@/components/ui/Chevron'
 import { formatFullDate } from '@/lib/format'
 
 /**
@@ -39,7 +40,14 @@ export function Assessments() {
     <SubScreen title={t('navAssessments')}>
       <div className="list">
         {assessments.map((record) => (
-          <div key={record.id} className="record">
+          // The record owns its result snapshot, so opening it needs no
+          // recomputation — the existing result route renders it by id.
+          <button
+            key={record.id}
+            type="button"
+            className="record"
+            onClick={() => navigate(`/result/${record.id}`)}
+          >
             <div className="record__head">
               <p className="record__date">
                 {formatFullDate(record.completedAt, language)}
@@ -55,7 +63,10 @@ export function Assessments() {
               {t('infoProvided')}: {record.informationProvided} ·{' '}
               {t('infoUnavailable')}: {record.informationUnavailable}
             </p>
-          </div>
+            <span className="record__go" aria-hidden="true">
+              <Chevron />
+            </span>
+          </button>
         ))}
       </div>
       <p className="fineprint">{t('recordsNote')}</p>

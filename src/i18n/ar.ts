@@ -242,6 +242,10 @@ export const ar: Strings = {
   historyVsAssessments: 'تُحفظ تقييمات بادرة بشكل منفصل',
   historyEmptyTitle: 'لا توجد قياسات بعد',
   historyEmptyBody: 'ستظهر هنا القياسات التي تضيفينها مع تواريخها، لتستند إليها بادرة عبر الزمن.',
+  greetingHello: 'مرحبًا',
+  guestSignInToSave: 'سجّلي الدخول لحفظ معلوماتك',
+  reliabilityHintSections: 'لم يُستكمل جزء من ملفك بعد.',
+  reliabilityHintAction2: 'أكمليه',
   // --- History view ---
   historyTitle: 'سجل القياسات',
   chartTitle: 'ضغط الدم عبر الزمن',

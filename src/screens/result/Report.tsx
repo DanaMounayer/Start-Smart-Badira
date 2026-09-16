@@ -96,7 +96,7 @@ function ReportList({
 }) {
   return (
     <section className="info-group">
-      <h2 className="info-eyebrow">{label}</h2>
+      <h2 className="eyebrow">{label}</h2>
       {items.length === 0 ? (
         <p className="info-group__empty">{emptyLabel}</p>
       ) : (
