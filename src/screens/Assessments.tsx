@@ -56,7 +56,11 @@ export function Assessments() {
                   {formatTime(record.completedAt, language)}
                 </bdi>
               </p>
-              <span className="tagline-pill">{t('awaitingModelShort')}</span>
+              <span className="tagline-pill">
+                {record.result.risk.state === 'awaitingModel'
+                  ? t('awaitingModelShort')
+                  : t('simulatedShort')}
+              </span>
             </div>
             <p className="record__meta">
               {record.gestationalAge

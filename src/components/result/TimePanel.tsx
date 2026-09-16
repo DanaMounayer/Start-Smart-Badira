@@ -10,18 +10,25 @@ import { progressOf, TERM_WEEKS } from '@/domain/gestation'
  * it read as timeless. The clinical meaning of that timing is deliberately
  * absent: no timing rule is invented.
  */
-export function TimePanel({ time }: { time: TimeContext }) {
+export function TimePanel({ time, demo }: { time: TimeContext; demo: boolean }) {
   const { t, language } = useLanguage()
   const age = time.gestationalAge
   const position = age ? progressOf(age) : 0
+
+  // One pill for the reading's provenance: awaiting the model, or a
+  // simulated demonstration state.
+  const tag =
+    time.interpretation.state === 'awaitingModel'
+      ? t('awaitingModelShort')
+      : demo
+        ? t('simulatedShort')
+        : null
 
   return (
     <section className="context-panel">
       <div className="context-panel__head">
         <h3 className="panel-title">{t('timeLabel')}</h3>
-        {time.interpretation.state === 'awaitingModel' && (
-          <span className="tagline-pill">{t('awaitingModelShort')}</span>
-        )}
+        {tag && <span className="tagline-pill">{tag}</span>}
       </div>
 
       <p className="time-at">
@@ -54,7 +61,9 @@ export function TimePanel({ time }: { time: TimeContext }) {
         <span className="time-stamp">
           {t('timeAssessedOn')} {formatFullDate(time.assessedAt, language)}
         </span>
-        {t('timeBelongsNote')}
+        {time.interpretation.state === 'available'
+          ? time.interpretation.summary
+          : t('timeBelongsNote')}
       </p>
     </section>
   )

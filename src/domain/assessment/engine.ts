@@ -76,8 +76,19 @@ export const answeredCount = (
   }
 }
 
-export const isMissing = (answer: Answer | undefined): boolean =>
-  answer === undefined || answer.kind === 'missing'
+/**
+ * Whether an answer carries a usable value.
+ *
+ * Only completeness is judged here — a blood pressure with one half still
+ * empty is not a reading yet. Nothing about what a value means is decided.
+ */
+export const hasValue = (answer: Answer | undefined): boolean => {
+  if (answer === undefined || answer.kind === 'missing') return false
+  if (answer.kind === 'bp') return answer.systolic !== '' && answer.diastolic !== ''
+  return true
+}
+
+export const isMissing = (answer: Answer | undefined): boolean => !hasValue(answer)
 
 /** What Stage 3 will consume: which visible questions ended without a value. */
 export const missingQuestions = (
@@ -91,7 +102,4 @@ export const providedQuestions = (
   spec: AssessmentSpec,
   context: RuleContext,
 ): Question[] =>
-  visibleQuestions(spec, context).filter((q) => {
-    const answer = context.answers[q.id]
-    return answer !== undefined && answer.kind !== 'missing'
-  })
+  visibleQuestions(spec, context).filter((q) => hasValue(context.answers[q.id]))

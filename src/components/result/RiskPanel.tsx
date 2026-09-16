@@ -6,21 +6,37 @@ import { Chevron } from '@/components/ui/Chevron'
 /**
  * Risk — the result's centre of gravity.
  *
- * Contains no threshold, band or colour rule. When the model has not produced
- * a reading, the panel says so plainly instead of showing a placeholder
- * number that could be mistaken for an estimate.
+ * Contains no threshold, band or colour rule. It renders whichever reading it
+ * is given: a simulated demonstration state in this prototype, plainly
+ * labelled as one, or the awaiting-model notice when no reading exists.
  */
-export function RiskPanel({ risk, resultId }: { risk: RiskReading; resultId: string }) {
+export function RiskPanel({
+  risk,
+  resultId,
+  demo,
+}: {
+  risk: RiskReading
+  resultId: string
+  /** Marks an available reading as demonstration content, not a prediction. */
+  demo: boolean
+}) {
   const { t } = useLanguage()
   const navigate = useNavigate()
+
+  // One pill for the reading's provenance: awaiting the model, or a
+  // simulated demonstration state.
+  const tag =
+    risk.state === 'awaitingModel'
+      ? t('awaitingModelShort')
+      : demo
+        ? t('simulatedShort')
+        : null
 
   return (
     <section className="risk">
       <div className="risk__head">
         <p className="risk__eyebrow">{t('riskLabel')}</p>
-        {risk.state === 'awaitingModel' && (
-          <span className="tagline-pill">{t('awaitingModelShort')}</span>
-        )}
+        {tag && <span className="tagline-pill">{tag}</span>}
       </div>
 
       {risk.state === 'awaitingModel' ? (
@@ -30,7 +46,9 @@ export function RiskPanel({ risk, resultId }: { risk: RiskReading; resultId: str
         </>
       ) : (
         <>
-          <h2 className="risk__headline risk__headline--value">
+          {/* The oversized treatment belongs to a number. A label alone reads
+              at the panel's normal headline size. */}
+          <h2 className={`risk__headline${risk.value ? ' risk__headline--value' : ''}`}>
             {risk.label}
             {risk.value && (
               <span className="risk__value">

@@ -6,6 +6,7 @@ import type { Strings } from '@/i18n'
 import { useAssessment } from '@/app/assessmentSession'
 import { useSession } from '@/app/session'
 import { useLanguage } from '@/i18n/LanguageProvider'
+import { SECTIONS, sectionState } from '@/domain/profile/sections'
 import { StepProgress } from '@/components/assessment/StepProgress'
 
 /**
@@ -28,8 +29,12 @@ export function AssessmentReview() {
   const provided = providedQuestions(demoSpec, context)
   const missing = missingQuestions(demoSpec, context)
 
+  // Only sections the profile actually holds something for. An empty profile
+  // reuses nothing, however signed in its owner is.
   const savedItems: (keyof Strings)[] = profile
-    ? ['introHaveProfile', 'introHaveHistory', 'introHaveFamily', 'introHaveMeasurements']
+    ? SECTIONS.filter((section) => sectionState(profile, section) !== 'empty').map(
+        (section) => section.titleKey,
+      )
     : []
 
   return (
@@ -195,7 +200,10 @@ function describe(
   if (!answer) return t('notAnswered')
   switch (answer.kind) {
     case 'bp':
-      return `${answer.systolic}/${answer.diastolic}`
+      // Half a reading is not a reading, and is reported as unanswered.
+      return answer.systolic === '' || answer.diastolic === ''
+        ? t('notAnswered')
+        : `${answer.systolic}/${answer.diastolic}`
     case 'number':
       return String(answer.value)
     case 'choice': {

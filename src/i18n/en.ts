@@ -154,7 +154,7 @@ export const en = {
   // --- Stage 3: result (model readings await the validated model) ---
   badiraResult: 'BADIRA result',
   resultActions: 'Result options',
-  demoResultNote: 'Prototype: BADIRA\u2019s validated model is not connected, so no risk or reliability value is produced.',
+  demoResultNote: 'Prototype simulation. No validated model is connected \u2014 this result is demonstration content, not a clinical prediction.',
   awaitingModelShort: 'Awaiting model',
   riskAwaitingTitle: 'Your risk estimate is not available yet',
   riskAwaitingBody: 'BADIRA will show its preeclampsia risk estimate here once the validated model is connected. Nothing is estimated in this prototype.',
@@ -274,6 +274,35 @@ export const en = {
   noSymptoms: 'None reported',
   lastUpdated: 'Last updated',
   updatedToday: 'Today',
+
+  // --- Prototype account / demo state switcher ------------------------------
+  openAccountMenu: 'Prototype account',
+  accountTitle: 'Prototype demo states',
+  accountNote: 'Not a sign-in. This prototype carries three prepared demo experiences, and this is how you move between them.',
+  accountSara: 'Returning user \u2014 Sara',
+  accountSaraMeta: 'Saved profile, history and measurements',
+  accountNew: 'New user',
+  accountNewMeta: 'Empty profile, so onboarding runs',
+  accountGuest: 'Guest',
+  accountGuestMeta: 'No profile, nothing saved',
+  accountCurrent: 'Current',
+  accountSwitchNote: 'Switching clears the assessment in progress and the records of the demo you are leaving.',
+  accountProfileRow: 'View saved profile',
+  closeLabel: 'Close',
+
+  // --- Simulated result ------------------------------------------------------
+  simulatedShort: 'Simulated',
+  riskSimLabel: 'Demonstration risk state',
+  riskSimSummary: 'This prototype shows one fixed demonstration state here so the whole experience can be seen. It is the same for every demo assessment, it is not produced from your answers, and it is not a prediction about you.',
+  reliabilitySimCompleteLabel: 'Complete information',
+  reliabilitySimCompleteBody: 'BADIRA held everything this assessment asked for. Reliability describes that coverage \u2014 it says nothing about your health.',
+  reliabilitySimPartialLabel: 'Partial information',
+  reliabilitySimPartialBody: 'BADIRA held most of what this assessment asked for, and some of it was unavailable. Reliability describes that coverage \u2014 it says nothing about your health.',
+  reliabilitySimLimitedLabel: 'Limited information',
+  reliabilitySimLimitedBody: 'More of what this assessment asked for was unavailable than was available. Reliability describes that coverage \u2014 it says nothing about your health.',
+  timeSimSummary: 'This result is fixed to the point in the pregnancy recorded above and to the day it was made. What that timing means clinically comes from the validated model and is not simulated here.',
+  whySimulatedTitle: 'This result is simulated',
+  whySimulatedBody: 'The risk state shown is fixed demonstration content, not a calculation from your answers, so there is nothing weighted to explain. What BADIRA actually held is listed below.',
 } as const
 
 /** Every dictionary must supply exactly these keys. */

@@ -18,16 +18,30 @@ export function ReliabilityPanel({ result }: { result: BadiraResult }) {
   const provided = countBy(result.information, 'provided')
   const unavailable = countBy(result.information, 'unavailable')
 
+  // One pill for the reading's provenance: awaiting the model, or a
+  // simulated demonstration state.
+  const tag =
+    result.reliability.state === 'awaitingModel'
+      ? t('awaitingModelShort')
+      : result.demo
+        ? t('simulatedShort')
+        : null
+
   return (
     <section className="context-panel">
       <div className="context-panel__head">
         <h3 className="panel-title">{t('reliabilityLabel')}</h3>
-        {result.reliability.state === 'awaitingModel' && (
-          <span className="tagline-pill">{t('awaitingModelShort')}</span>
-        )}
+        {tag && <span className="tagline-pill">{tag}</span>}
       </div>
 
-      <p className="context-panel__note">{t('reliabilityExplainer')}</p>
+      {result.reliability.state === 'available' ? (
+        <>
+          <p className="context-panel__reading">{result.reliability.label}</p>
+          <p className="context-panel__note">{result.reliability.summary}</p>
+        </>
+      ) : (
+        <p className="context-panel__note">{t('reliabilityExplainer')}</p>
+      )}
 
       <dl className="tally">
         <div className="tally__item">

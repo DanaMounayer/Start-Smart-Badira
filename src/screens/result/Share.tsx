@@ -29,6 +29,8 @@ export function ResultShare() {
 
   const lines = [
     `${t('badiraResult')} — ${formatFullDate(result.time.assessedAt, language)}`,
+    // Whoever this is pasted to must see the prototype boundary first.
+    ...(result.demo ? [t('demoResultNote')] : []),
     `${t('gestationLabel')}: ${
       age ? `${age.weeks} ${t('weeksWord')} + ${age.days} ${t('daysWord')}` : t('gestationUnknown')
     }`,

@@ -22,7 +22,12 @@ export type MissingReason = 'unknown' | 'unavailable' | 'skipped'
 export type Answer =
   | { kind: 'choice'; values: string[] }
   | { kind: 'number'; value: number }
-  | { kind: 'bp'; systolic: number; diastolic: number }
+  /**
+   * A reading being typed. Either half may still be empty — without that the
+   * first digit of a pair could not be held anywhere, and the field would
+   * clear itself as the user typed.
+   */
+  | { kind: 'bp'; systolic: number | ''; diastolic: number | '' }
   | { kind: 'fromProfile' }
   | { kind: 'missing'; reason: MissingReason }
 

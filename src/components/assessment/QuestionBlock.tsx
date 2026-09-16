@@ -109,8 +109,10 @@ export function QuestionBlock({
           diastolic={answer?.kind === 'bp' ? answer.diastolic : ''}
           usingSaved={answer?.kind === 'fromProfile'}
           onChange={(systolic, diastolic) =>
+            // A half-typed reading is kept as it is entered; the engine decides
+            // separately that it is not a value until both halves are there.
             onAnswer(
-              systolic === '' || diastolic === ''
+              systolic === '' && diastolic === ''
                 ? undefined
                 : { kind: 'bp', systolic, diastolic },
             )

@@ -10,9 +10,11 @@ import { InfoGroup } from '@/components/result/InfoGroup'
  * Wording is deliberately non-causal: this screen names information that the
  * assessment took into account, never reasons the user "is at risk".
  *
- * Until a validated model produces explanation output, `result.factors` is
- * empty and the screen shows the information used instead — which is factual.
- * The ranked-factor list appears as soon as the model supplies one.
+ * `result.factors` stays empty in the prototype: the simulated risk state is
+ * not calculated from the answers, so there is nothing weighted to rank, and
+ * inventing one would assert a cause. The screen explains that and shows the
+ * information BADIRA held instead — which is factual. The ranked-factor list
+ * appears as soon as a validated model supplies one.
  */
 export function ResultWhy() {
   const { t } = useLanguage()
@@ -50,8 +52,12 @@ export function ResultWhy() {
         </section>
       ) : (
         <section className="notice">
-          <p className="notice__title">{t('whyNoModelTitle')}</p>
-          <p className="notice__body">{t('whyNoModelBody')}</p>
+          <p className="notice__title">
+            {result.demo ? t('whySimulatedTitle') : t('whyNoModelTitle')}
+          </p>
+          <p className="notice__body">
+            {result.demo ? t('whySimulatedBody') : t('whyNoModelBody')}
+          </p>
         </section>
       )}
 

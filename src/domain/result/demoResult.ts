@@ -2,53 +2,117 @@ import type { PregnancyProfile } from '@/domain/types'
 import type { Answers } from '@/domain/assessment/schema'
 import { demoSpec } from '@/domain/assessment/demoSpec'
 import { missingQuestions, providedQuestions } from '@/domain/assessment/engine'
+import { SECTIONS, sectionState } from '@/domain/profile/sections'
 import type { Strings } from '@/i18n'
-import type { BadiraResult, InformationItem } from './schema'
+import type {
+  BadiraResult,
+  InformationItem,
+  ReliabilityReading,
+  RiskReading,
+} from './schema'
 
 /**
- * ⚠️ DEMO RESULT — NOT CLINICAL OUTPUT.
+ * ⚠️ SIMULATED RESULT — NOT CLINICAL OUTPUT.
  *
- * No validated prediction model is connected to this prototype, so this
- * module deliberately produces NO risk value, NO reliability value and NO
- * timing interpretation. Those three readings are returned in their
- * `awaitingModel` state and the UI reports exactly that.
+ * No validated prediction model is connected to this prototype. This module
+ * produces a SIMULATION so the complete BADIRA experience — Risk, Reliability
+ * and Time as three separate readings — can be demonstrated end to end. Every
+ * screen labels it as a simulation.
  *
- * What this module does produce is factual, not inferred:
- *   - the inventory of information the assessment did and did not have,
- *     read straight from the saved profile and the user's own answers;
- *   - the gestational age and date the assessment was made.
+ * What each dimension is, and is not:
  *
- * Nothing here contains a threshold, band, cutoff, percentage, probability,
- * timing rule or recommendation. When the validated model is connected, it
- * supplies the `available` variants and this file's role shrinks to wiring.
+ *   Risk        — one fixed demonstration state, identical for every demo
+ *                 assessment. It is NOT derived from the user's answers, so
+ *                 nothing here can imply that an answer caused or calculated
+ *                 it. No probability, percentage, band or cutoff exists.
+ *
+ *   Reliability — varies with information coverage, which is the one thing the
+ *                 prototype genuinely knows: how many of the things it asked
+ *                 for it ended up holding. The bands below are presentation
+ *                 groupings over that count. They describe the completeness of
+ *                 the information, never the user's health.
+ *
+ *   Time        — the recorded gestational age and the date, both factual,
+ *                 presented as context. No timing rule is invented: what a
+ *                 point in pregnancy means is left to the validated model.
+ *
+ * `awaitingModel` remains part of the schema and every screen still renders
+ * it; it is simply not where the demo journey ends.
  */
 
-/** Profile sections BADIRA reuses. Labels are i18n keys, resolved by the UI. */
-const PROFILE_ITEMS: { id: string; labelKey: keyof Strings }[] = [
-  { id: 'profile.pregnancy', labelKey: 'introHaveProfile' },
-  { id: 'profile.health', labelKey: 'introHaveHistory' },
-  { id: 'profile.family', labelKey: 'introHaveFamily' },
-  { id: 'profile.measurements', labelKey: 'introHaveMeasurements' },
-]
+type Translate = (key: keyof Strings) => string
+
+/**
+ * The single Smart Start demo scenario.
+ *
+ * Deliberately constant: the same demonstration produces the same Risk state
+ * every time, so a demo can never suggest that running it later, or answering
+ * differently, moved a risk estimate.
+ */
+const simulatedRisk = (t: Translate): RiskReading => ({
+  state: 'available',
+  label: t('riskSimLabel'),
+  // No `value`: a number here would read as a probability, and none exists.
+  summary: t('riskSimSummary'),
+})
+
+/**
+ * Information coverage, grouped for presentation.
+ *
+ * Complete when nothing was left unanswered; partial while BADIRA holds at
+ * least as much as it lacks; limited below that. These are groupings of a
+ * count, and carry no clinical meaning.
+ */
+const simulatedReliability = (
+  provided: number,
+  unavailable: number,
+  t: Translate,
+): ReliabilityReading => {
+  if (unavailable === 0) {
+    return {
+      state: 'available',
+      label: t('reliabilitySimCompleteLabel'),
+      summary: t('reliabilitySimCompleteBody'),
+    }
+  }
+  if (provided >= unavailable) {
+    return {
+      state: 'available',
+      label: t('reliabilitySimPartialLabel'),
+      summary: t('reliabilitySimPartialBody'),
+    }
+  }
+  return {
+    state: 'available',
+    label: t('reliabilitySimLimitedLabel'),
+    summary: t('reliabilitySimLimitedBody'),
+  }
+}
 
 export type DemoResultInput = {
   profile: PregnancyProfile | null
   answers: Answers
   /** Resolves an i18n key; passed in so this module stays UI-free. */
-  t: (key: keyof Strings) => string
+  t: Translate
 }
 
 export function buildDemoResult({ profile, answers, t }: DemoResultInput): BadiraResult {
   const context = { answers, profile }
 
   const information: InformationItem[] = [
-    // Saved profile sections count as available only when a profile exists.
+    // What the saved profile actually holds, section by section. A profile
+    // that exists is not a profile that is filled: an empty section counts as
+    // information BADIRA did not have, or a new user would appear to have
+    // supplied everything simply by signing in.
     ...(profile
-      ? PROFILE_ITEMS.map((item) => ({
-          id: item.id,
-          label: t(item.labelKey),
+      ? SECTIONS.map((section) => ({
+          id: `profile.${section.id}`,
+          label: t(section.titleKey),
           source: 'profile' as const,
-          status: 'provided' as const,
+          status:
+            sectionState(profile, section) === 'empty'
+              ? ('unavailable' as const)
+              : ('provided' as const),
         }))
       : []),
     ...providedQuestions(demoSpec, context).map((question) => ({
@@ -65,20 +129,24 @@ export function buildDemoResult({ profile, answers, t }: DemoResultInput): Badir
     })),
   ]
 
+  const provided = information.filter((item) => item.status === 'provided').length
+  const unavailable = information.length - provided
+
   return {
     id: 'demo',
+    // Every screen reads this to label the result as a simulation.
     demo: true,
-    // All three readings await the validated model. Nothing is fabricated.
-    risk: { state: 'awaitingModel' },
-    reliability: { state: 'awaitingModel' },
+    risk: simulatedRisk(t),
+    reliability: simulatedReliability(provided, unavailable, t),
     time: {
       gestationalAge: profile?.gestationalAge ?? null,
       assessedAt: new Date().toISOString(),
-      interpretation: { state: 'awaitingModel' },
+      interpretation: { state: 'available', summary: t('timeSimSummary') },
     },
     information,
-    // Model explanation output. Empty until a model produces it — the UI
-    // shows the information used instead of inventing weighted factors.
+    // No influential factors: naming what "counted most" would be a causal
+    // claim, and the simulation has no weights to report. The Why screen
+    // shows the information BADIRA actually held instead.
     factors: [],
   }
 }

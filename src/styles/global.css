@@ -2372,3 +2372,169 @@ button {
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
+
+/* The reading itself — the label the model (or, here, the simulation) gave. */
+.context-panel__reading {
+  font-size: var(--t-title-s);
+  font-weight: 620;
+  letter-spacing: -0.01em;
+}
+
+/* --- Prototype demo-state sheet ------------------------------------------
+   A sheet rather than a dropdown: it is a mode change, and it should read as
+   one. The scrim is a button so a tap outside dismisses it. */
+
+.sheet-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.sheet-layer__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(36 29 42 / 34%);
+  animation: scrim-in 180ms ease both;
+}
+
+.sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin-inline: auto;
+  padding: var(--s-3) var(--gutter) max(var(--s-5), env(safe-area-inset-bottom));
+  border-start-start-radius: var(--r-hero);
+  border-start-end-radius: var(--r-hero);
+  background: var(--c-bg);
+  box-shadow: 0 -12px 40px rgb(36 29 42 / 18%);
+  animation: sheet-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.sheet:focus {
+  outline: none;
+}
+
+.sheet__grip {
+  align-self: center;
+  width: 36px;
+  height: 5px;
+  border-radius: var(--r-pill);
+  background: var(--c-track);
+}
+
+.sheet__title {
+  margin-top: var(--s-2);
+  font-size: var(--t-title-m);
+  font-weight: 640;
+  letter-spacing: -0.02em;
+}
+
+.sheet__note {
+  color: var(--c-ink-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sheet__rows {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-card);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.sheet__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: 60px;
+  padding: var(--s-3) var(--s-4);
+  text-align: start;
+}
+
+.sheet__rows .sheet__row + .sheet__row {
+  box-shadow: inset 0 0.5px 0 var(--c-separator);
+}
+
+.sheet__row:active {
+  background: var(--c-surface-sunken);
+}
+
+.sheet__row--plain {
+  margin-top: var(--s-1);
+  border-radius: var(--r-card);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.sheet__row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sheet__row-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sheet__row-meta {
+  color: var(--c-ink-tertiary);
+  font-size: 13px;
+}
+
+.sheet__row.is-current .sheet__row-label {
+  color: var(--c-primary);
+}
+
+.sheet__current {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--c-lilac);
+  color: var(--c-primary);
+  font-size: 11.5px;
+  font-weight: 640;
+}
+
+.sheet__fineprint {
+  color: var(--c-ink-tertiary);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* A reading that is a sentence reads as prose, not as a right-aligned value. */
+.report__row--block {
+  display: block;
+}
+
+.report__row--block dd {
+  margin-top: var(--s-1);
+  color: var(--c-ink-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: start;
+}

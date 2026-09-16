@@ -57,6 +57,7 @@ export function ResultReport() {
               ? t('awaitingModelShort')
               : result.time.interpretation.summary
           }
+          block={result.time.interpretation.state === 'available'}
         />
       </dl>
 
@@ -76,9 +77,18 @@ export function ResultReport() {
   )
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({
+  label,
+  value,
+  block = false,
+}: {
+  label: string
+  value: string
+  /** Stacks label over value, for a reading that is a sentence, not a term. */
+  block?: boolean
+}) {
   return (
-    <div className="report__row">
+    <div className={`report__row${block ? ' report__row--block' : ''}`}>
       <dt>{label}</dt>
       <dd>{value}</dd>
     </div>

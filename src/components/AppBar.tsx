@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { BadiraMark } from './BadiraMark'
+import { AccountMenu } from './AccountMenu'
 import { useLanguage } from '@/i18n/LanguageProvider'
 
 /**
@@ -11,8 +11,8 @@ import { useLanguage } from '@/i18n/LanguageProvider'
  */
 export function AppBar({ initial }: { initial: string }) {
   const { t, toggleLanguage } = useLanguage()
-  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
+  const [accountOpen, setAccountOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4)
@@ -35,12 +35,16 @@ export function AppBar({ initial }: { initial: string }) {
         <button
           type="button"
           className="avatar"
-          onClick={() => navigate('/profile')}
-          aria-label={t('yourProfile')}
+          onClick={() => setAccountOpen(true)}
+          aria-label={t('openAccountMenu')}
+          aria-haspopup="dialog"
+          aria-expanded={accountOpen}
         >
           {initial || <PersonGlyph />}
         </button>
       </span>
+
+      {accountOpen && <AccountMenu onClose={() => setAccountOpen(false)} />}
     </header>
   )
 }
