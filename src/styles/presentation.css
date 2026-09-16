@@ -105,13 +105,10 @@
     min-height: calc(100% - 150px);
   }
 
+  /* The stage does not follow the system theme. BADIRA's own dark theme still
+     runs inside the phone; the ground it sits on is the presentation's, and it
+     stays the same blush in either. */
   @media (prefers-color-scheme: dark) {
-    /* The same flat stage, at the weight a dark room asks for: a pale ground
-       behind a dark device would be the brightest thing in the room. */
-    body {
-      background: #16121A;
-    }
-
     .app-shell {
       border-color: #2A2333;
       box-shadow:
