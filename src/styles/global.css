@@ -137,7 +137,9 @@ button {
 .navbar__brand {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  /* The mark and the wordmark are one lockup; at 32px the mark needs the
+     extra air to read as set beside the name rather than crowding it. */
+  gap: 10px;
 }
 
 .navbar__wordmark {
