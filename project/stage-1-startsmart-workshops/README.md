@@ -31,6 +31,6 @@ shown as exactly that.
 
 ## What changed afterwards
 
-Stage 1 made the case for the product. [Stage 2](../stage-2-finals-and-senior-project-i/) builds the
-clinical and methodological foundation underneath it — what preeclampsia actually is, how it is
-found in practice, and which data could support a real model.
+Stage 1 made the case for the product. [Stage 2](../stage-2-startsmart-final/) builds the clinical
+and evidence base underneath it — what preeclampsia actually is, how it is found in practice, and
+which data could support a real model.

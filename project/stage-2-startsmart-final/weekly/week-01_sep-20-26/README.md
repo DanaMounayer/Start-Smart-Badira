@@ -14,8 +14,6 @@
   screening), then joined into one combined report with a single argument and a one-page figure.
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
-- **Proposal and feasibility study** completed, including the TELOS assessment.
-- **Schedule** built as a Gantt chart covering the full SDLC to May.
 - **Business Model Canvas** completed, all nine blocks.
 
 ## Moved to next week

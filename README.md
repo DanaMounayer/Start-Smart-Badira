@@ -77,7 +77,7 @@ shown as exactly that, and the user is told what would strengthen it.
 | --- | --- |
 | 🌐 **[BADIRA Website](https://badira-ai.vercel.app/)** | The BADIRA project website — what BADIRA is and the thinking behind it. |
 | 📱 **[Interactive Prototype](https://badira-ai.netlify.app/)** | The working SmartStart prototype documented in this repository. |
-| 📚 **[Project Record](project/)** | The project behind the prototype — stages, deliverables and the weekly record. |
+| 📚 **[StartSmart Record](project/)** | The competition work behind the prototype — stages, deliverables and the weekly record. |
 
 The prototype runs entirely in the browser — no installation, no account, no data
 leaves the device. Open it on a phone for the intended experience, or on a
@@ -195,7 +195,7 @@ src/
   i18n/         Language provider and the EN/AR dictionaries
   styles/       Design tokens, global styles, desktop presentation frame
 docs/           Screen map
-project/        Project record — stages, deliverables, weekly log
+project/        StartSmart record — stages, deliverables, weekly log
 ```
 
 Adding a string means adding the key to `src/i18n/en.ts` and its Arabic value to
