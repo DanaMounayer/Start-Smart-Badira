@@ -9,18 +9,17 @@ to building the clinical and evidence base underneath it.
 
 ## Weekly record
 
-One folder per week, named after its week plan. Each holds the plan itself and the work produced
-that week.
+One folder per week, named after its week plan. Each holds the plan and the work produced that week.
 
-| Week | Tasks | Folder |
+| Week | Focus | Folder |
 |---|---|---|
-| **20–26 September** | Task 1 — clinical understanding · Task 2 — finding the data · Task 3 — judge channel | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
+| **20–26 September** | Task 1 clinical understanding · Task 2 finding the data · Task 3 judge channel | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
+| **27 September – 3 October** | *to be set from the week plan* | [Week-Plan (27 September - 3 October)](<Week-Plan (27 September - 3 October)/>) |
 
 <!-- Add a row per week, newest at the bottom, so the table reads as a timeline. -->
 
 **To add a week:** create a folder named `Week-Plan (DD-DD Month)`, put the plan and that week's
-work inside it, and add a row above. A short `README.md` in the folder saying what was planned, what
-was done and what moved is what turns a pile of files into a record.
+work inside it, add a `README.md` saying what was planned and what was done, and add a row above.
 
 ---
 

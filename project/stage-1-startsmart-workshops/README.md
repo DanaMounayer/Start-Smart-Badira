@@ -14,8 +14,10 @@ from a problem statement to a pitched, working product.
 | **[Workshop Day 1.pptx](<Workshop Day 1.pptx>)** | First workshop day |
 | **[Workshop Day 2.pptx](<Workshop Day 2.pptx>)** | Second workshop day |
 | **[Badira - Final ppt.pptx](<Badira - Final ppt.pptx>)** | The final pitch deck presented in round 1 |
+| **[Badira Competitors Analysis.pdf](<Badira Competitors Analysis.pdf>)** | Who else is in this space, and what BADIRA does differently |
 | **[Business Model Canva.docx](<Business Model Canva.docx>)** | The Business Model Canvas — all nine blocks |
 | **[Demo.mp4](<Demo.mp4>)** | Video walkthrough of the prototype |
+| **[Badira Logo.png](<Badira Logo.png>)** | The brand mark |
 | **[prototype-v1/](prototype-v1/)** | What the pitched prototype did, with screenshots |
 
 ---

@@ -10,7 +10,7 @@
 
 | | Task | Deliverable | Status |
 |---|---|---|---|
-| **1** | Clinical understanding — what preeclampsia is, how it is found in practice, and where BADIRA sits | *not uploaded yet* | ⚠️ Missing from this folder |
+| **1** | Clinical understanding — what preeclampsia is, how it is found in practice, and where BADIRA sits | [Badira_Task1_Report.pdf](<Badira_Task1_Report.pdf>) | ✅ |
 | **2** | Finding the data — candidate datasets assessed and ranked | [Badira_Task2_Data.docx](<Badira_Task2_Data.docx>) | ✅ |
 | **3** | Judge channel — competition communication and judge questions | [Badira_Task3_Judge_Channel.docx](<Badira_Task3_Judge_Channel.docx>) | 🔄 Draft |
 
@@ -20,7 +20,6 @@
 
 - **Task 1** — three research documents written (clinical definition, risk-factor screening, FMF
   screening), then joined into one combined report with a single argument and a one-page figure.
-  *The report itself still needs to be uploaded here.*
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
 
