@@ -1,19 +1,22 @@
 # Stage 1 — StartSmart Workshops
 
-The first round of the **StartSmart Universities Challenge**: a series of workshops that took the
-idea from a problem statement to a pitched, working product.
+The first round of the **StartSmart Universities Challenge**: two workshop days that took the idea
+from a problem statement to a pitched, working product.
 
 **Outcome: qualified for the final in Riyadh.**
 
 ---
 
-## What was produced
+## What is here
 
-| Deliverable | What it is |
+| File | What it is |
 |---|---|
-| **[Pitch deck](pitch-deck/)** | The competition pitch, in English and Arabic |
-| **[Business Model Canvas](business-model-canvas/)** | All nine blocks — who we serve, how we reach them, how it pays for itself |
-| **[Prototype v1](prototype-v1/)** | The bilingual, mobile-first working prototype pitched in this round |
+| **[Workshop Day 1.pptx](<Workshop Day 1.pptx>)** | First workshop day |
+| **[Workshop Day 2.pptx](<Workshop Day 2.pptx>)** | Second workshop day |
+| **[Badira - Final ppt.pptx](<Badira - Final ppt.pptx>)** | The final pitch deck presented in round 1 |
+| **[Business Model Canva.docx](<Business Model Canva.docx>)** | The Business Model Canvas — all nine blocks |
+| **[Demo.mp4](<Demo.mp4>)** | Video walkthrough of the prototype |
+| **[prototype-v1/](prototype-v1/)** | What the pitched prototype did, with screenshots |
 
 ---
 

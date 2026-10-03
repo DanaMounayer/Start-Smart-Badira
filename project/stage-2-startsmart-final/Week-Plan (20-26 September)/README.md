@@ -2,17 +2,17 @@
 
 **Focus:** build the clinical foundation and find out what data actually exists.
 
-**[`Week-Plan-20-26-September.pdf`](Week-Plan-20-26-September.pdf)** — the plan as issued.
+**[Badira-Week-Plan-20-26-September.pdf](<Badira-Week-Plan-20-26-September.pdf>)** — the plan as issued.
 
 ---
 
 ## The three tasks
 
-| | Task | What it covers | Status |
+| | Task | Deliverable | Status |
 |---|---|---|---|
-| **1** | [Clinical understanding](task-1-clinical-understanding/) | What preeclampsia is, how it is found in practice, and where BADIRA sits | ✅ Report complete |
-| **2** | [Finding the data](task-2-finding-the-data/) | Nine candidate datasets assessed, ranked and recommended | ✅ Document complete |
-| **3** | [Judge channel](task-3-judge-channel/) | Competition communication and judge questions | 🔄 Draft |
+| **1** | Clinical understanding — what preeclampsia is, how it is found in practice, and where BADIRA sits | *not uploaded yet* | ⚠️ Missing from this folder |
+| **2** | Finding the data — candidate datasets assessed and ranked | [Badira_Task2_Data.docx](<Badira_Task2_Data.docx>) | ✅ |
+| **3** | Judge channel — competition communication and judge questions | [Badira_Task3_Judge_Channel.docx](<Badira_Task3_Judge_Channel.docx>) | 🔄 Draft |
 
 ---
 
@@ -20,6 +20,7 @@
 
 - **Task 1** — three research documents written (clinical definition, risk-factor screening, FMF
   screening), then joined into one combined report with a single argument and a one-page figure.
+  *The report itself still needs to be uploaded here.*
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
 
