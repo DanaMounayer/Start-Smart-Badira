@@ -12,7 +12,8 @@ idea from a problem statement to a pitched, working product.
 | Deliverable | What it is |
 |---|---|
 | **[Pitch deck](pitch-deck/)** | The competition pitch, in English and Arabic |
-| **[Prototype v1](prototype-v1/)** | The bilingual, mobile-first working prototype — the version pitched in this round |
+| **[Business Model Canvas](business-model-canvas/)** | All nine blocks — who we serve, how we reach them, how it pays for itself |
+| **[Prototype v1](prototype-v1/)** | The bilingual, mobile-first working prototype pitched in this round |
 
 ---
 

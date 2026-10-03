@@ -7,21 +7,30 @@ to building the clinical and evidence base underneath it.
 
 ---
 
-## Deliverables
+## The three tasks
 
-| | Deliverable | What it covers | Status |
+| | Task | What it covers | Status |
 |---|---|---|---|
-| **Task 1** | [Clinical understanding](task-1-clinical-understanding/) | What preeclampsia is, how it is found in practice, and where BADIRA sits | ✅ Report complete |
-| **Task 2** | [Finding the data](task-2-finding-the-data/) | Nine candidate datasets assessed, ranked and recommended | ✅ Document complete |
-| **Task 3** | [Judge channel](task-3-judge-channel/) | Competition communication and judge questions | 🔄 Draft |
-| | [Business Model Canvas](business-model-canvas/) | All nine blocks, filled | ✅ Complete |
+| **1** | [Clinical understanding](task-1-clinical-understanding/) | What preeclampsia is, how it is found in practice, and where BADIRA sits | ✅ Report complete |
+| **2** | [Finding the data](task-2-finding-the-data/) | Nine candidate datasets assessed, ranked and recommended | ✅ Document complete |
+| **3** | [Judge channel](task-3-judge-channel/) | Competition communication and judge questions | 🔄 Draft |
 
 ---
 
-## The weekly record
+## Weekly record
 
-[**`weekly/`**](weekly/) holds one folder per week: the plan, and what actually happened. It is the
-clearest view of how the work is progressing.
+One folder per week, named by its week plan. Each holds the plan itself and a short record of what
+actually happened.
+
+| Week | Folder |
+|---|---|
+| 20–26 September | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
+
+<!-- Add a row per week, newest at the bottom, so the table reads as a timeline. -->
+
+**To add a week:** create a folder named `Week-Plan (DD-DD Month)`, drop the plan inside, copy
+[`_WEEK-TEMPLATE.md`](_WEEK-TEMPLATE.md) in as `README.md` and fill it in, then add a row above.
+Three lines is enough — the point is the trail, not the prose.
 
 ---
 

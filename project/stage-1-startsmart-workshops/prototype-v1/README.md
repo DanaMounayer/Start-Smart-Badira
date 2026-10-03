@@ -2,9 +2,13 @@
 
 The working prototype pitched in the StartSmart first round.
 
-**The code is this repository.** It is not duplicated here — the prototype at the repository root
-(`src/`, `public/`, `index.html`) *is* prototype v1. This folder records that fact and holds the
-screenshots as they stood at the end of Stage 1.
+## Where the code is
+
+**The whole prototype is this repository.** It is not copied into this folder, on purpose — the app
+at the repository root (`src/`, `public/`, `index.html`, the build config) *is* prototype v1. It is
+where the app builds and deploys from, and nothing in `project/` touches it.
+
+This folder records that v1 exists, what it did, and what it looked like.
 
 | | |
 |---|---|

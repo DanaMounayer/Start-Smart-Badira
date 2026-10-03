@@ -1,4 +1,4 @@
-# Week 01 — 20–26 September
+# Week Plan — 20–26 September
 
 **Focus:** build the clinical foundation and find out what data actually exists.
 
@@ -14,7 +14,6 @@
   screening), then joined into one combined report with a single argument and a one-page figure.
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
-- **Business Model Canvas** completed, all nine blocks.
 
 ## Moved to next week
 

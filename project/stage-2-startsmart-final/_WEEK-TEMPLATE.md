@@ -1,4 +1,4 @@
-# Week NN — <dates>
+# Week Plan — <dates>
 
 **Focus:** <one line — what this week was for>
 
