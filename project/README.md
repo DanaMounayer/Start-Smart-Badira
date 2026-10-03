@@ -26,12 +26,10 @@ Each stage folder is self-contained: its own README, its own deliverables, its o
 
 ## Quick links
 
-- **[Task 1 — clinical understanding](stage-2-startsmart-final/task-1-clinical-understanding/)**
-- **[Task 2 — finding the data](stage-2-startsmart-final/task-2-finding-the-data/)**
-- **[Task 3 — judge channel](stage-2-startsmart-final/task-3-judge-channel/)**
+- **[Week-Plan (20-26 September)](<stage-2-startsmart-final/Week-Plan (20-26 September)/>)** — Tasks 1, 2 and 3
 - **[Business Model Canvas](stage-1-startsmart-workshops/business-model-canvas/)**
+- **[Pitch deck](stage-1-startsmart-workshops/pitch-deck/)**
 - **[Prototype v1](stage-1-startsmart-workshops/prototype-v1/)**
-- **[Weekly record](stage-2-startsmart-final/)** — one folder per week, inside Stage 2
 
 ---
 
@@ -44,10 +42,11 @@ project/
 │   ├── business-model-canvas/
 │   └── prototype-v1/                    # v1 = the prototype at the repository root
 └── stage-2-startsmart-final/            # now
-    ├── task-1-clinical-understanding/
-    ├── task-2-finding-the-data/
-    ├── task-3-judge-channel/
     └── Week-Plan (20-26 September)/     # one folder per week
+        ├── Week-Plan-20-26-September.pdf
+        ├── task-1-clinical-understanding/
+        ├── task-2-finding-the-data/
+        └── task-3-judge-channel/
 ```
 
 **The prototype's code is not copied into Stage 1.** It lives at the repository root, where it

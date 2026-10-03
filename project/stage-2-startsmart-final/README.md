@@ -7,30 +7,20 @@ to building the clinical and evidence base underneath it.
 
 ---
 
-## The three tasks
-
-| | Task | What it covers | Status |
-|---|---|---|---|
-| **1** | [Clinical understanding](task-1-clinical-understanding/) | What preeclampsia is, how it is found in practice, and where BADIRA sits | ✅ Report complete |
-| **2** | [Finding the data](task-2-finding-the-data/) | Nine candidate datasets assessed, ranked and recommended | ✅ Document complete |
-| **3** | [Judge channel](task-3-judge-channel/) | Competition communication and judge questions | 🔄 Draft |
-
----
-
 ## Weekly record
 
-One folder per week, named by its week plan. Each holds the plan itself and a short record of what
-actually happened.
+One folder per week, named after its week plan. Each holds the plan itself, a short record of what
+happened, and the work produced that week.
 
-| Week | Folder |
-|---|---|
-| 20–26 September | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
+| Week | Tasks | Record |
+|---|---|---|
+| **20–26 September** | Task 1 — clinical understanding · Task 2 — finding the data · Task 3 — judge channel | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
 
 <!-- Add a row per week, newest at the bottom, so the table reads as a timeline. -->
 
 **To add a week:** create a folder named `Week-Plan (DD-DD Month)`, drop the plan inside, copy
-[`_WEEK-TEMPLATE.md`](_WEEK-TEMPLATE.md) in as `README.md` and fill it in, then add a row above.
-Three lines is enough — the point is the trail, not the prose.
+[`_WEEK-TEMPLATE.md`](_WEEK-TEMPLATE.md) in as `README.md`, and add a row above. The week's tasks
+go in folders inside it.
 
 ---
 

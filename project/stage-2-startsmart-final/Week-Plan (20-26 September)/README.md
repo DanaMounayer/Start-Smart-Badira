@@ -2,11 +2,19 @@
 
 **Focus:** build the clinical foundation and find out what data actually exists.
 
-## Planned
+**[`Week-Plan-20-26-September.pdf`](Week-Plan-20-26-September.pdf)** — the plan as issued.
 
-- [x] **Task 1** — understand how preeclampsia is detected in real clinical practice
-- [x] **Task 2** — find and assess candidate datasets
-- [ ] **Task 3** — judge channel
+---
+
+## The three tasks
+
+| | Task | What it covers | Status |
+|---|---|---|---|
+| **1** | [Clinical understanding](task-1-clinical-understanding/) | What preeclampsia is, how it is found in practice, and where BADIRA sits | ✅ Report complete |
+| **2** | [Finding the data](task-2-finding-the-data/) | Nine candidate datasets assessed, ranked and recommended | ✅ Document complete |
+| **3** | [Judge channel](task-3-judge-channel/) | Competition communication and judge questions | 🔄 Draft |
+
+---
 
 ## Done
 
@@ -28,9 +36,3 @@ the smallest usable case count. That reframed the whole ranking.
 
 The finding that shaped Task 1: the risk-factor checklist and the FMF model **end at the same
 clinical decision** — low-dose aspirin before 16 weeks — and neither source document said so.
-
-## Files
-
-| File | What it is |
-|---|---|
-| `Week-Plan-20-26-September.pdf` | The week's plan as issued |

@@ -2,11 +2,17 @@
 
 **Focus:** <one line — what this week was for>
 
-## Planned
+**[`Week-Plan-<dates>.pdf`](.)** — the plan as issued.
 
-- [ ] Task 1 — …
-- [ ] Task 2 — …
-- [ ] Task 3 — …
+---
+
+## The tasks
+
+| | Task | What it covers | Status |
+|---|---|---|---|
+| **1** | [<name>](<folder>/) | … | 🔄 |
+
+---
 
 ## Done
 
@@ -18,11 +24,5 @@
 
 ## Notes
 
-<Anything worth remembering: a decision taken, a question for the supervisor, something that
-turned out harder than expected.>
-
-## Files
-
-| File | What it is |
-|---|---|
-| `…` | … |
+<Anything worth remembering: a decision taken, a question for the supervisor, something that turned
+out harder than expected.>
