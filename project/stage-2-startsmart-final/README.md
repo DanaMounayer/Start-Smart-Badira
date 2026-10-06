@@ -14,7 +14,7 @@ One folder per week, named after its week plan. Each holds the plan and the work
 | Week | Focus | Folder |
 |---|---|---|
 | **20–26 September** | Task 1 clinical understanding · Task 2 finding the data · Task 3 judge channel | [Week-Plan (20-26 September)](<Week-Plan (20-26 September)/>) |
-| **27 September – 3 October** | *to be set from the week plan* | [Week-Plan (27 September - 3 October)](<Week-Plan (27 September - 3 October)/>) |
+| **27 September – 3 October** | Interview questions — 24 factual questions for doctor and patient, each traced to a published paper | [Week-Plan (27 September - 3 October)](<Week-Plan (27 September - 3 October)/>) |
 
 <!-- Add a row per week, newest at the bottom, so the table reads as a timeline. -->
 
@@ -28,8 +28,9 @@ work inside it, add a `README.md` saying what was planned and what was done, and
 > There are two ways to find a woman at risk before she is sick, and one way to confirm she is sick.
 > Each needs different things to be available.
 
-Task 1 establishes that picture from the clinical guidelines. Task 2 asks which data could support a
-model inside it.
+Week 1 established that picture from the clinical guidelines (Task 1) and asked which data could
+support a model inside it (Task 2). Week 2 turned it outward: if the guidelines say one thing, does
+Saudi practice do it — and does one real pregnancy look like the literature says it should?
 
 ---
 

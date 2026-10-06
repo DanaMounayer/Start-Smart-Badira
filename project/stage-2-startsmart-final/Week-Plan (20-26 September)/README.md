@@ -12,7 +12,7 @@
 |---|---|---|---|
 | **1** | Clinical understanding — what preeclampsia is, how it is found in practice, and where BADIRA sits | [Badira_Task1_Report.pdf](<Badira_Task1_Report.pdf>) | ✅ |
 | **2** | Finding the data — candidate datasets assessed and ranked | [Badira_Task2_Data.docx](<Badira_Task2_Data.docx>) | ✅ |
-| **3** | Judge channel — competition communication and judge questions | [Badira_Task3_Judge_Channel.docx](<Badira_Task3_Judge_Channel.docx>) | 🔄 Draft |
+| **3** | Judge channel — competition communication and judge questions | [Badira_Task3_Judge_Channel.pdf](<Badira_Task3_Judge_Channel.pdf>) | ✅ |
 
 ---
 
@@ -23,9 +23,10 @@
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
 
+- **Task 3** — judge channel written up and submitted.
+
 ## Moved to next week
 
-- **Task 3** — judge channel still needs restructuring into its three required headings.
 - **RAHMA access enquiry** — drafted, not yet sent.
 - **Topics 2–5** of the clinical research (risk factors, FMF detail, datasets, modelling).
 

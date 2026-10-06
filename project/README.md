@@ -35,6 +35,7 @@ The prototype's own documentation lives at the repository root ([`README.md`](..
 | 🧩 **[Business Model Canvas](<stage-1-startsmart-workshops/Business Model Canva.docx>)** | All nine blocks |
 | 📱 **[Prototype v1](stage-1-startsmart-workshops/prototype-v1/)** | What the pitched prototype did |
 | 📅 **[Week-Plan (20-26 September)](<stage-2-startsmart-final/Week-Plan (20-26 September)/>)** | Tasks 1, 2 and 3 |
+| 📝 **[Week-Plan (27 September - 3 October)](<stage-2-startsmart-final/Week-Plan (27 September - 3 October)/>)** | The interview questions, traced to seven papers |
 
 ---
 
