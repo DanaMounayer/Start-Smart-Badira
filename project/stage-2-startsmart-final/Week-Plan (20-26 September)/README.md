@@ -25,12 +25,6 @@
 - **Task 3** — judge channel written up and submitted, with the competition communication and the
   judge questions answered.
 
-## Moved to next week
-
-- **RAHMA access enquiry** — drafted, not yet sent.
-- **Topics 2–5** of the clinical research (risk factors, FMF detail, datasets, modelling).
-
-## Notes
 
 The finding that shaped Task 2: **row count is not sample size.** RAHMA has the largest cohort and
 the smallest usable case count. That reframed the whole ranking.
