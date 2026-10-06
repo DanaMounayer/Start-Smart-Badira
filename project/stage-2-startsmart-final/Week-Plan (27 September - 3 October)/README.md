@@ -52,14 +52,3 @@ every question traceable to a published source.
 - **Qualitative vs quantitative** — settled: closed numeric answers for anything countable, free text
   only where the answer is a reason. Written up in the document.
 
-## Still open
-
-- **Conduct the interviews** — doctor and patient.
-- **Task 3** — judge channel follow-up.
-- **RAHMA access enquiry** — drafted, not yet sent.
-- **Topics 2–5** of the clinical research (risk factors, FMF detail, datasets, modelling).
-
-## Notes
-
-A user interview was conducted separately about a first pregnancy experience. It is held outside this
-repository — it contains a participant's personal account, and this repository is public.
