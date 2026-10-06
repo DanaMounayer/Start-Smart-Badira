@@ -22,8 +22,8 @@
   screening), then joined into one combined report with a single argument and a one-page figure.
 - **Task 2** — nine datasets examined, assessed and ranked. Two recommended: **MFMU HRA** and
   **nuMoM2b**, as a pair. Two excluded with reasons (UCI, Kaggle).
-
-- **Task 3** — judge channel written up and submitted.
+- **Task 3** — judge channel written up and submitted, with the competition communication and the
+  judge questions answered.
 
 ## Moved to next week
 
